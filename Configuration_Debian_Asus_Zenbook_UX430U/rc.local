@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+# Starting firewall
+if [ -e '/etc/firewall.sh' ]
+then
+    /bin/sh '/etc/firewall.sh'
+fi
+
+exit 0
