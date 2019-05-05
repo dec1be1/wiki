@@ -90,7 +90,7 @@ Enfin, on autorise le trafic venant de l'extérieur sur le port d'écoute du ser
 ```
 pass in quick on $ext_if inet proto tcp from !<abuse> to (egress) port $vpn_ports \
         flags S/SA keep state (max-src-conn 100, max-src-conn-rate 20/1, overload <abuse> flush global)
-        ```
+```
 
 Quelques remarques supplémentaires sur cette ligne :
 * On suppose ici que le vpn travaille en *tcp*.
