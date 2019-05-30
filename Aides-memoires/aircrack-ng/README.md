@@ -36,12 +36,12 @@ Pour désactiver le mode `monitor` :
 
 A noter que l'interface change de nom lorsqu'elle passe en mode `monitor` : `wlan0` -> `wlan0mon`
 
-
 Pour tuer les process qui pourraient gêner le changement de mode :
 ```
 # airmon-ng check kill
 ```
 
+# Utilisation
 ## Reconnaissance
 Pour scanner les réseaux wifi disponibles :
 ```
@@ -87,7 +87,7 @@ Pour cracker une clé WPA avec un fichier de dictionnaire après avoir capturer 
 # aircrack-ng -w dict.txt -b <bssid> dump.cap
 ```
 
-## Sources
+# Sources
 * https://linuxconfig.org/discover-hidden-wifi-ssids-with-aircrack-ng
 * https://www.aircrack-ng.org/doku.php?id=simple_wep_crack
 * https://www.aircrack-ng.org/doku.php?id=newbie_guide

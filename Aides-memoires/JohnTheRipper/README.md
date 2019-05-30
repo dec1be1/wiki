@@ -8,7 +8,7 @@ Trois modes sont possibles.
 ```
 # john --single [HASH_FILE]
 ```
-John va tester des combinaisons de caractères basées sur les logins à tester et sur les règles données dans le fichier de configuration `/etc/john/john.conf`.
+John va tester des combinaisons de caractères basées sur les logins identifiés et sur les règles données dans le fichier de configuration `/etc/john/john.conf`.
 
 On peut ajouter des mots à l'analyse dans la section `[List.Single.SeedWords]`.
 
@@ -23,7 +23,7 @@ Le principe est ici de tester tous les mots d'une liste.
 Si aucune liste n'est spécifiée, john utilise par défaut sa propre liste. Le temps est proportionnel à la longueur de la liste.
 
 ## Incremental
-Ce mode teste toutes les combinaisons de caractères d'un jeu donné. Il peut être très (trop) long !
+Ce mode teste toutes les combinaisons de caractères d'un jeu donné (cf. fichier de configuration de john). Il peut être très (trop) long !
 ```
 # john --incremental [HASH_FILE]
 ```

@@ -1,13 +1,13 @@
 Flash du firmware usine sur un routeur TP-Link WR1043ND v2.1
 ============================================================
 
-Ce wiki décrit la méthode utilisée pour flasher le firmware usine grâce à la connexion série du routeur et en utilisant un serveur *tftp* pour uploader le nouveau firmware.
+Ce wiki décrit la méthode utilisée pour flasher le firmware usine grâce à la connexion série du routeur en utilisant un serveur *tftp* pour uploader le nouveau firmware.
 
-On fait tout ça depuis un firmware *openwrt*.
+On fait tout ça depuis un firmware *openwrt* qui semblait "briqué" (plus d'accès web ou ssh). La procédure peut être à adapter selon le système depuis lequel on boote.
 
 # Pré-requis
 ## Connexion série
-Le routeur est équipé d'une connectique série (à souder soi-même !). Il faut évidemment avoir fait cette étape pour continuer. Il faut également disposer d'un adaptateur *USB/série* (un d'un vieux PC avec un port série...).
+Le routeur est équipé d'une connectique série (à souder soi-même !). Il faut évidemment avoir fait cette étape pour continuer. Il faut également disposer d'un adaptateur *USB/série* (ou d'un vieux PC avec un port série...).
 On note que les pins sur le routeur correspondent à (en partant du côté du condensateur) :
 * VCC (3.3 V)
 * Ground
@@ -43,8 +43,8 @@ La configuration est la suivante :
 +-----------------------------------------------------------------------+
 ```
 
-## Serveur TFTP
-Il va nous alloir un serveur *TFTP* pour uploader le firmware.
+## Serveur tftp
+Il va nous falloir un serveur *tftp* pour uploader le firmware.
 On installe par exemple `tftpd-hpa` sous GNU/Linux.
 Il faudra copier le firmware à uploader dans le dossier du serveur.
 La configuration se fait dans le fichier suivant : `/etc/default/tftpd-hpa`.
@@ -55,16 +55,16 @@ On déconnecte toutes les inferfaces (sauf celle qui va être utilisée) et on d
 
 On configure l'interface avec les paramètres suivants :
 ```
-# ip a add 192.168.1.100/24 dev enx24f5a28c49a0
-# ip route add default via 192.168.1.1 dev enx24f5a28c49a0
+# ip a add 192.168.1.100/24 dev eth0
+# ip route add default via 192.168.1.1 dev eth0
 ```
 
 ## Le firmware
-On va flasher le firmware usine pour repartir sur de bonne base (on installera ensuite le firmware de notre choix !).
+On va flasher le firmware usine pour repartir sur de bonnes bases (on installera ensuite le firmware de notre choix !).
 
 On télécharge la dernière version sur le [site du fabricant](https://www.tp-link.com/fr/support/download/tl-wr1043nd/v2/).
 
-Si le nom du firmware contient le mot *boot*, il va falloir le "stripper" (enlever le ddébut qui correspond au boot). Pour faire ça :
+Si le nom du firmware contient le mot *boot*, il va falloir le "stripper" (enlever le début qui correspond au boot). Pour faire ça :
 ```
 # dd if=download_firmware(with_boot).bin of=6F01A8C0.img skip=257 bs=512
 ```
@@ -90,7 +90,7 @@ ap135> cp.b 0x81000000 0x9f020000 0x7c0000
 ap135> boot.m 0x9f020000
 ```
 
-Si tout se passe bien, le routeur reboot sur le nouveau firmware et une interface de configuration web est accessible ici : `http://192.168.0.1`. Les identifiants par défaut sont `admin:admin`.
+Si tout se passe bien, le routeur reboote sur le nouveau firmware et une interface de configuration web est accessible ici : http://192.168.0.1. Les identifiants par défaut sont `admin:admin`.
 
 On peut maintenant installer proprement le firmware de son choix depuis cette interface.
 
