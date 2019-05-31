@@ -22,6 +22,10 @@ Le principe est ici de tester tous les mots d'une liste.
 
 Si aucune liste n'est spécifiée, john utilise par défaut sa propre liste. Le temps est proportionnel à la longueur de la liste.
 
+On peut ajouter `--rules` pour activer les règles de mangling. Dans ce cas, lorsque john teste un mot, il teste également différentes variations de ce mot selon les règles définies.
+
+On peut également préciser le type d'encodage de la wordlist avec l'option `--encoding=[...]`. Par exemple `--encoding=ASCII`. C'est utile lorsque john n'identifie pas bien le type d'encodage d'un fichier.
+
 ## Incremental
 Ce mode teste toutes les combinaisons de caractères d'un jeu donné (cf. fichier de configuration de john). Il peut être très (trop) long !
 ```
