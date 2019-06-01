@@ -17,7 +17,7 @@ Ce mode est généralement rapide.
 ## Wordlist
 Le principe est ici de tester tous les mots d'une liste.
 ```
-# john --wordlist /root/wordlists/rockyou.txt [HASH_FILE]
+# john --wordlist=/root/wordlists/rockyou.txt [HASH_FILE]
 ```
 
 Si aucune liste n'est spécifiée, john utilise par défaut sa propre liste. Le temps est proportionnel à la longueur de la liste.
