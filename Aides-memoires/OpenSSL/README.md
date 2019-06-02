@@ -42,6 +42,11 @@ Pour convertir le certificat au format `DER` (pour Android par exemple) :
 # openssl x509 -in certs/CA_flathouse.pem -outform der -out certs/CA_flathouse.der.crt
 ```
 
+Pour convertir un certificat et sa clé privée dans le format PKCS#12 (pour import dans Firefox par exemple) :
+```
+# openssl pkcs12 -export -out certificate.p12 -inkey privateKey.key -in certificate.crt -certfile CACert.crt
+```
+
 ## Chiffrement de fichiers
 Pour chiffrer un fichier avec par exemple *aes-256-cbc* :
 ```
