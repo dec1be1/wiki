@@ -54,6 +54,15 @@ Pour visualiser les mots de passe que john a réussi à cracker sur un fichier p
 # john --show [HASH_FILE]
 ```
 
+# Fichiers zip ou rar
+Pour cracker un fichier zip ou rar protégé, il faut d'abord créer le fichier de hash en utilisant l'utilitaire `zip2john` :
+```
+# zip2john fichier.zip > fichier.hash
+```
+Pour les fichiers rar, utiliser `rar2john`.
+
+On peut ensuite utiliser john normalement avec ce fichier de hash.
+
 # Sources
 * https://www.openwall.com/john/doc/
 * https://artduweb.com/tutoriels/jtr
