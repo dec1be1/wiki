@@ -63,6 +63,27 @@ Pour les fichiers rar, utiliser `rar2john`.
 
 On peut ensuite utiliser john normalement avec ce fichier de hash.
 
+# Crack de mot de passe avec sel
+## Préambule
+On commence par créer le fichier de hash selon ce format :
+```
+# echo "username:hash$salt" > hash.txt
+```
+Pour lister les sous-formats disponibles :
+```
+# john --list=subformats
+```
+
+## Exemple pour md5(salt+password)
+On dispose du salt et du hash md5(salt+password). On veut trouver le password.
+
+On voit en listant les sous-formats qu'il s'agit du format `dynamic_4`. On lance john après avoir préparé le fichier de hash (cf. un peu plus haut) :
+```
+# john --format=dynamic_4 ./hash.txt
+```
+
+On peut utiliser toutes les options habituelles.
+
 # Sources
 * https://www.openwall.com/john/doc/
 * https://artduweb.com/tutoriels/jtr
