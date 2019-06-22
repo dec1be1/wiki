@@ -64,6 +64,14 @@ On peut générer tout type de hash avec *openssl*. Par exemple, pour générer 
 $ openssl passwd -1 -salt S4L7 "p4ssw0rd"
 ```
 
+## Génération d'aléa
+On peut générer tout type d'aléa. Quelques exemples :
+```
+$ openssl rand -base64 256
+$ openssl rand -hex 16
+$ openssl rand -out random.bin 512
+```
+
 ## RSA
 Pour créer une clé privée :
 ```
