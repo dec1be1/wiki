@@ -32,6 +32,17 @@ Ce mode teste toutes les combinaisons de caractères d'un jeu donné (cf. fichie
 # john --incremental [HASH_FILE]
 ```
 
+# Mangling rules
+Les *mangling rules* permettent de faire des dérivations de mots selon des règles établies dans le fichier de configuration de john.
+On peut les activer avec l'option `--rules`. On peut spécifier un jeu de règles particuliers. Par exemple `--rules=Jumbo` qui est un jeu présent par défaut.
+Voir les jeux de règles existants dans le fichier de configuration.
+A noter qu'il existe des utilitaires permettant de générer des fichiers de configuration avec des jeux de règles entièrement paramétrables.
+
+On peut également générer un dictionnaire custom utilisant des *mangling rules* avec l'option `--stdout`. Cela permet d'utiliser ce dictionnaire avec un autre logiciel. Par exemple :
+```
+# john --config=custom_config_file --wordlist=custom_wordlist.txt --rules=Jumbo --stdout
+```
+
 # unshadow
 Lorsqu'on dispose, sous GNU/Linux, des fichiers `/etc/passwd` et `/etc/shadow`, il faut d'abord les combiner pour pouvoir les utiliser avec john. On utilise l'utilitaire `unshadow` :
 ```
