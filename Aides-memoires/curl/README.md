@@ -1,6 +1,7 @@
 curl
 ====
 
+# POST
 Pour poster des données dans un formulaire :
 ```
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "param1=value1&param2=value2" <url>
@@ -17,6 +18,11 @@ $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d @data.txt
 $ curl -X POST -H "Content-Type: application/json" -d @data.json <url>
 ```
 
+# Basic auth
+On peut s'authentifier avec l'option `-u` :
+```
+$ curl -u login:password <url>
+```
 
 # Sources
 * https://gist.github.com/subfuzion/08c5d85437d5d4f00e58
