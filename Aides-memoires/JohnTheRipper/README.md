@@ -74,6 +74,13 @@ Pour les fichiers rar, utiliser `rar2john`.
 
 On peut ensuite utiliser john normalement avec ce fichier de hash.
 
+# Clés privées RSA
+**Il n'est pas question ici de trouver une clé privée RSA en connaissant la clé publique.**
+
+On veut ici trouver la *passphrase* d'une clé privée RSA chiffrée de manière à la déchiffrer. On va procéder exactement de la même manière que pour les fichiers zip ou rar mais en utilisant un script python pour créer le fichier de hash : https://github.com/koboi137/john/blob/master/ssh2john.py.
+
+On utilise ensuite john normalement avec le fichier de hash créé. On peut évidemment mettre plusieurs clés privées dans le fichier de hash.
+
 # Crack de mot de passe avec sel
 ## Préambule
 On commence par créer le fichier de hash selon ce format :
