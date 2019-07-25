@@ -17,5 +17,5 @@ wfuzz
 
 ## Fuzzing virtual hosts
 ```
-# wfuzz -c -w /root/wordlists/dirbuster/directory-list-2.3-medium.txt --hc 400,403,404 -H "host: FUZZ.example.org"  "http://<SERVER_IP_ADDRESS>"
+# wfuzz -c -w /root/wordlists/virtual-host-wordlist.txt --hc 400,403,404 -H "host: FUZZ.example.org"  "http://<SERVER_IP_ADDRESS>"
 ```
