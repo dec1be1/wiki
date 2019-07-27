@@ -99,7 +99,7 @@ On monte la bonne partition de boot :
 # mount /dev/sda3ou4 /boot
 ```
 
-On créé un fichier `/boot/refind-linux.conf` (sur le modèle de celui du premier OS installé ou voir sur le net selon le système installé). Cela permettra à *reFind* de trouver la partition root du système à booter.
+On créé un fichier `/boot/refind_linux.conf` (sur le modèle de celui du premier OS installé ou voir sur le net selon le système installé ; exemple pour Debian : [refind_linux.conf](./refind_linux.conf)). Cela permettra à *reFind* de trouver la partition root du système à booter.
 
 On ajoute la ligne suivante au fichier `/etc/crypttab` pour indiquer le volume chiffré (on peut utiliser *blkid* pour trouver l'UUID) :
 ```
