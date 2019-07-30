@@ -118,7 +118,7 @@ On régénère les images du noyau :
 # update-initramfs -u -k all
 ```
 
-**Note : Si on a une erreur à ce moment-là, il est plus simple de redémmarrer sur la procédure d'installation en mode rescue. Dans ce cas, l'installateur propose de monter les partitions chiffrées automatiquement et de faire le chroot. On peut alors tout vérifier et régénérer les images du noyau et de faire un update-grub sans problèmes cette fois.**
+**Note : Si on a une erreur à ce moment-là, il est plus simple de redémarrer sur la procédure d'installation en mode rescue. Dans ce cas, l'installateur propose de monter les partitions chiffrées automatiquement et de faire le chroot. On peut alors tout vérifier et régénérer les images du noyau et de faire un update-grub sans problèmes cette fois.**
 
 On met à jour *GRUB* sur la bonne partition de boot :
 ```
