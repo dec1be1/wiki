@@ -62,7 +62,7 @@ On remarque que l'installation (avec le script `refind-install.sh` va créer un 
 ## Installation des OS suivants
 On lance la procédure d'installation normalement. **Avant de faire le partitionnement du disque, il faut exécuter un shell et monter les volumes chiffrés** pour pouvoir utiliser ceux dont on aura besoin :
 ```
-# cryptsetup luksOpen /dev/sda5 chif
+# cryptsetup luksOpen /dev/sda5 sda5_crypt
 ```
 
 On active les volumes LVM pour le groupe entier :
@@ -117,6 +117,8 @@ On régénère les images du noyau :
 ```
 # update-initramfs -u -k all
 ```
+
+**Note : Si on a une erreur à ce moment-là, il est plus simple de redémmarrer sur la procédure d'installation en mode rescue. Dans ce cas, l'installateur propose de monter les partitions chiffrées automatiquement et de faire le chroot. On peut alors tout vérifier et régénérer les images du noyau et de faire un update-grub sans problèmes cette fois.**
 
 On met à jour *GRUB* sur la bonne partition de boot :
 ```
