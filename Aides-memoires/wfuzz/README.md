@@ -19,3 +19,9 @@ wfuzz
 ```
 # wfuzz -c -w /root/wordlists/virtual-host-wordlist.txt --hc 400,403,404 -H "host: FUZZ.example.org"  "http://<SERVER_IP_ADDRESS>"
 ```
+
+## Fuzzing formulaire POST
+### Username
+```
+# wfuzz -c --hc 400,403,404 --hs "No account found with that username." -w /root/wordlists/dirbuster/apache-user-enum-2.0.txt -d "username=FUZZ&password=test&submit=Login" http://site.example.org:80/login.php
+```
