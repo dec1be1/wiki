@@ -138,8 +138,8 @@ mail_gid = vmail
 ### `/etc/dovecot/conf.d/10-ssl.conf`
 * `ssl = yes`
 * ```
-ssl_cert = </etc/ssl/chezju.org.fullchain.pem
-ssl_key = </etc/ssl/private/chezju.org.key
+ssl_cert = </etc/ssl/domain.tld.fullchain.pem
+ssl_key = </etc/ssl/private/domain.tld.key
 ```
 * `ssl_prefer_server_ciphers = yes`
 
@@ -228,7 +228,7 @@ On ajoute ces lignes à `/etc/rc.local` pour les démarrer automatiquement au bo
 On ajoute le service et on configure :
 ```
 # rcctl enable spamd
-# rcctl set spamd flags -v -G 2:4:864 -y 127.0.0.1 -K /etc/ssl/private/chezju.org.key -C /etc/ssl/chezju.org.fullchain.pem
+# rcctl set spamd flags -v -G 2:4:864 -y 127.0.0.1 -K /etc/ssl/private/domain.tld.key -C /etc/ssl/domain.tld.fullchain.pem
 # rcctl start spamd
 ```
 
@@ -246,7 +246,7 @@ nospamd:\
 	:file=/etc/mail/nospamd:
 ```
 
-On ajoute l'adresse piège à spamd : `spamdb -T -a 'blackhole@chezju.org'`
+On ajoute l'adresse piège à spamd : `spamdb -T -a 'blackhole@domain.tld'`
 
 On ajoute ce crontab :
 ```
@@ -305,16 +305,16 @@ On commence par créer un utilisateur :
 permit nopass setenv { HOME=/var/fetchmail USER=_fetchmail LOGNAME=_fetchmail } root as _fetchmail cmd /usr/local/bin/fetchmail
 ```
 
-On crée le fichier de configuration `/var/fetchmail/.fetchmailrc`. Voici un exemple de contenu :
+On crée le fichier de configuration `/var/fetchmail/.fetchmailrc`. Voici un exemple de contenu (on peut mettre plusieurs sections `poll` pour plusieurs comptes) :
 ```
 set daemon 60
-set postmaster 'ju'
+set postmaster 'jc'
 set syslog
 
 poll <imap_server> port 993 proto imap:
     user '<login>'
     password '<password>'
-    is 'ju@chezju.org'
+    is 'jc@domain.tld'
     options
         ssl
         #keep
