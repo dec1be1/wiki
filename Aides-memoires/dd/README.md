@@ -33,3 +33,9 @@ On peut aussi utiliser `watch` pour lancer la commande périodiquement (toutes l
 ```
 # watch -n60 kill -USR1 $(pgrep ^dd$)
 ```
+
+## Extraire une séquence d'octets dans un fichier
+Extraction de 64 octets à partir du 37ème dans le fichier `source`. Le nouveau fichier est créé et s'appelle `target` :
+```
+$ dd if=./source of=./target bs=1 skip=37 count=64
+```

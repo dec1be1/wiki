@@ -240,7 +240,8 @@ Source : http://linrunner.de/en/tlp/tlp.html
 ```
 * Modifier le fichier de configuration (`/etc/default/ntpdate`) pour y ajouter les serveurs qu'on veut. Typiquement :
 ```
-NTPSERVERS="0.fr.pool.ntp.org 1.fr.pool.ntp.org 2.fr.pool.ntp.org 3.fr.pool.ntp.org"```
+NTPSERVERS="0.fr.pool.ntp.org 1.fr.pool.ntp.org 2.fr.pool.ntp.org 3.fr.pool.ntp.org"
+```
 * Lancer ntpdate-debian (ntpdate sera ensuite lancé au démarrage d'une interface réseau) :
 ```
 # ntpdate-debian
