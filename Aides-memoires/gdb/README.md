@@ -89,6 +89,15 @@ Pour voir tous les registres d'un coup :
 (gdb) info registers
 ```
 
+Pour voir les infos sur le stackframe courant :
+```
+(gdb) info frame
+```
+ou
+```
+(gdb) i f
+```
+
 ### examine
 `examine` (ou `x` en abrégé) permet d'examiner le contenu de la mémoire.
 ```
