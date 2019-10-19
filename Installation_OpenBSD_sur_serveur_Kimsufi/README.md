@@ -8,12 +8,12 @@ On installe depuis l'interface web de gestion un système classique. Ici *Debian
 On suit les instructions.
 
 ## Reboot en mode rescue
-Depuis l'interface web de gestion, redémmarer en mode *rescue* :
+Depuis l'interface web de gestion, redémarrer en mode *rescue* :
 * Cliquer sur *Netboot*
 * Puis sur *Rescue*
 * Choisir le mode *rescue64-pro*
 
-Au bout de quelques instant, on reçoit un mail avec les identifiants de connexion à utiliser.
+Au bout de quelques instants, on reçoit un mail avec les identifiants de connexion à utiliser.
 On se connecte en ssh :
 ```
 # ssh root@176.31.100.127
@@ -22,7 +22,7 @@ root@ns389060:~# export TERM=xterm-color
 ```
 
 ## Préparation de l'installation
-On installe *qemu* : `apt install qemu`
+On installe *qemu* : `apt update` puis `apt install qemu`.
 On télécharge l'image iso d'OpenBSD, les sommes de contrôle et on vérifie :
 ```
 root@ns389060:~# wget https://cdn.openbsd.org/pub/OpenBSD/6.5/amd64/install65.iso
@@ -124,7 +124,7 @@ Pour sortir de qemu : Alt+Shift+2 puis `quit`.
 ## Test ou dépannage
 Avant de faire un reboot à l'aveugle ou pour dépanner, on peut tester le systèm en bootant sur le disque du serveur avec *Qemu* :
 ```
-root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,if=virtio -curses -k fr
+root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,if=virtio -curses -k fr -smp $(nproc)
 ```
 
 Pour remapper correctement le clavier en français : `# wsconsctl keyboard.encoding=fr`.
@@ -140,13 +140,53 @@ Après quelques instants, le serveur devrait être accessible par ssh.
 Ne pas oublier les mises à jour de sécurité avec `syspatch` dès que possible !
 
 # Mise à jour
-A venir...
+## Préparation
+On se connecte en ssh au serveur et on fait les étapes *pre-upgrade* décrites dans la page d'upgrade de la [FAQ d'OpenBSD](https://www.openbsd.org/faq/index.html).
+Il faut notamment télécharger sur le serveur le noyau ramdisk *bsd.rd* de la nouvelle version pour booter dessus ensuite.
 
+Arrêter le serveur proprement.
 
+## Redémarrage en mode *rescue*
+Depuis l'interface web de gestion, redémarrer en mode *rescue* :
+* Cliquer sur *Netboot*
+* Puis sur *Rescue*
+* Choisir le mode *rescue64-pro*
 
+Au bout de quelques instants, on reçoit un mail avec les identifiants de connexion à utiliser (on peut consulter les mails envoyés par Kimsufi depuis l'interface web).
+On se connecte en ssh :
+```
+# ssh root@176.31.100.127
+[...]
+root@ns389060:~# export TERM=xterm-color
+```
 
+## Lancement de qemu
+On installe qemu et on le lance en bootant sur le disque dur du serveur :
+```
+root@ns389060:~# apt update
+root@ns389060:~# apt install qemu
+root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,if=virtio -curses -k fr -smp $(nproc)
+```
 
+Au prompt `boot>`, on demande à booter sur le noyau `bsd.rd`.
 
+## Mise à jour OpenBSD
+On poursuit la procédure de la page d'upgrade de la [FAQ d'OpenBSD](https://www.openbsd.org/faq/index.html).
+
+> On note que les partitions chiffrées n'ont pas besoin d'être montées durant l'upgrade, ce qui simplifie la procédure.
+
+Une fois l'upgrade terminé, rebooter sur le nouveau noyau pour vérifier que tout va bien. En profiter pour vérifier le fonctionnement du firewall.
+
+## Rebooter sur le nouveau système
+Ca se passe avec l'interface web de gestion. Il faut avoir fait un `halt` depuis OpenBSD. Ensuite :
+* cliquer sur *Netboot*
+* cliquer sur *Hard disk*
+* puis *Next* et confirmer
+* taper `reboot` depuis la console *rescue*
+
+Après quelques instants, le serveur devrait être accessible par ssh.
+
+Terminer le processus d'installation en suivant la [FAQ d'OpenBSD](https://www.openbsd.org/faq/index.html).
 
 # Sources
 * https://www.tumfatig.net/20190510/running-openbsd-6-5-on-kimsufi-ks-10/
