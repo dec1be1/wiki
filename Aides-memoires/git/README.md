@@ -97,3 +97,35 @@ Si, lors d'un `git pull`, on obtient une erreur *Veuillez valider ou remiser vos
 ```
 $ git reset --hard HEAD
 ```
+
+#### Créer un tag (étiquette annotée)
+Sur le dernier commit réalisé (**attention à être dans la bonne branche**) :
+```
+$ git tag -a nom-du-tag -m "Annotation du tag"
+```
+
+Sur un commit particulier :
+```
+$ git tag -a nom-du-tag -m "Annotation du tag" <hash du commit>
+```
+#### Pousser un tag
+Pour pousser un tag sur le dépôt distant :
+```
+$ git push origin nom-du-tag
+```
+
+Pour pousser tous les nouveaux tags d'un coup :
+```
+$ git push origin --tags
+```
+
+#### Effacer un tag
+En local :
+```
+$ git tag -d nom-du-tag
+```
+
+Sur le dépôt distant :
+```
+$ git push --delete origin nom-du-tag
+```
