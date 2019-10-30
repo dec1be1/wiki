@@ -170,6 +170,11 @@ Ou directement une adresse en mémoire :
 ```
 (gdb) break *0x080484ce
 ```
+Pour supprimer le breakpoint 2 (ne pas pas spécifier le numéro pour supprimer tous les breakpoints d'un coup) :
+```
+(gdb) del break 2
+```
+
 
 ### backtrace
 La commande `backtrace` (`bt` en abrégé) permet d'afficher la backtrace du stack. Utile pour trouver une adresse de retour par exemple.
@@ -179,3 +184,25 @@ La commande `backtrace` (`bt` en abrégé) permet d'afficher la backtrace du sta
 
 ### stepi
 `stepi` (ou `si` en abrégé) permet de sauter à l'instruction suivante (au moment d'un *breakpoint*). Si un entier `N` est fourni en argument, on saute de N instructions.
+
+## Environnement
+Pour voir les variables d'environnement :
+```
+(gdb) show env
+```
+
+Pour créer (`set`) ou supprimer (`unset`) une variable :
+```
+(gdb) set env VARIABLE
+```
+
+Pour supprimer toutes les variables :
+```
+(gdb) unset env
+```
+
+## Entrée standard
+Pour lancer un programme en envoyant des données sur l'entrée standard :
+```
+(gdb) run ./my_program < <(python -c 'print "A"*156')
+```
