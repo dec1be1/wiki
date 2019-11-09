@@ -24,5 +24,11 @@ On peut s'authentifier avec l'option `-u` :
 $ curl -u login:password <url>
 ```
 
+# Cookie
+On peut ajouter un cookie avec l'option `-b` ou `--cookie` :
+```
+$ curl --cookie "session=eyJaZz...09In19" <url>
+```
+
 # Sources
 * https://gist.github.com/subfuzion/08c5d85437d5d4f00e58

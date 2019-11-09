@@ -182,8 +182,10 @@ La commande `backtrace` (`bt` en abrégé) permet d'afficher la backtrace du sta
 (gdb) bt
 ```
 
-### stepi
+### stepi et nexti
 `stepi` (ou `si` en abrégé) permet de sauter à l'instruction suivante (au moment d'un *breakpoint*). Si un entier `N` est fourni en argument, on saute de N instructions.
+
+`nexti` (ou `ni`) fait la même chose mais en sautant les appels de fonction. 
 
 ## Environnement
 Pour voir les variables d'environnement :
@@ -201,7 +203,7 @@ Pour supprimer toutes les variables :
 (gdb) unset env
 ```
 
-## Entrée standard
+## Entrée standard
 Pour lancer un programme en envoyant des données sur l'entrée standard :
 ```
 (gdb) run ./my_program < <(python -c 'print "A"*156')
