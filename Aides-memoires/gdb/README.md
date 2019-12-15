@@ -12,6 +12,8 @@ Pour éviter d'avoir à le retaper à chaque démarrage de `gdb`, éditer le fic
 $ echo "set disassembly-flavor intel" > ~/.gdbinit
 ```
 
+Pour AT&T : idem mais avec `att`.
+
 ### Processus
 Par défaut, c'est le *parent process* qui est suivi par `gdb`. Pour suivre le *child process* (dans le cas de l'étude d'un *daemon* par exemple) :
 ```
@@ -63,10 +65,14 @@ Permet de lister le code source (par bloc de 10 lignes). On peut également ne l
 
 Cette commande fonctionne à la condition que le programme ait été compilé avec l'option -g (`gcc -g ...`).
 
-### disass
+### disas
 Affiche le code assembleur. On peut indiquer la fonction à traiter en argument. Exemple :
 ```
-(gdb) disass main
+(gdb) disas main
+```
+Pour désassembler une plage de mémoire (de `0xcafebabe` à `0xcafebaee`):
+```
+(gdb) disas 0xcafebabe, 0xcafebaee
 ```
 
 ### info
@@ -185,7 +191,7 @@ La commande `backtrace` (`bt` en abrégé) permet d'afficher la backtrace du sta
 ### stepi et nexti
 `stepi` (ou `si` en abrégé) permet de sauter à l'instruction suivante (au moment d'un *breakpoint*). Si un entier `N` est fourni en argument, on saute de N instructions.
 
-`nexti` (ou `ni`) fait la même chose mais en sautant les appels de fonction. 
+`nexti` (ou `ni`) fait la même chose mais en sautant les appels de fonction.
 
 ## Environnement
 Pour voir les variables d'environnement :
@@ -207,4 +213,18 @@ Pour supprimer toutes les variables :
 Pour lancer un programme en envoyant des données sur l'entrée standard :
 ```
 (gdb) run ./my_program < <(python -c 'print "A"*156')
+```
+
+## Modification de la mémoire
+Il est possible de modifier la mémoire dans gdb. Par exemple, pour modifier l'octet à l'adresse `0xdeadbeef` :
+```
+(gdb) set *(0xdeadbeef) = 0x14
+```
+Ou incrémenter :
+```
+(gdb) set *(0xdeadbeef) += 10
+```
+Ou encore modifier un registre :
+```
+(gdb) set $esp += 4
 ```
