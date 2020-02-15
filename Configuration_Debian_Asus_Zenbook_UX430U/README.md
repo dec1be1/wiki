@@ -1,7 +1,7 @@
 Configuration Debian sur laptop Asus Zenbook UX430U
 ===================================================
 
-Cette page décrit diverses tâches de configuration et d'optimisation de Debian 9 (Stretch) sur un Asus Zenbook UX430U.
+Cette page décrit diverses tâches de configuration et d'optimisation de Debian 10 (Buster) sur un Asus Zenbook UX430U.
 A noter que l'installation s'est faite dans un container *LVM* chiffré avec *LUKS*.
 
 Voici les sorties des commandes `lspci` et `lsusb` :
@@ -182,3 +182,15 @@ $ optirun nvidia-settings -c :8
 Source :
 * https://debian-facile.org/doc:materiel:cartes-graphique:nvidia:optimus
 * https://wiki.debian.org/Bumblebee
+
+## Gestion d'énergie
+Par défaut, il n'y a pas vraiment de gestion (économie) d'énergie, en particulier en mode *suspend* (quand l'écran est fermé par exemple).
+Pour améliorer ça, on peut installer *tlp* qui est présent dans les dépôts officiels :
+```
+# apt install tlp
+```
+
+La configuration par défaut est satisfaisante. On reboote ou on lancer le service manuellement.
+A noter qu'il y a deux services :
+- `tlp.service` : le service lorsque l'ordinateur est allumé
+- `tlp-sleep.service` : le service actif lorsque l'ordinateur est en mode *suspend*.
