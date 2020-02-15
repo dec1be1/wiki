@@ -132,7 +132,7 @@ Si le disque est de type SSD, il faut activer le *trim*. Pour ça, on ajoute une
 ```
 # echo btusb >> /etc/modules
 ```
-* On installer les paquets suivants :
+* On installe les paquets suivants :
 ```
 # apt install pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
 ```

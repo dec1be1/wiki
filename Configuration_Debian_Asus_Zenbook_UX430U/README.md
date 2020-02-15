@@ -179,7 +179,7 @@ Pour ouvrir le panneau NVidia :
 $ optirun nvidia-settings -c :8
 ```
 
-Source :
+Sources :
 * https://debian-facile.org/doc:materiel:cartes-graphique:nvidia:optimus
 * https://wiki.debian.org/Bumblebee
 
@@ -194,3 +194,21 @@ La configuration par défaut est satisfaisante. On reboote ou on lancer le servi
 A noter qu'il y a deux services :
 - `tlp.service` : le service lorsque l'ordinateur est allumé
 - `tlp-sleep.service` : le service actif lorsque l'ordinateur est en mode *suspend*.
+
+## Le bluetooth
+Pour une installation sous *KDE Plasma*
+On installe les paquets suivants :
+```
+# apt install bluetooth bluedevil pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
+```
+
+On relance le service `bluetooth`.
+
+Pour les périphériques de son (casques, écouteurs, ...), il est possible qu'il faille exécuter la commande suivante (si on a une erreur `a2dp-sink profile connect failed for ...` au niveau du service `bluetooth` pendant l’appairage) :
+```
+# killall pulseaudio
+```
+
+Sources :
+* https://wiki.debian.org/fr/BluetoothUser
+* https://wiki.debian.org/BluetoothUser/a2dp
