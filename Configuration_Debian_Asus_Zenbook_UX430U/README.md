@@ -184,20 +184,40 @@ Sources :
 * https://wiki.debian.org/Bumblebee
 
 ## Gestion d'énergie
-Par défaut, il n'y a pas vraiment de gestion (économie) d'énergie, en particulier en mode *suspend* (quand l'écran est fermé par exemple).
-Pour améliorer ça, on peut installer *tlp* qui est présent dans les dépôts officiels :
+### TLP
+On peut installer *tlp* pour améliorer la gestion de l'énergie (présent dans les dépôts officiels) :
 ```
 # apt install tlp
 ```
 
 La configuration par défaut est satisfaisante. On reboote ou on lancer le service manuellement.
 A noter qu'il y a deux services :
-- `tlp.service` : le service lorsque l'ordinateur est allumé
-- `tlp-sleep.service` : le service actif lorsque l'ordinateur est en mode *suspend*.
+* `tlp.service` : le service lorsque l'ordinateur est allumé
+* `tlp-sleep.service` : le service actif lorsque l'ordinateur est en mode *suspend*.
+
+### Mode *suspend*
+Sous Debian 10, le mode *suspend* passe par défaut l'ordinateur en mode S2 (`s2idle`) au lieu de S3 (`deep`). On peut le vérifier, après avoir fermé puis ré-ouvert le laptop :
+```
+root@zen:~/bin# journalctl | grep "PM: suspend" | tail
+févr. 16 11:50:38 zen kernel: PM: suspend entry (s2idle)
+févr. 16 11:50:47 zen kernel: PM: suspend exit
+```
+
+Ce mode n'est pas très économe en énergie. La batterie se décharge donc assez rapidement lorsque l'écran est fermé. On souhaite plutôt passer en mode S3 de manière à éviter cette décharge de batterie. Pour ça, on doit passer `mem_sleep_default=deep` au noyau au moment du boot. On passe par grub en ajoutant `mem_sleep_default=deep` au paramètre `GRUB_CMDLINE_LINUX_DEFAULT` du fichier `/etc/default/grub`.
+On met à jour la configuration de grub qvec `# update-grub` puis on reboote.
+
+On peut alors vérifier que ça fonctionne bien (après avoir fermé puis ré-ouvert le laptop) :
+```
+root@zen:~# journalctl | grep "PM: suspend" | tail
+févr. 16 13:19:27 zen kernel: PM: suspend entry (deep)
+févr. 16 13:19:38 zen kernel: PM: suspend exit
+```
+
+Documentation :
+* https://www.kernel.org/doc/Documentation/power/states.txt
 
 ## Le bluetooth
-Pour une installation sous *KDE Plasma*
-On installe les paquets suivants :
+Pour une installation sous *KDE Plasma*, on installe les paquets suivants :
 ```
 # apt install bluetooth bluedevil pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
 ```
