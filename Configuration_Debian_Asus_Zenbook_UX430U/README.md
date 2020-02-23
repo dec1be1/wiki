@@ -184,16 +184,17 @@ Sources :
 * https://wiki.debian.org/Bumblebee
 
 ## Gestion d'énergie
-### TLP
-On peut installer *tlp* pour améliorer la gestion de l'énergie (présent dans les dépôts officiels) :
-```
-# apt install tlp
-```
+### systemd
+Editer le ficher `/etc/systemd/sleep.conf` pour modifier la ligne `HibernateDelaySec`. On met une valeur suffisamment grande (`86400` soit 24 heures).
 
-La configuration par défaut est satisfaisante. On reboote ou on lancer le service manuellement.
-A noter qu'il y a deux services :
-* `tlp.service` : le service lorsque l'ordinateur est allumé
-* `tlp-sleep.service` : le service actif lorsque l'ordinateur est en mode *suspend*.
+Ca permet de s'assurer qu'on ne passe pas en hibernation après une période de *suspend* trop courte.
+
+Documentation :
+* https://manpages.debian.org/testing/systemd/systemd-suspend-then-hibernate.service.8.en.html
+* https://manpages.debian.org/testing/systemd/systemd-sleep.conf.5.en.html
+
+### UPower
+Regarder la configuration de *UPower* dans `/etc/UPower/UPower.conf`. Configurer le passage du mode *suspend* au mode *hybrid* selon le pourcentage de batterie et pas le temps.
 
 ### Mode *suspend*
 Sous Debian 10, le mode *suspend* passe par défaut l'ordinateur en mode S2 (`s2idle`) au lieu de S3 (`deep`). On peut le vérifier, après avoir fermé puis ré-ouvert le laptop :
@@ -213,8 +214,27 @@ févr. 16 13:19:27 zen kernel: PM: suspend entry (deep)
 févr. 16 13:19:38 zen kernel: PM: suspend exit
 ```
 
-Documentation :
+Sources :
 * https://www.kernel.org/doc/Documentation/power/states.txt
+* https://weiguangcui.github.io/2019-03-10-ubuntu-laptop-power-management/
+
+### TLP
+On peut installer puis démarrer *tlp* pour améliorer la gestion de l'énergie (présent dans les dépôts officiels) :
+```
+# apt install tlp
+[...]
+# tlp start
+```
+
+La configuration par défaut est satisfaisante.
+A noter qu'il y a deux services :
+* `tlp.service` : le service lorsque l'ordinateur est allumé
+* `tlp-sleep.service` : le service actif lorsque l'ordinateur est en mode *suspend*.
+
+Documentation : https://linrunner.de/en/tlp/tlp.html
+
+### Powertop
+On peut aussi installer et lancer *powertop* pour corriger certains problèmes ou faire du monitoring plus poussé.
 
 ## Le bluetooth
 Pour une installation sous *KDE Plasma*, on installe les paquets suivants :
