@@ -184,6 +184,53 @@ Sources :
 * https://wiki.debian.org/Bumblebee
 
 ## Gestion d'énergie
+### Gestion wifi
+Il apparaît que sous Debian 10, lorsque on met le pc en mode *suspend* (en fermant le capot par exemple), il arrive qu'il ne se réveille pas. On est alors obligé de faire un hard-reset.
+Cela semble être dû à *NetworkManager* qui bloque le réveil du pc. Pour corriger ce problème, on va créer deux nouveaux services avec *systemd* :
+- `wifi-sleep.service` permet d'éteindre *NetworkManager* juste avant de passer en mode *suspend*. Configuré dans le fichier `/etc/systemd/system/wifi-sleep.service` (à créer).
+- `wifi-resume.service` permet de rallumer *NetworkManager* juste après être sorti du mode *suspend*. Configuré dans le fichier `/etc/systemd/system/wifi-resume.service` (à créer aussi).
+
+Voilà le contenu de ces deux fichiers :
+```
+# cat /etc/systemd/system/wifi-sleep.service
+[Unit]
+Description=Stop networkmanager before sleep
+Before=suspend.target
+Before=hibernate.target
+Before=hybrid-sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/nmcli networking off
+
+[Install]
+WantedBy=suspend.target
+WantedBy=hibernate.target
+WantedBy=hybrid-sleep.target
+
+# cat /etc/systemd/system/wifi-resume.service
+[Unit]
+Description=Enable networkmanager after sleep
+After=suspend.target
+After=hibernate.target
+After=hybrid-sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/nmcli networking on
+
+[Install]
+WantedBy=suspend.target
+WantedBy=hibernate.target
+WantedBy=hybrid-sleep.target
+```
+
+Après avoir créé ces fichiers, on active les services :
+```
+# systemctl enable  wifi-sleep.service
+# systemctl enable  wifi-resume.service
+```
+
 ### systemd
 Editer le ficher `/etc/systemd/sleep.conf` pour modifier la ligne `HibernateDelaySec`. On met une valeur suffisamment grande (`86400` soit 24 heures).
 
@@ -199,7 +246,7 @@ Regarder la configuration de *UPower* dans `/etc/UPower/UPower.conf`. Configurer
 ### Mode *suspend*
 Sous Debian 10, le mode *suspend* passe par défaut l'ordinateur en mode S2 (`s2idle`) au lieu de S3 (`deep`). On peut le vérifier, après avoir fermé puis ré-ouvert le laptop :
 ```
-root@zen:~/bin# journalctl | grep "PM: suspend" | tail
+# journalctl | grep "PM: suspend" | tail
 févr. 16 11:50:38 zen kernel: PM: suspend entry (s2idle)
 févr. 16 11:50:47 zen kernel: PM: suspend exit
 ```
@@ -209,7 +256,7 @@ On met à jour la configuration de grub qvec `# update-grub` puis on reboote.
 
 On peut alors vérifier que ça fonctionne bien (après avoir fermé puis ré-ouvert le laptop) :
 ```
-root@zen:~# journalctl | grep "PM: suspend" | tail
+# journalctl | grep "PM: suspend" | tail
 févr. 16 13:19:27 zen kernel: PM: suspend entry (deep)
 févr. 16 13:19:38 zen kernel: PM: suspend exit
 ```
