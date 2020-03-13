@@ -201,7 +201,8 @@ Before=hybrid-sleep.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/nmcli networking off
+ExecStart=/usr/bin/systemctl stop NetworkManager.service
+
 
 [Install]
 WantedBy=suspend.target
@@ -217,7 +218,7 @@ After=hybrid-sleep.target
 
 [Service]
 Type=oneshot
-ExecStart=/bin/nmcli networking on
+ExecStart=/usr/bin/systemctl start NetworkManager.service
 
 [Install]
 WantedBy=suspend.target
@@ -227,9 +228,22 @@ WantedBy=hybrid-sleep.target
 
 Après avoir créé ces fichiers, on active les services :
 ```
-# systemctl enable  wifi-sleep.service
-# systemctl enable  wifi-resume.service
+# systemctl enable wifi-sleep.service
+# systemctl enable wifi-resume.service
 ```
+
+
+
+
+
+https://ask.fedoraproject.org/t/fedora-29-lenovo-p72-doesnt-resume-from-suspend-state/322
+
+
+
+
+
+
+
 
 ### systemd
 Editer le ficher `/etc/systemd/sleep.conf` pour modifier la ligne `HibernateDelaySec`. On met une valeur suffisamment grande (`86400` soit 24 heures).

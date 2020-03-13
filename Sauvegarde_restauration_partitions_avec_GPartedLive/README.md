@@ -13,10 +13,13 @@ Enfin, pour éviter de chercher certains caractères spéciaux sur un clavier de
 * les signes < et > : & et 1 ou / et .
 
 ## Sauvegarde de partitions
-Après avoir booté sous *GParted Live* :
 * Ouvrir une console et se logger en *root* :
 ```
 $ sudo su
+```
+* Passer le clavier en français :
+```
+# setxkbmap fr
 ```
 * Créer un répertoire pour le stockage externe :
 ```
@@ -26,20 +29,23 @@ $ sudo su
 ```
 # mount /dev/sdc1 /media/EXTERNE
 ```
+
+> Note : Si on veut sauvegarder une partition chiffrée, on peut y accéder en l'ouvrant avec `cryptsetup`. Si la partition utilise LVM, on peut lister les volumes avec `lvscan` pour vérifier qu'ils sont bien actifs.
+
 * Lancer la sauvegarde (`dd` est ton ami ;)) :
 ```
 # dd if=/dev/sda8 | gzip -v6 | dd of=/media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz
 ```
 * Créer une somme de contrôle :
 ```
-# sha1sum /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz > /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz.sha1
+# sha256sum /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz > /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz.sha256
 ```
 
 ## Restauration de partitions
 * Comme pour la sauvegarde : booter sous *GParted Live*, ouvrir une console en *root*, créer le répertoire pour le stockage externe (`/media/EXTERNE`) et monter le stockage externe.
 * Vérifier la somme de contrôle :
 ```
-# sha1sum /media/EXTERNE/20180729_mac_root_sda8.gz && cat /media/EXTERNE/20180729_mac_root_sda8.gz.sha1
+# sha256sum /media/EXTERNE/20180729_mac_root_sda8.gz && cat /media/EXTERNE/20180729_mac_root_sda8.gz.sha256
 ```
 * Lancer la restauration :
 ```
