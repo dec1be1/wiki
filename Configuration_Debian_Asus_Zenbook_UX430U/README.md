@@ -1,7 +1,7 @@
 Configuration Debian sur laptop Asus Zenbook UX430U
 ===================================================
 
-Cette page décrit diverses tâches de configuration et d'optimisation de Debian 10 (Buster) sur un Asus Zenbook UX430U.
+Cette page décrit diverses tâches de configuration et d'optimisation de Debian 10 (*Buster* branche *unstable* ou *sid*) sur un Asus Zenbook UX430UNR.
 A noter que l'installation s'est faite dans un container *LVM* chiffré avec *LUKS*.
 
 Voici les sorties des commandes `lspci` et `lsusb` :
@@ -34,6 +34,8 @@ Bus 001 Device 003: ID 8087:0a2b Intel Corp.
 Bus 001 Device 002: ID 13d3:5694 IMC Networks
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```
+
+> On note qu'on fera d'abord l'installation selon la branche *stable* puis on passera après à la branche *sid*.
 
 ## Le processeur
 Vérifier que le kernel intègre bien les éléments pour la configuration du microcode :
@@ -184,78 +186,9 @@ Sources :
 * https://wiki.debian.org/Bumblebee
 
 ## Gestion d'énergie
-### Gestion wifi
-Il apparaît que sous Debian 10, lorsque on met le pc en mode *suspend* (en fermant le capot par exemple), il arrive qu'il ne se réveille pas. On est alors obligé de faire un hard-reset.
-Cela semble être dû à *NetworkManager* qui bloque le réveil du pc. Pour corriger ce problème, on va créer deux nouveaux services avec *systemd* :
-- `wifi-sleep.service` permet d'éteindre *NetworkManager* juste avant de passer en mode *suspend*. Configuré dans le fichier `/etc/systemd/system/wifi-sleep.service` (à créer).
-- `wifi-resume.service` permet de rallumer *NetworkManager* juste après être sorti du mode *suspend*. Configuré dans le fichier `/etc/systemd/system/wifi-resume.service` (à créer aussi).
-
-Voilà le contenu de ces deux fichiers :
-```
-# cat /etc/systemd/system/wifi-sleep.service
-[Unit]
-Description=Stop networkmanager before sleep
-Before=suspend.target
-Before=hibernate.target
-Before=hybrid-sleep.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/systemctl stop NetworkManager.service
-
-
-[Install]
-WantedBy=suspend.target
-WantedBy=hibernate.target
-WantedBy=hybrid-sleep.target
-
-# cat /etc/systemd/system/wifi-resume.service
-[Unit]
-Description=Enable networkmanager after sleep
-After=suspend.target
-After=hibernate.target
-After=hybrid-sleep.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/systemctl start NetworkManager.service
-
-[Install]
-WantedBy=suspend.target
-WantedBy=hibernate.target
-WantedBy=hybrid-sleep.target
-```
-
-Après avoir créé ces fichiers, on active les services :
-```
-# systemctl enable wifi-sleep.service
-# systemctl enable wifi-resume.service
-```
-
-
-
-
-
-https://ask.fedoraproject.org/t/fedora-29-lenovo-p72-doesnt-resume-from-suspend-state/322
-
-
-
-
-
-
-
-
-### systemd
-Editer le ficher `/etc/systemd/sleep.conf` pour modifier la ligne `HibernateDelaySec`. On met une valeur suffisamment grande (`86400` soit 24 heures).
-
-Ca permet de s'assurer qu'on ne passe pas en hibernation après une période de *suspend* trop courte.
-
-Documentation :
-* https://manpages.debian.org/testing/systemd/systemd-suspend-then-hibernate.service.8.en.html
-* https://manpages.debian.org/testing/systemd/systemd-sleep.conf.5.en.html
-
-### UPower
-Regarder la configuration de *UPower* dans `/etc/UPower/UPower.conf`. Configurer le passage du mode *suspend* au mode *hybrid* selon le pourcentage de batterie et pas le temps.
+### Remarque sur branche *stable*
+Le noyau (4.9) de la branche *stable* de buster semble incompatible avec certains composants matériels du laptop. Cela engendre des problèmes lors de la mise en veille (*sleep* ou *suspend*). En effet, après un certain temps de fonctionnement, l'action de mise en veille plonge le PC dans un état dont on ne peut pas revenir. Un hardreboot est alors nécessaire.
+On note que ce comportement est corrigé en passant sur la branche *unstable* (ou *sid*) de buster.
 
 ### Mode *suspend*
 Sous Debian 10, le mode *suspend* passe par défaut l'ordinateur en mode S2 (`s2idle`) au lieu de S3 (`deep`). On peut le vérifier, après avoir fermé puis ré-ouvert le laptop :
