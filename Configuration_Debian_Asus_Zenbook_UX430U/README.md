@@ -57,7 +57,14 @@ on peut installer le paquet `intel-microcode` et `iucode-tool` (qui est un outil
 ```
 
 ## Les dépôts
+### Branche *stable*
 Éditer le fichier `/etc/apt/sources.list` et ajouter `contrib non-free` après le `main` dans le premier dépôt (le dépôt `non-free` est malheureusement nécessaire pour l'installation du module wifi).
+
+### Branche *sid*
+Après l'installation de *stable*, on peut passer sur la branche *sid*. Pour ça, on édite le `sources.list` qui ne contiendra au final que la ligne suivante (en effet, la branche *sid* ne dispose pas de mises à jour de sécurité spécifiques) :
+```
+deb http://deb.debian.org/debian/ sid main non-free contrib
+```
 
 ## Le wifi
 Installer le paquet firmware-iwlwifi (non libre) :
@@ -229,6 +236,7 @@ Documentation : https://linrunner.de/en/tlp/tlp.html
 
 ### Powertop
 On peut aussi installer et lancer *powertop* pour corriger certains problèmes ou faire du monitoring plus poussé.
+On peut lancer le mode automatique : `powertop --auto-tune`.
 
 ## Le bluetooth
 Pour une installation sous *KDE Plasma*, on installe les paquets suivants :
