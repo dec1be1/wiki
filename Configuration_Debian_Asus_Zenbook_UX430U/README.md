@@ -78,6 +78,15 @@ Ajouter le contenu suivant au fichier `/etc/NetworkManager/NetworkManager.conf` 
 wifi.scan-rand-mac-address=no
 ```
 
+## Divers firmwares
+Comme pour le wifi, il est malheureusement nécessaire d'installer certains firmwares non-libres. Pour ça, on installe le paquet suivant :
+```
+Commandline: apt install firmware-linux
+Install: firmware-amd-graphics:amd64 (20190717-2, automatic), amd64-microcode:amd64 (3.20191218.1, automatic), firmware-linux-nonfree:amd64 (20190717-2, automatic), firmware-misc-nonfree:amd64 (20190717-2, automatic), firmware-linux:amd64 (20190717-2)
+```
+
+> Ces paquets permettent notamment de corriger certains problèmes lors de la mise en veille du laptop (*sleep* ou *suspend*).
+
 ## Le trackpad
 Installer et compiler `libinput-gestures` depuis le dépôt *Github* : https://github.com/bulletmark/libinput-gestures
 
