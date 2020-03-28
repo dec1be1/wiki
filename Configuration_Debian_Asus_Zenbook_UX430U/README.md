@@ -85,8 +85,6 @@ Commandline: apt install firmware-linux
 Install: firmware-amd-graphics:amd64 (20190717-2, automatic), amd64-microcode:amd64 (3.20191218.1, automatic), firmware-linux-nonfree:amd64 (20190717-2, automatic), firmware-misc-nonfree:amd64 (20190717-2, automatic), firmware-linux:amd64 (20190717-2)
 ```
 
-> Ces paquets permettent notamment de corriger certains problèmes lors de la mise en veille du laptop (*sleep* ou *suspend*).
-
 ## Le trackpad
 Installer et compiler `libinput-gestures` depuis le dépôt *Github* : https://github.com/bulletmark/libinput-gestures
 
@@ -202,6 +200,8 @@ Sources :
 * https://wiki.debian.org/Bumblebee
 
 ## Gestion d'énergie
+**Il reste toujours un problème de taille : d'une manière qui semble pour le moment aléatoire, la mise en veille (suspend) échoue. Le PC semble éteint mais la led du bouton power reste allumée et il est impossible de le rallumer. Seul un hardreboot permet de sortir de cet état. AFFAIRE 0 SUIVRE !!!**
+
 ### Remarque sur branche *stable*
 Le noyau (4.9) de la branche *stable* de buster semble incompatible avec certains composants matériels du laptop. Cela engendre des problèmes lors de la mise en veille (*sleep* ou *suspend*). En effet, après un certain temps de fonctionnement, l'action de mise en veille plonge le PC dans un état dont on ne peut pas revenir. Un hardreboot est alors nécessaire.
 On note que ce comportement est corrigé en passant sur la branche *unstable* (ou *sid*) de buster.

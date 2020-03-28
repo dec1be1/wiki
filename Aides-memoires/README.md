@@ -13,7 +13,7 @@ Pour commencer, quelques aide-mémoires externes à ce wiki :
 * [Encodage x264](https://tutox264.wordpress.com/)
 * [Article Wikipedia sur l'Endianness](https://fr.wikipedia.org/wiki/Endianness )
 
-Enfin, une convention générale à tous mes articles concernant les commandes systèmes :
+Enfin, une convention générale à tous mes articles concernant les commandes système :
 ```
 $ : commande à taper avec les droits d'un utilisateur classique.
 # : commande à taper avec les droits de l'utilisateur root.
