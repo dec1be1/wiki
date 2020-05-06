@@ -7,7 +7,7 @@ Pour commencer, quelques aide-mémoires externes à ce wiki :
 * [La table ASCII](http://www.asciitable.com) (ou alors `$ man ascii`)
 * [La commande awk](http://www.shellunix.com/awk.html)
 * [LVM](https://doc.ubuntu-fr.org/lvm)
-* [La commande dd](https://doc.ubuntu-fr.org/dd)
+* [La commande dd](https://debian-facile.org/doc:systeme:dd)
 * [Bash scripting](https://abs.traduc.org/abs-fr/)
 * [Shell Unix](http://www.linux-france.org/article/dalox/unix04.htm#tubep)
 * [Encodage x264](https://tutox264.wordpress.com/)

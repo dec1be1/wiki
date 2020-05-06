@@ -14,6 +14,9 @@ On doit donc ouvrir les ports 443 et 8448 (en TCP) sur le firewall du serveur.
 
 # Pré-requis
 ## Paquets
+```
+# apt install build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-virtualenv libjpeg-dev libxslt1-dev virtualenv
+```
 
 ## certbot
 On fait une installation classique de *certbot* de manière à générer un certificat et le mettre à jour régulièrement. Ce certificat sera uniquement à disposition du serveur *nginx* qui fait reverse proxy (le serveur *synapse* tournant uniquement en local et recevant les requêtes depuis le reverse proxy).
@@ -26,8 +29,17 @@ Il faut une version récente de nodejs (à l'heure de l'écriture de cet article
 
 Peut-être plus simple (à tester) : https://github.com/nodesource/distributions/blob/master/README.md.
 
-# Installation depuis les sources
-C'est l'installation recommandé. On suit les indications ici : https://github.com/matrix-org/synapse/blob/master/INSTALL.md
+## PostgreSQL
+On peut en complément installer *PostgreSQL* pour de meilleures performances : https://wiki.debian.org/PostgreSql puis https://github.com/matrix-org/synapse/blob/master/docs/postgres.md.
+
+# Installation
+Sur Debian 10, on peut installer par les paquets disponibles dans les dépôts :
+```
+# apt install matrix-synapse
+```
+
+Alternativement, on peut installer via les sources en suivant les indications ici : https://github.com/matrix-org/synapse/blob/master/INSTALL.md
+
 
 
 

@@ -19,7 +19,6 @@ Pour profiter de ce mode, il faut disposer du code source du programme qu'on veu
 La configuration se fait à l'aide de variables d'environnement :
 * `CC` : le chemin (et éventuellement les options de compilation) du compilateur C. Au choix : `afl-gcc`, `afl-clang` ou `afl-clang-fast` (support *LLVM* à installer dans ce cas).
 * `CXX` : idem pour le compilateur C++ : `afl-g++`, `afl-clang++` ou `afl-clang-fast++`.
-* `AFL_SKIP_CPUFREQ` : permet de désactiver le système de régulation de la fréquence du CPU (qui, sous GNU/Linux, ne fait pas bon ménage avec AFL).
 * `AFL_INST_RATIO` : le pourcentage d'instrumentation du binaire. On met généralement `100` mais on peut vouloir diminuer pour diverses raisons (performances, ...).
 * `AFL_HARDEN` : permet d'ajouter des options de durcissement du code. Ca augmente les chances de crash ;)
 
@@ -32,7 +31,8 @@ Un exemple typique :
 ```
 $ export CC="afl-gcc -ggdb"
 $ export CXX="afl-g++ -ggdb"
-$ export AFL_SKIP_CPUFREQ=1
+$ export CFLAGS="-ggdb -fsanitize=address"
+$ export CXXFLAGS="-ggdb -fsanitize=address"
 $ export AFL_INST_RATIO=100
 $ export AFL_HARDEN=1
 $ ./configure
@@ -51,8 +51,9 @@ AFL propose deux outils pour optimiser les testcases :
 > Note : Attention aux formats qui intègrent des champs de checksum ou de taille (par exemple *png*). Ca peut gâcher beaucoup de puissance de calcul car lorsqu'un checksum sera mauvais, le fichier passera potentiellement par un path très court (rejet rapide du parser) d'où de mauvais résultats. Pour le cas de *png*, cf. `libpng_no_checksum`.
 
 ## Fuzzing
-On peut ensuite lancer `afl-fuzz`. Par exemple :
+On peut ensuite lancer `afl-fuzz`. La variable d'envrionnement `AFL_SKIP_CPUFREQ` permet de désactiver le système de régulation de la fréquence du CPU (qui, sous GNU/Linux, ne fait pas bon ménage avec AFL). Par exemple :
 ```
+$ export AFL_SKIP_CPUFREQ=1
 $ afl-fuzz -i afl_in -o afl_out <afl-fuzz_options> -- <targeted_binary> <options_for_targeted_binary> @@
 ```
 
@@ -80,7 +81,15 @@ On peut utiliser l'outil `afl-gotcpu` pour connaître le nombre de coeurs dispon
 
 Il existe également `afl-whatsup -s <sync_output_dir>` pour avoir un résumé des processus qui tournent en parallèle.
 
-Le plus simple est de créer un petit script bash qui utilise `screen` : [exemple de script](./parallel_fuzzing.sh).
+Le plus simple est de créer un petit script bash qui utilise `screen` :
+```bash
+#!/usr/bin/bash
+screen -dmS fuzzer1 /usr/bin/bash -c "afl-fuzz -i afl_in -o afl_out -M fuzzer1 -- ./binary @@"
+screen -dmS fuzzer2 /usr/bin/bash -c "afl-fuzz -i afl_in -o afl_out -S fuzzer2 -- ./binary @@"
+screen -dmS fuzzer3 /usr/bin/bash -c "afl-fuzz -i afl_in -o afl_out -S fuzzer3 -- ./binary @@"
+screen -dmS fuzzer4 /usr/bin/bash -c "afl-fuzz -i afl_in -o afl_out -S fuzzer3 -- ./binary @@"
+```
+
 Après avoir lancer ce script, on accède alors aux différents processus (ici `fuzzer1`) :
 ```
 $ screen -rd fuzzer1
@@ -91,7 +100,12 @@ Il est possible de reprendre une session existante. Il faut relancer la ligne de
 
 
 # Mode *blackbox*
+Pour compiler, voir :
+* https://github.com/qemu/qemu/commit/71ba74f67eaca21b0cc9d96f534ad3b9a7161400?diff=split
+* https://github.com/NixOS/nixpkgs/issues/82232
+
 A compléter.
+
 
 
 # Misc
@@ -153,6 +167,7 @@ Une solution alternative est de forcer tous les coeurs en mode *performance* :
 * https://lcamtuf.coredump.cx/afl/
 * https://fuzzing-project.org/tutorial3.html
 * https://blog.f-secure.com/super-awesome-fuzzing-part-one/
+* https://research.aurainfosec.io/hunting-for-bugs-101/
 
 ## Cas pratiques
 * https://www.evilsocket.net/2015/04/30/fuzzing-with-afl-fuzz-a-practical-example-afl-vs-binutils/
@@ -173,7 +188,6 @@ Une solution alternative est de forcer tous les coeurs en mode *performance* :
 ## To read
 * https://lcamtuf.coredump.cx/afl/technical_details.txt
 * https://blog.hboeck.de/archives/868-How-Heartbleed-couldve-been-found.html
-* https://research.aurainfosec.io/hunting-for-bugs-101/
 * https://blog.cloudflare.com/a-gentle-introduction-to-linux-kernel-fuzzing/
 * https://www.fastly.com/blog/how-fuzz-server-american-fuzzy-lop
 * https://www.youtube.com/user/SECConsult/videos
