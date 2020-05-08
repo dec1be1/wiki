@@ -275,6 +275,8 @@ On active et on lance les services :
 # rcctl start spampd
 ```
 
+Si on souhaite *whitelister* des adresses particulières, on peut le faire via le fichier `/etc/mail/spamassassin/local.cf`. Voir https://cwiki.apache.org/confluence/display/SPAMASSASSIN/ManualWhitelist pour plus de détails. Relancer les services après édition de ce fichier.
+
 ## DKIM Proxy
 Le fichier de configuration est : [`/etc/dkimproxy_out.conf`](./dkimproxy_out.conf).
 
