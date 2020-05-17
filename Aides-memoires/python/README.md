@@ -15,11 +15,14 @@ $ pip check && pip3 check
 ```
 
 # subprocess
-Pour lancer un processus en lisant sur *stdin* puis imprimer le résultat :
+Pour lancer un processus en lisant sur *stdin* puis imprimer le résultat (même si c'est sur *stderr*) et le code de retour :
 ```python
 import subprocess
-p = subprocess.run(command, input=input_string.encode(), stdout=subprocess.PIPE)
+import shlex
+args = shlex.split(command)
+p = subprocess.run(args, input=input_string.encode(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 print(p.stdout.decode())
+print(p.returncode)
 ```
 
 # format
