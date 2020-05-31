@@ -2,7 +2,7 @@ Freebox : Problème de déconnexions intempestives en mode bridge
 ===============================================================
 
 # Préambule
-Beaucoup d'abonnés *Free* utilisant leur Freebox en mode bridge constate un problème de déconnexions intempestives du lien internet (la téléphonie et la télévision continuent à fonctionner).
+Beaucoup d'abonnés *Free* utilisant leur Freebox en mode bridge constate un problème de déconnexions intempestives du lien internet (la téléphonie et la télévision continuent de fonctionner).
 La seule solution trouvée à ce jour est le reboot de la Freebox. On peut bien sûr débrancher/rebrancher la box brutalement. On peut aussi utiliser l'API de *Free* pour initier ce reboot.
 
 On va utiliser un **Raspberry Pi Zero connecté au réseau local** et ce dépôt : https://gitlab.com/benzoga33/reboot_freebox.

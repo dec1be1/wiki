@@ -2,6 +2,7 @@ VirtualBox
 ==========
 
 # Compactage image disque VDI
+
 ## Préparation du *guest*
 
 Sur le *guest*, mettre à zéro les secteurs des fichiers non alloués. La procédure pour faire ça dépend du système d'exploitation.
