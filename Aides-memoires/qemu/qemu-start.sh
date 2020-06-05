@@ -29,7 +29,7 @@ QBOOT="-boot order=c -boot menu=on"     # boot on harddrive
 
 ### network options
 QSSH_PORT="9000"
-QNET="-device virtio-net,netdev=nic0 -netdev user,id=nic0,hostfwd=tcp::$QSSH_PORT-:22"    # redirect the vm's ssh port to the locélhost's port 9000
+QNET="-device virtio-net,netdev=nic0 -netdev user,id=nic0,hostfwd=tcp::$QSSH_PORT-:22"    # redirect the vm's ssh port to the localhost's port 9000
 
 ### keyboard mapping
 QKB="-k fr"
