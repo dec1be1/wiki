@@ -1,0 +1,20 @@
+" Custom options
+filetype plugin on
+syntax enable
+set number
+set tabstop=4
+set expandtab
+set shiftwidth=4
+set smartindent
+set autoindent
+set mouse=r
+set hlsearch
+set ignorecase
+set smartcase
+set encoding=utf-8
+
+" Mapping some special keys
+map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
+
+" Tcomment here : https://github.com/tomtom/tcomment_vim
+

@@ -149,3 +149,4 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 - https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/42693-vim-lediteur-de-texte-du-programmeur
 - https://doc.ubuntu-fr.org/vim 
 - https://www.saintcarre.fr/saintcarre/2018/08/correcteur-orthographe-vim.html
+- https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/
