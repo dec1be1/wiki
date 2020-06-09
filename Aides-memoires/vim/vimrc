@@ -12,6 +12,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set encoding=utf-8
+set wildmenu
 
 " Mapping some special keys
 map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"

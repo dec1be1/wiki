@@ -1,6 +1,12 @@
 vim
 ===
 
+# Fichiers
+
+En mode interactif :
+
+- pour ouvrir un nouveau fichier à la place d'un autre (le fichier ouvert doit avoir été sauvé) : `:e`
+
 # Déplacement
 
 En mode interactif :
@@ -18,6 +24,13 @@ En mode interactif :
 - passer en mode d'insertion de texte à partir du curseur : `i`.
 - insérer une nouvelle ligne après la ligne du curseur (et passer en mode insertion) : `o`
 - insérer à la fin de la ligne : `A`
+
+# Indentation
+
+Depuis le mode visuel :
+
+- ajouter indentation : `>`
+- enlever indentation : `<`
 
 # Suppression
 
@@ -123,6 +136,19 @@ Pour lancer une commande externe dans *vim* : `:!commande`
 
 - Passer en mode d'édition hexadécimale : `:%!xxd`
 - Revenir en édition normale : `:%!xxd -r`
+
+# Commentaires (avec *tComment*)
+
+On peut utiliser ce plugin : <https://github.com/tomtom/tcomment_vim>
+
+## En mode interactif
+
+- commenter ou décommenter une ligne : `gcc`
+
+## En mode visuel
+
+- commenter le texte sélectionné : `g>`
+- décommenter le texte sélectionné : `g<`
 
 # Correction orthographique
 
