@@ -6,6 +6,7 @@ vim
 En mode interactif :
 
 - pour ouvrir un nouveau fichier à la place d'un autre (le fichier ouvert doit avoir été sauvé) : `:e`
+- utiliser la commande `:r CheminFichierAInserer` pour insérer un fichier à la position du curseur.
 
 # Déplacement
 
@@ -95,10 +96,6 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 - commenter les lignes 3 à 8 (avec le caractère `#` par exemple) : `:3,8s/^/# `
 - décommenter l'exemple précédent : `:3,8s/^# //` 
 
-# Fusion de fichiers
-
-Utiliser la commande `:r CheminFichierAInserer` pour insérer un fichier à la position du curseur.
-
 > Note : l'autocomplétion fonctionne dans la barre de commande de *vim*.
 
 # Découpage d'écran (split)
@@ -120,8 +117,11 @@ Utiliser la commande `:r CheminFichierAInserer` pour insérer un fichier à la p
 - égalise la taille des vues : `Ctrl+w` puis `=`
 - échange la position des vues : `Ctrl+w` puis `r` (ou `R` pour le sens inverse)
 - fermer la vue actuelle : `Ctrl+w` puis `q`
+- Augmenter ou diminuer : 
+    * la hauteur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `+` ou `-`
+    * la largeur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `>` ou `<`
 
-# Autocomplétion
+# Autocomplétion
 
 En mode édition : 
 
@@ -137,20 +137,22 @@ Pour lancer une commande externe dans *vim* : `:!commande`
 - Passer en mode d'édition hexadécimale : `:%!xxd`
 - Revenir en édition normale : `:%!xxd -r`
 
-# Commentaires (avec *tComment*)
+# Plugins
+
+## Commentaires (avec *tComment*)
 
 On peut utiliser ce plugin : <https://github.com/tomtom/tcomment_vim>
 
-## En mode interactif
+### En mode interactif
 
 - commenter ou décommenter une ligne : `gcc`
 
-## En mode visuel
+### En mode visuel
 
 - commenter le texte sélectionné : `g>`
 - décommenter le texte sélectionné : `g<`
 
-# Correction orthographique
+## Correction orthographique
 
 - Activer la correction orthographique : `:set spell`
 - Spécifier la langue : `:set spell spelllang=fr`
@@ -169,6 +171,10 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.latin1.sug
 $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.spl
 $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 ```
+
+## Auto-pairs
+
+Installer selon les indications : <https://github.com/jiangmiao/auto-pairs>
 
 # Sources
 
