@@ -1,14 +1,14 @@
 vim
 ===
 
-# Fichiers
+## Fichiers
 
 En mode interactif :
 
 - pour ouvrir un nouveau fichier à la place d'un autre (le fichier ouvert doit avoir été sauvé) : `:e`
 - utiliser la commande `:r CheminFichierAInserer` pour insérer un fichier à la position du curseur.
 
-# Déplacement
+## Déplacement
 
 En mode interactif :
 
@@ -20,20 +20,20 @@ En mode interactif :
 - sauter à la première ligne : `G`
 - sauter à la dernière ligne : `gg`
 
-# Insertion
+## Insertion
 
 - passer en mode d'insertion de texte à partir du curseur : `i`.
 - insérer une nouvelle ligne après la ligne du curseur (et passer en mode insertion) : `o`
 - insérer à la fin de la ligne : `A`
 
-# Indentation
+## Indentation
 
 Depuis le mode visuel :
 
 - ajouter indentation : `>`
 - enlever indentation : `<`
 
-# Suppression
+## Suppression
 
 En mode interactif :
 
@@ -47,7 +47,7 @@ En mode interactif :
 - du curseur jusqu'au début de la ligne : `d0`
 - du curseur jusqu'à la fin de la ligne : `d$`
 
-# Copier / Coller
+## Copier / Coller
 
 En mode interactif :
 
@@ -59,13 +59,13 @@ En mode interactif :
 - coller la ligne située en mémoire (sur la ligne située après le curseur) : `p`
 - coller 4 fois la ligne en mémoire : `4p`
 
-# Mode visuel
+## Mode visuel
 
 Ce mode permet de sélectionner une partie du texte à l'aide des flèches. On accède à ce mode depuis le mode interactif avec `v`.
 
 On peut sélectionner une colonne particulière (sur un nombre arbitraire de lignes) avec `Ctrl+v` depuis le mode interactif.
 
-# Annulation
+## Annulation
 
 En mode interactif :
 
@@ -73,8 +73,8 @@ En mode interactif :
 - annuler les 3 dernières actions : `3u`
 - annuler l'annulation : `Ctrl+r`
 
-# Rechercher / Remplacer
-## Rechercher
+## Rechercher / Remplacer
+### Rechercher
 
 Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 
@@ -84,23 +84,23 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 
 > Note : pour faire une recherche vers le début du fichier, taper `?` au lieu de `/`.
 
-## Remplacer
+### Remplacer
 
 - remplacer la première occurrence de la ligne du curseur : `:s/ancien/nouveau`
 - remplacer toutes les occurrences de la ligne du curseur : `:s/ancien/nouveau/g`
 - remplacer toutes les occurrences entre les lignes 6 et 42 : `:6,42s/ancien/nouveau/g`
 - remplacer toutes les occurrences dans le fichier entier : `:%s/ancien/nouveau/g`
 
-## Commentaires
+### Commentaires
 
 - commenter les lignes 3 à 8 (avec le caractère `#` par exemple) : `:3,8s/^/# `
-- décommenter l'exemple précédent : `:3,8s/^# //` 
+- décommenter l'exemple précédent : `:3,8s/^# //`
 
 > Note : l'autocomplétion fonctionne dans la barre de commande de *vim*.
 
-# Découpage d'écran (split)
+## Découpage d'écran (split)
 
-## Découpage
+### Découpage
 
 - découper l'écran horizontalement : `:sp` ou `Ctrl+w` puis `s`
 - découper l'écran verticalement : `:vsp` ou `Ctrl+w` puis `v`
@@ -108,7 +108,7 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 
 > Note : Par défaut, c'est le même fichier qui est ouvert. On peut spécifier le chemin du fichier à ouvrir à la suite de la commande.
 
-## Gestion des vues
+### Gestion des vues
 
 - naviguer de vue en vue : `Ctrl` + `w` plusieurs fois
 - déplacer le curseur vers la vue en dessous : `Ctrl+w` puis `j` (au dessus : `k`, à gauche : `h`, à droite : `l`)
@@ -117,42 +117,42 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 - égalise la taille des vues : `Ctrl+w` puis `=`
 - échange la position des vues : `Ctrl+w` puis `r` (ou `R` pour le sens inverse)
 - fermer la vue actuelle : `Ctrl+w` puis `q`
-- Augmenter ou diminuer : 
+- Augmenter ou diminuer :
     * la hauteur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `+` ou `-`
     * la largeur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `>` ou `<`
 
-# Autocomplétion
+## Autocomplétion
 
-En mode édition : 
+En mode édition :
 
 - Aller à la suggestion suivante : `Ctrl+n`
 - Aller à la suggestion précédente : `Ctrl+p`
 
-# Commande externe
+## Commande externe
 
 Pour lancer une commande externe dans *vim* : `:!commande`
 
-# Édition hexadécimale
+## Édition hexadécimale
 
 - Passer en mode d'édition hexadécimale : `:%!xxd`
 - Revenir en édition normale : `:%!xxd -r`
 
-# Plugins
+## Plugins
 
-## Commentaires (avec *tComment*)
+### Commentaires (avec *tComment*)
 
 On peut utiliser ce plugin : <https://github.com/tomtom/tcomment_vim>
 
-### En mode interactif
+#### En mode interactif
 
 - commenter ou décommenter une ligne : `gcc`
 
-### En mode visuel
+#### En mode visuel
 
 - commenter le texte sélectionné : `g>`
 - décommenter le texte sélectionné : `g<`
 
-## Correction orthographique
+### Correction orthographique
 
 - Activer la correction orthographique : `:set spell`
 - Spécifier la langue : `:set spell spelllang=fr`
@@ -172,13 +172,13 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.spl
 $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 ```
 
-## Auto-pairs
+### Auto-pairs
 
 Installer selon les indications : <https://github.com/jiangmiao/auto-pairs>
 
-# Sources
+## Sources
 
 - https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/42693-vim-lediteur-de-texte-du-programmeur
-- https://doc.ubuntu-fr.org/vim 
+- https://doc.ubuntu-fr.org/vim
 - https://www.saintcarre.fr/saintcarre/2018/08/correcteur-orthographe-vim.html
 - https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/

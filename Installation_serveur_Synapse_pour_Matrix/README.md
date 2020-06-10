@@ -12,27 +12,27 @@ On doit donc ouvrir les ports 443 et 8448 (en TCP) sur le firewall du serveur.
 > Note : A l'heure de la rédaction de cet article, *synapse* ne gère pas la version 2 du protocole *ACME*. On ne peut donc pas utiliser la fonction de gestion des certificats intégrée dans *synapse*. On gère donc avec une installation séparée de *Certbot*.
 
 
-# Pré-requis
-## Paquets
+## Pré-requis
+### Paquets
 ```
 # apt install build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-virtualenv libjpeg-dev libxslt1-dev virtualenv
 ```
 
-## certbot
+### certbot
 On fait une installation classique de *certbot* de manière à générer un certificat et le mettre à jour régulièrement. Ce certificat sera uniquement à disposition du serveur *nginx* qui fait reverse proxy (le serveur *synapse* tournant uniquement en local et recevant les requêtes depuis le reverse proxy).
 
-## nginx
+### nginx
 On fait une installation classique de *nginx* qui va servir de reverse proxy pour prendre en charge les requêtes sur les ports 443 et 8448 exposés sur internet.
 
-## node
+### node
 Il faut une version récente de nodejs (à l'heure de l'écriture de cet article, la version dans *debian stable* n'est pas suffisante). J'ai pris l'archive précompilée (en version LTS) disponible sur le site https://nodejs.org. Pour l'installation : https://github.com/nodejs/help/wiki/Installation.
 
 Peut-être plus simple (à tester) : https://github.com/nodesource/distributions/blob/master/README.md.
 
-## PostgreSQL
+### PostgreSQL
 On peut en complément installer *PostgreSQL* pour de meilleures performances : https://wiki.debian.org/PostgreSql puis https://github.com/matrix-org/synapse/blob/master/docs/postgres.md.
 
-# Installation
+## Installation
 Sur Debian 10, on peut installer par les paquets disponibles dans les dépôts :
 ```
 # apt install matrix-synapse
@@ -43,8 +43,8 @@ Alternativement, on peut installer via les sources en suivant les indications ic
 
 
 
-# Installation des bridges
-## IRC
+## Installation des bridges
+### IRC
 
 Commencer par créer un fichier `passkey.pem`.
 
@@ -73,7 +73,7 @@ $ node app.js -c config.freenode.yaml -f my_registration_file_freenode.yaml -p 9
 * https://github.com/matrix-org/matrix-appservice-irc/wiki
 
 
-## Discord
+### Discord
 
 
-## Whatsapp
+### Whatsapp

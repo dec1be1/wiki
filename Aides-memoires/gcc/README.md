@@ -1,7 +1,7 @@
 gcc
 ===
 
-# Compilation séparée
+## Compilation séparée
 Pour compiler une librairie `.c` (un fichier objet `.o` est créé) :
 ```
 $ gcc -o mylib.o -c mylib.c
@@ -15,5 +15,5 @@ gcc -o main main.c mylib.o
 ```
 
 
-# Sources
+## Sources
 * https://www.cs.swarthmore.edu/~newhall/unixhelp/howto_C_libraries.html

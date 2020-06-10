@@ -43,8 +43,8 @@ Pour démonter le volume :
 ### Afficher les informations
 Pour afficher les informations sur une partition chiffrée :
 ```
-```
 # cryptsetup luksDump /dev/sdc1
+```
 
 ### Ajouter une clé d'accès
 Pour ajouter une clé d'accès (s'il reste au moins un slot disponible) :

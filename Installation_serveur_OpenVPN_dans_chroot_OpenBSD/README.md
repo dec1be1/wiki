@@ -151,7 +151,7 @@ Il révoque le certificat de l'utilisateur qui ne pourra donc plus se connecter 
 # ./revoke-vpn-user.sh username
 ```
 
-# Administration
+## Administration
 Pour lancer manuellement le serveur (après un arrêt manuel par exemple), on relance tout simplement l'interface *tun0* :
 ```
 # sh /etc/netstart tun0

@@ -5,14 +5,14 @@ Voici quelques commandes sous GNU/Linux pour configurer le réseau et le firewal
 
 Ces commandes sont à taper avec les droits d'administration.
 
-# Ethernet
-## Interfaces
+## Ethernet
+### Interfaces
 |Action|Commande|
 |------|--------|
 |Observation interface|`# ethtool eth0`|
 |Repérer une interface|`# ethtool -p eth0`|
 
-## Ponts (bridges)
+### Ponts (bridges)
 
 |Action|Commande|
 |------|--------|
@@ -25,7 +25,7 @@ Ces commandes sont à taper avec les droits d'administration.
 |Supprimer une adresse|`# bridge fdb del c0:ff:ee:c0:ff:ee dev eth0 master temp`|
 |Etat de la base de données|`# bridge fdb show`|
 
-## VLAN
+### VLAN
 |Action|Commande|
 |------|--------|
 |Ajouter une interface|`# ip link add link eth0 name eth0.14 type vlan id 14`|
@@ -34,8 +34,8 @@ Ces commandes sont à taper avec les droits d'administration.
 |Interdire certains VLANs|`# bridge vlan del vid 100 dev br0`|
 |Observation d'un VLAN|`# bridge vlan show`|
 
-# IP
-## Interfaces
+## IP
+### Interfaces
 On note que des alias sont disponibles : par exemple `addr` peut s'écrire simplement `a`.
 
 |Action|Commande|
@@ -47,7 +47,7 @@ On note que des alias sont disponibles : par exemple `addr` peut s'écrire simpl
 |Voir une interface|`# ip addr show dev eth0`|
 |Voir les interfaces actives|`# ip addr show` (alias `# ip a`)|
 
-## Routage
+### Routage
 |Action|Commande|
 |------|--------|
 |Activer le routage|`# echo 1 > /proc/sys/net/ipv4/ip_forward`|
@@ -56,7 +56,7 @@ On note que des alias sont disponibles : par exemple `addr` peut s'écrire simpl
 |Supprimer une route|`# ip route del 192.168.10.0/24 via 192.168.20.1`|
 |Voir les routes|`# ip route show` (alias `# ip r`)|
 
-## iptables
+### iptables
 |Action|Commande|
 |------|--------|
 |Source NAT d'une adresse|`# iptables -t nat -a POSTROUTING -o eth0 -j SNAT 192.168.1.10`|

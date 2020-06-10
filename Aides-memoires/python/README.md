@@ -1,7 +1,7 @@
 Python
 ======
 
-# pip / pip3
+## pip / pip3
 Pour mettre à jour tous les modules :
 ```
 $ pip install -r <(pip freeze) --upgrade
@@ -14,7 +14,7 @@ Pour vérifier ensuite :
 $ pip check && pip3 check
 ```
 
-# subprocess
+## subprocess
 Pour lancer un processus en lisant sur *stdin* puis imprimer le résultat (même si c'est sur *stderr*) et le code de retour :
 ```python
 import subprocess
@@ -25,7 +25,7 @@ print(p.stdout.decode())
 print(p.returncode)
 ```
 
-# format
+## format
 La spécification du type de données à afficher à l'aide de la fonction `format()` peut se faire avec la syntaxe suivante : `{numéro_argument:conversion}`, avec `conversion` pouvant prendre les valeurs suivantes :
 - `s` : strings
 - `d` : decimal integers (base-10)

@@ -2,12 +2,12 @@ Installation OpenBSD sur un serveur distant Kimsufi
 ===================================================
 Testé avec OpenBSD 6.5 sur serveur Kimsufi KS-6 (Intel i5-750 - 16GB DDR3 1333 MHz - 2To SATA).
 
-# Première installation
-## Système d'origine
+## Première installation
+### Système d'origine
 On installe depuis l'interface web de gestion un système classique. Ici *Debian 9*.
 On suit les instructions.
 
-## Reboot en mode rescue
+### Reboot en mode rescue
 Depuis l'interface web de gestion, redémarrer en mode *rescue* :
 * Cliquer sur *Netboot*
 * Puis sur *Rescue*
@@ -21,7 +21,7 @@ On se connecte en ssh :
 root@ns389060:~# export TERM=xterm-color
 ```
 
-## Préparation de l'installation
+### Préparation de l'installation
 On installe *qemu* : `apt update` puis `apt install qemu`.
 On télécharge l'image iso d'OpenBSD, les sommes de contrôle et on vérifie :
 ```
@@ -32,13 +32,13 @@ root@ns389060:~# sha256sum -c --ignore-missing SHA256
 
 Si c'est ok, on passe à la suite.
 
-## Lancement de qemu
+### Lancement de qemu
 On lance qemu :
 ```
 root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,if=virtio -cdrom ./install65.iso -boot d -curses -k fr -smp $(nproc)
 ```
 
-## Installation d'OpenBSD
+### Installation d'OpenBSD
 On installe OpenBSD de manière classique (avec certaines partitions chiffrées). Pour chiffrer les partitions importantes (on ne peut pas tout chiffrer car on veut éviter d'avoir à taper une passphrase au boot) :
 * on ouvre un shell lors de l'install **avant** de partitionner le disque.
 * on crée une table des partitions : `# fdisk -iy sd0`
@@ -121,7 +121,7 @@ On finit l'installation normalement puis on passe à la configuration (notamment
 
 Pour sortir de qemu : Alt+Shift+2 puis `quit`.
 
-## Test ou dépannage
+### Test ou dépannage
 Avant de faire un reboot à l'aveugle ou pour dépanner, on peut tester le systèm en bootant sur le disque du serveur avec *Qemu* :
 ```
 root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,if=virtio -curses -k fr -smp $(nproc)
@@ -129,7 +129,7 @@ root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,i
 
 Pour remapper correctement le clavier en français : `# wsconsctl keyboard.encoding=fr`.
 
-## Rebooter sur le nouveau système
+### Rebooter sur le nouveau système
 Ca se passe avec l'interface web de gestion. Il faut avoir fait un `halt` depuis OpenBSD. Ensuite :
 * cliquer sur *Netboot*
 * cliquer sur *Hard disk*
@@ -139,14 +139,14 @@ Ca se passe avec l'interface web de gestion. Il faut avoir fait un `halt` depuis
 Après quelques instants, le serveur devrait être accessible par ssh.
 Ne pas oublier les mises à jour de sécurité avec `syspatch` dès que possible !
 
-# Mise à jour
-## Préparation
+## Mise à jour
+### Préparation
 On se connecte en ssh au serveur et on fait les étapes *pre-upgrade* décrites dans la page d'upgrade de la [FAQ d'OpenBSD](https://www.openbsd.org/faq/index.html).
 Il faut notamment télécharger sur le serveur le noyau ramdisk *bsd.rd* de la nouvelle version pour booter dessus ensuite.
 
 Arrêter le serveur proprement.
 
-## Redémarrage en mode *rescue*
+### Redémarrage en mode *rescue*
 Depuis l'interface web de gestion, redémarrer en mode *rescue* :
 * Cliquer sur *Netboot*
 * Puis sur *Rescue*
@@ -160,7 +160,7 @@ On se connecte en ssh :
 root@ns389060:~# export TERM=xterm-color
 ```
 
-## Lancement de qemu
+### Lancement de qemu
 On installe qemu et on le lance en bootant sur le disque dur du serveur :
 ```
 root@ns389060:~# apt update
@@ -170,14 +170,14 @@ root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,i
 
 Au prompt `boot>`, on demande à booter sur le noyau `bsd.rd`.
 
-## Mise à jour OpenBSD
+### Mise à jour OpenBSD
 On poursuit la procédure de la page d'upgrade de la [FAQ d'OpenBSD](https://www.openbsd.org/faq/index.html).
 
 > On note que les partitions chiffrées n'ont pas besoin d'être montées durant l'upgrade, ce qui simplifie la procédure.
 
 Une fois l'upgrade terminé, rebooter sur le nouveau noyau pour vérifier que tout va bien. En profiter pour vérifier le fonctionnement du firewall.
 
-## Rebooter sur le nouveau système
+### Rebooter sur le nouveau système
 Ca se passe avec l'interface web de gestion. Il faut avoir fait un `halt` depuis OpenBSD. Ensuite :
 * cliquer sur *Netboot*
 * cliquer sur *Hard disk*
@@ -188,7 +188,7 @@ Après quelques instants, le serveur devrait être accessible par ssh.
 
 Terminer le processus d'installation en suivant la [FAQ d'OpenBSD](https://www.openbsd.org/faq/index.html).
 
-# Sources
+## Sources
 * https://www.tumfatig.net/20190510/running-openbsd-6-5-on-kimsufi-ks-10/
 * https://github.com/dodoritfort/OpenBSD/wiki/Installer-OpenBSD-sur-votre-serveur-Kimsufi
 * https://blog.meseira.net/post/2016/12/21/install-openbsd-kimsufi/

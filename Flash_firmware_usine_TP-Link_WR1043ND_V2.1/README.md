@@ -5,8 +5,8 @@ Ce wiki décrit la méthode utilisée pour flasher le firmware usine grâce à l
 
 On fait tout ça depuis un firmware *openwrt* qui semblait "briqué" (plus d'accès web ou ssh). La procédure peut être à adapter selon le système depuis lequel on boote.
 
-# Pré-requis
-## Connexion série
+## Pré-requis
+### Connexion série
 Le routeur est équipé d'une connectique série (à souder soi-même !). Il faut évidemment avoir fait cette étape pour continuer. Il faut également disposer d'un adaptateur *USB/série* (ou d'un vieux PC avec un port série...).
 On note que les pins sur le routeur correspondent à (en partant du côté du condensateur) :
 * VCC (3.3 V)
@@ -20,7 +20,7 @@ Le branchement à l'adaptateur usb/série doit se faire de la manière suivante 
 * RX <--> TX
 * TX <--> RX
 
-## Emulateur de terminal
+### Emulateur de terminal
 Il faut avoir un émulateur de terminal. J'ai utilisé *minicom* sous GNU/Linux.
 
 On branche l'adaptateur USB/série puis on regarde dans `/var/log/messages` pour avoir le point de montage du périphérique. Chez moi c'était `/dev/ttyUSB0`.
@@ -43,13 +43,13 @@ La configuration est la suivante :
 +-----------------------------------------------------------------------+
 ```
 
-## Serveur tftp
+### Serveur tftp
 Il va nous falloir un serveur *tftp* pour uploader le firmware.
 On installe par exemple `tftpd-hpa` sous GNU/Linux.
 Il faudra copier le firmware à uploader dans le dossier du serveur.
 La configuration se fait dans le fichier suivant : `/etc/default/tftpd-hpa`.
 
-## Configuration réseau
+### Configuration réseau
 Il faut configurer une interface réseau pour la connexion au serveur *tftp*.
 On déconnecte toutes les inferfaces (sauf celle qui va être utilisée) et on désactive le wifi.
 
@@ -59,7 +59,7 @@ On configure l'interface avec les paramètres suivants :
 # ip route add default via 192.168.1.1 dev eth0
 ```
 
-## Le firmware
+### Le firmware
 On va flasher le firmware usine pour repartir sur de bonnes bases (on installera ensuite le firmware de notre choix !).
 
 On télécharge la dernière version sur le [site du fabricant](https://www.tp-link.com/fr/support/download/tl-wr1043nd/v2/).
@@ -77,7 +77,7 @@ On copie ensuite ce fichier dans le dossier du *tftp* :
 
 Normalement, la taille de ce fichier est de 0x7c0000.
 
-# Upload firmware usine
+## Upload firmware usine
 Maintenant que tout est prêt, on va pouvoir uploader le firmware. On branche la connectique série et le câble réseau entre un port du routeur et l'interface configurée précédemment sur le pc.
 
 On allume le routeur et on tape `tpl` en boucle pour arrêter le processus de boot et obtenir une console *ap135*.
@@ -94,7 +94,7 @@ Si tout se passe bien, le routeur reboote sur le nouveau firmware et une interfa
 
 On peut maintenant installer proprement le firmware de son choix depuis cette interface.
 
-# Sources
+## Sources
 * https://openwrt.org/toh/tp-link/tl-wr1043nd
 * https://forum.dd-wrt.com/phpBB2/viewtopic.php?p=1012559
 * https://www.cyberciti.biz/faq/install-configure-tftp-server-ubuntu-debian-howto/
