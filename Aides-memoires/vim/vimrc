@@ -1,4 +1,5 @@
 " Custom options
+color simple-dark
 filetype plugin on
 syntax enable
 set number
@@ -14,8 +15,6 @@ set smartcase
 set encoding=utf-8
 set wildmenu
 
-" Mapping some special keys
+" Mapping F6 key for spell check
 map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
-
-" Tcomment here : https://github.com/tomtom/tcomment_vim
 

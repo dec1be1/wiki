@@ -139,6 +139,10 @@ Pour lancer une commande externe dans *vim* : `:!commande`
 
 ## Plugins
 
+### fzf
+
+<https://github.com/junegunn/fzf/>
+
 ### Commentaires (avec *tComment*)
 
 On peut utiliser ce plugin : <https://github.com/tomtom/tcomment_vim>
@@ -172,9 +176,17 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.spl
 $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 ```
 
-### Auto-pairs
+### Autojump
 
-Installer selon les indications : <https://github.com/jiangmiao/auto-pairs>
+<https://github.com/trotter/autojump.vim>
+
+Permet de faciliter l'ouverture des fichiers. Il propose en priorité les fichiers ouverts le plus souvent.
+
+### Thèmes
+
+Créer le dossier `.vim/colors` et copier le thème à l'intérieur. Pour activer le thème, taper `:color nom_du_theme`
+
+Par exemple : <https://github.com/zefei/simple-dark>
 
 ## Sources
 
