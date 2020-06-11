@@ -121,6 +121,28 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
     * la hauteur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `+` ou `-`
     * la largeur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `>` ou `<`
 
+## Tabs
+
+Vim permet de gérer plusieurs tabs.
+
+Pour ouvrir des fichiers dans plusieurs tabs :
+```
+$ vim -p file1 file2 file3
+```
+
+Dans vim :
+
+- Pour ouvrir un fichier dans un nouveau tab : `:tabedit file_path`
+- Pour fermer le tab courant : `:tabclose` (ou `Ctrl+w` puis `q`)
+- Pour fermer tous les tabs sauf le courant : `:tabonly`
+- Pour déplacer une vue vers un nouveau tab : `Ctrl+w` puis `T`
+
+Navigation en mode normal :
+
+- Pour passer au tab suivant : `gt`
+- Pour passer au tab précédent : `gT`
+- Pour aller au tab 2 (les indices commencent à 1) : `2gt`
+
 ## Autocomplétion
 
 En mode édition :
@@ -184,9 +206,10 @@ Permet de faciliter l'ouverture des fichiers. Il propose en priorité les fichie
 
 ### Thèmes
 
-Créer le dossier `.vim/colors` et copier le thème à l'intérieur. Pour activer le thème, taper `:color nom_du_theme`
+Suivre les indications. Par exemple : 
 
-Par exemple : <https://github.com/zefei/simple-dark>
+- <https://github.com/zefei/simple-dark>
+- <https://github.com/sonph/onehalf/tree/master/vim>
 
 ## Sources
 
@@ -194,3 +217,4 @@ Par exemple : <https://github.com/zefei/simple-dark>
 - https://doc.ubuntu-fr.org/vim
 - https://www.saintcarre.fr/saintcarre/2018/08/correcteur-orthographe-vim.html
 - https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/
+- https://vim.fandom.com/wiki/Using_tab_pages
