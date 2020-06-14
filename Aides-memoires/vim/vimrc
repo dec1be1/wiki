@@ -1,5 +1,9 @@
+" Custom theme
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
+
 " Custom options
-color simple-dark
 filetype plugin on
 syntax enable
 set number
@@ -14,7 +18,16 @@ set ignorecase
 set smartcase
 set encoding=utf-8
 set wildmenu
+set cursorline
 
 " Mapping F6 key for spell check
 map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
 
+" fzf plugin
+set rtp+=/usr/bin/fzf
+
+" status line plugin (lightline)
+set laststatus=2
+
+" mapping key for nerdtree
+map <C-o> :NERDTreeToggle<CR>

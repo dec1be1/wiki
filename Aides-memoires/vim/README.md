@@ -161,22 +161,37 @@ Pour lancer une commande externe dans *vim* : `:!commande`
 
 ## Plugins
 
+### Surround
+
+Assistance à la saisie des paires de caractères (ou des balises).
+
+<https://github.com/tpope/vim-surround>
+
+Il existe un paquet précompilé. Par exemple pour Arch :
+```
+# pacman -S vim-surround
+```
+
 ### fzf
 
 <https://github.com/junegunn/fzf/>
 
-### Commentaires (avec *tComment*)
+### Commentaires
 
-On peut utiliser ce plugin : <https://github.com/tomtom/tcomment_vim>
+On peut utiliser ce plugin : <https://github.com/preservim/nerdcommenter> 
 
-#### En mode interactif
+Il y a un paquet précompilé. Par exemple, sous Arch :
+```
+# pacman -S vim-nerdcommenter
+```
 
-- commenter ou décommenter une ligne : `gcc`
+> Par défaut, la *leader key* est `\`.
 
-#### En mode visuel
+En mode interactif ou visuel :
 
-- commenter le texte sélectionné : `g>`
-- décommenter le texte sélectionné : `g<`
+- commenter ou décommenter une ligne : `[count]\c<space>`
+- commenter le texte sélectionné : `[count]\cc`
+- décommenter le texte sélectionné : `[count]\cu`
 
 ### Correction orthographique
 
@@ -198,6 +213,21 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.spl
 $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 ```
 
+### Barre de status
+
+Pour avoir une belle barre de status  : <https://github.com/itchyny/lightline.vim>
+
+### Arborescence des fichiers
+
+Pour avoir un panneau avec l'arborescence des fichiers : <https://github.com/preservim/nerdtree>
+
+Il existe un paquet précompilé. Par exemple, sous Arch :
+```
+# pacman -S vim-nerdtree
+```
+
+On peut mapper une touche pour afficher/masquer le panneau : `map <C-o> :NERDTreeToggle<CR>` (à mettre dans le `.vimrc`).
+
 ### Autojump
 
 <https://github.com/trotter/autojump.vim>
@@ -205,9 +235,10 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 Permet de faciliter l'ouverture des fichiers. Il propose en priorité les fichiers ouverts le plus souvent.
 
 ### Thèmes
-
+ 
 Suivre les indications. Par exemple : 
 
+- <https://github.com/altercation/vim-colors-solarized>
 - <https://github.com/zefei/simple-dark>
 - <https://github.com/sonph/onehalf/tree/master/vim>
 
