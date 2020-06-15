@@ -167,20 +167,21 @@ Assistance à la saisie des paires de caractères (ou des balises).
 
 <https://github.com/tpope/vim-surround>
 
-Il existe un paquet précompilé. Par exemple pour Arch :
+Il existe un paquet précompilé pour Arch :
 ```
 # pacman -S vim-surround
 ```
 
 ### fzf
 
-<https://github.com/junegunn/fzf/>
+- <https://github.com/junegunn/fzf/>
+- <https://github.com/junegunn/fzf.vim>
 
 ### Commentaires
 
 On peut utiliser ce plugin : <https://github.com/preservim/nerdcommenter> 
 
-Il y a un paquet précompilé. Par exemple, sous Arch :
+Il y a un paquet précompilé sous Arch :
 ```
 # pacman -S vim-nerdcommenter
 ```
@@ -221,7 +222,7 @@ Pour avoir une belle barre de status  : <https://github.com/itchyny/lightline.vi
 
 Pour avoir un panneau avec l'arborescence des fichiers : <https://github.com/preservim/nerdtree>
 
-Il existe un paquet précompilé. Par exemple, sous Arch :
+Il existe un paquet précompilé sous Arch :
 ```
 # pacman -S vim-nerdtree
 ```
@@ -230,7 +231,7 @@ On peut mapper une touche pour afficher/masquer le panneau : `map <C-o> :NERDTre
 
 ### Autojump
 
-<https://github.com/trotter/autojump.vim>
+<https://github.com/wting/autojump>
 
 Permet de faciliter l'ouverture des fichiers. Il propose en priorité les fichiers ouverts le plus souvent.
 
@@ -238,6 +239,7 @@ Permet de faciliter l'ouverture des fichiers. Il propose en priorité les fichie
  
 Suivre les indications. Par exemple : 
 
+- <https://github.com/joshdick/onedark.vim>
 - <https://github.com/altercation/vim-colors-solarized>
 - <https://github.com/zefei/simple-dark>
 - <https://github.com/sonph/onehalf/tree/master/vim>
@@ -249,3 +251,4 @@ Suivre les indications. Par exemple :
 - https://www.saintcarre.fr/saintcarre/2018/08/correcteur-orthographe-vim.html
 - https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/
 - https://vim.fandom.com/wiki/Using_tab_pages
+- https://vimawesome.com/

@@ -1,7 +1,12 @@
-" Custom theme
-set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
+" solarized theme
+"set background=dark
+"let g:solarized_termcolors=256
+"colorscheme solarized
+
+" onedark theme
+let g:onedark_termcolors=256
+let g:lightline = { 'colorscheme': 'onedark' }
+colorscheme onedark
 
 " Custom options
 filetype plugin on
