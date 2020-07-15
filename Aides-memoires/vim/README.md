@@ -159,6 +159,21 @@ Pour lancer une commande externe dans *vim* : `:!commande`
 - Passer en mode d'édition hexadécimale : `:%!xxd`
 - Revenir en édition normale : `:%!xxd -r`
 
+## ctags
+
+Installer d'abord `ctags` dans sa distribution.
+
+### Génération des tags
+
+Pour générer un fichier de tags, se placer dans le dossier des sources puis : `$ ctags -R *`.
+Un fichier `tags` est alors généré dans le dossier courant.
+
+### Dans vim
+
+- Pour charger un fichier de tags particulier : `:set tags+=<path_tags_file>`
+- Pour chercher, se placer sur un symbole puis `Ctrl+]`
+- Pour revenir en arrière : `Ctrl+t`
+
 ## Plugins
 
 ### Surround
