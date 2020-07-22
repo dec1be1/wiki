@@ -37,4 +37,6 @@ Le script [qemu-start.sh](./qemu-start.sh) permet de lancer une machine virtuell
 ## Sources
 
 - <https://wiki.qemu.org/Documentation>
-
+- <https://wiki.archlinux.org/index.php/QEMU>
+- <https://doc.ycharbi.fr/index.php/Qemu>
+- <https://www.spice-space.org/spice-user-manual.html>
