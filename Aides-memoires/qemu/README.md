@@ -9,10 +9,23 @@ Pour quitter qemu : `[CTRL]+a` puis `x` (ou `q` depuis le *monitor*)
 
 ## Image disque
 
+### Création
+
 Pour créer une image disque (taille maximale de 20 Go) :
 ```
 $ qemu-img create -f qcow2 disk.qcow2 20G
 ```
+
+### Conversion
+
+Pour convertir une image du format *VirtualBox* (vdi) au format *qemu* (qcow2) :
+```
+qemu-img convert -c -f vdi disk.vdi -O qcow2 disk.qcow2
+```
+
+Voir le *man* pour la prise en charge d'autres formats.
+
+> Note : Ca peut être très long (plusieurs heures) selon la taille des images à traiter.
 
 ## Snapshots
 
@@ -28,11 +41,31 @@ Pour obtenir des informations sur un snapshot :
 $ qemu-img info snapshot.qcow2
 ```
 
+Pour avoir toute la chaîne d'images :
+```
+$ qemu-img info --backing-chain snapshot.qcow2
+```
+
 On peut aussi créer un snapshot temporaire en ajoutant le flag `-snapshot` à la ligne de commande de Qemu. Dans ce cas, les modifications sur l'image ne sont pas enregistrées et seront perdues à l'arrêt de la machine virtuelle.
+
+## Machine virtuelle en mode texte
+
+Si on n'a pas besoin d'un affichage graphique pour sa machine virtuelle, le plus simple est d'utiliser l'option `-nographic` de la ligne de commande *qemu* qui va rediriger le port série du guest vers le stdio de l'host (équivalent à `-serial stdio`).
+
+Dans ce cas, il faut, dans le guest, rediriger l'affichage vers le port série. Par exemple, sous *debian* avec *grub* :
+
+1. Editer `/etc/default/grub` pour ajouter les lignes suivantes :
+```
+GRUB_CMDLINE_LINUX='console=tty0 console=ttyS0,115200n8'
+GRUB_TERMINAL=serial
+GRUB_SERIAL_COMMAND="serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1"
+```
+2. Mettre à jour *grub* : `# update-grub`.
+3. Redémarrer
 
 ## Démarrage d'une machine virtuelle
 
-Le script [qemu-start.sh](./qemu-start.sh) permet de lancer une machine virtuelle avec qemu.
+Ce [Makefile](./Makefile) permet de configurer et de lancer facilement une machine virtuelle.
 
 ## Sources
 
@@ -40,3 +73,5 @@ Le script [qemu-start.sh](./qemu-start.sh) permet de lancer une machine virtuell
 - <https://wiki.archlinux.org/index.php/QEMU>
 - <https://doc.ycharbi.fr/index.php/Qemu>
 - <https://www.spice-space.org/spice-user-manual.html>
+- <https://blog.programster.org/qemu-img-cheatsheet>
+
