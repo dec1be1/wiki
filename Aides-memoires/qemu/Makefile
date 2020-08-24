@@ -33,7 +33,7 @@ QEMU_OPTS	+= -boot order=c
 
 # misc
 QEMU_OPTS	+= -k fr
-QEMU_OPTS	+= -soundhw hda
+QEMU_OPTS	+= -device intel-hda -device hda-duplex # soudcard
 QEMU_OPTS	+= -rtc base=utc
 QEMU_OPTS   += -usb -device usb-tablet
 
