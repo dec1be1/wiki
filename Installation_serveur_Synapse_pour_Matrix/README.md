@@ -72,8 +72,15 @@ $ node app.js -c config.freenode.yaml -f my_registration_file_freenode.yaml -p 9
 * https://wiki.calculate-linux.org/matrix_irc_bridge
 * https://github.com/matrix-org/matrix-appservice-irc/wiki
 
-
-### Discord
-
-
 ### Whatsapp
+Le principe général consiste à installer une machine virtuelle Android avec une installation classique de l'application *Whatapps* à l'intérieur et un bridge *Matrix* qui va communiquer, via un bot, avec cette application.
+
+Le plus simple est de tout installer sur le même serveur GNU/Linux. On peut trouver une VM Android x86 (LineageOS) ici : <https://www.android-x86.org/>
+
+C'est idéal d'avoir un Android pour architecture x86 car on va pouvoir utiliser, sur un CPU de même architecture, les extensions matérielles de virtualisation de ce dernier : par exemple *Qemu* avec *kvm*. Ainsi, les performances seront relativement bonnes.https://www.android-x86.org/
+
+
+
+* https://matrix.org/docs/guides/whatsapp-bridging-mautrix-whatsapp
+* https://github.com/tulir/mautrix-whatsapp/
+
