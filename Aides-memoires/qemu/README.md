@@ -36,6 +36,13 @@ $ qemu-img create -f qcow2 -b original.qcow2 snapshot.qcow2
 
 > A partir de ce moment-là, il ne faut plus modifier `original.qcow2` (au risque de corrompre les snapshots créés). Qemu doit donc être lancé avec `snapshot.qcow2`. Pour revenir en arrière, on supprime `snapshot.qcow2` et on recrée un snapshot depuis `original.qcow2` (qui n'a jamais été modifié entre temps).
 
+Pour appliquer les changements d'un snapshot dans l'image de base :
+```
+$ qemu-img commit snapshot.qcow2
+```
+
+> On peut ensuite supprimer le fichier du snapshot.
+
 Pour obtenir des informations sur un snapshot :
 ```
 $ qemu-img info snapshot.qcow2
