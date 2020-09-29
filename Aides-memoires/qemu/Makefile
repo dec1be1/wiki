@@ -26,7 +26,7 @@ QEMU_OPTS 	+= -device virtio-net,netdev=nic0,mac=12:34:56:78:90:ab
 QEMU_OPTS 	+= -netdev user,id=nic0,hostfwd=tcp::$(QSSH_PORT)-:22
 
 # drives
-QEMU_OPTS	+= -drive if=virtio,media=disk,format=qcow2,file=$(QDRIVE_FILE)
+QEMU_OPTS	+= -drive if=virtio,media=disk,format=qcow2,discard=unmap,file=$(QDRIVE_FILE)
 QEMU_OPTS	+= -boot order=c
 #QEMU_OPTS	+= -cdrom ./cdrom.iso
 #QEMU_OPTS	+= -snapshot

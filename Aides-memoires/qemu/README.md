@@ -31,7 +31,7 @@ Voir le *man* pour la prise en charge d'autres formats.
 
 Pour créer un snapshot :
 ```
-$ qemu-img create -f qcow2 -b original.qcow2 snapshot.qcow2
+$ qemu-img create -f qcow2 -b base.qcow2 snapshot.qcow2
 ```
 
 > A partir de ce moment-là, il ne faut plus modifier `original.qcow2` (au risque de corrompre les snapshots créés). Qemu doit donc être lancé avec `snapshot.qcow2`. Pour revenir en arrière, on supprime `snapshot.qcow2` et on recrée un snapshot depuis `original.qcow2` (qui n'a jamais été modifié entre temps).
@@ -54,6 +54,21 @@ $ qemu-img info --backing-chain snapshot.qcow2
 ```
 
 On peut aussi créer un snapshot temporaire en ajoutant le flag `-snapshot` à la ligne de commande de Qemu. Dans ce cas, les modifications sur l'image ne sont pas enregistrées et seront perdues à l'arrêt de la machine virtuelle.
+
+## Réduction image qcow2
+Il faut d'abord mettre des zéros dans les zones non utilisées de l'image. Pour une machine virtuelle Linux, depuis la VM :
+```
+# dd if=/dev/zero of=/mytempfile
+# rm -f /mytempfile
+```
+
+On éteint ensuite la VM et on peut réduire l'image en faisant une conversion de qcow2 vers qcow2 :
+```
+$ qemu-img convert -c -O qcow2 source.qcow2 shrunk.qcow2
+```
+
+> Pour éviter d'avoir à faire ça régulièrement, on peut activer *TRIM* dans la VM (selon le système d'exploitation). Il faut également que le matériel le supporte. C'est le cas des dernières versions de *Virtio*. Il faut ajouter l'option `discard=unmap` au disque dur de la VM.
+
 
 ## Machine virtuelle en mode texte
 
