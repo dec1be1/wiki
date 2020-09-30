@@ -69,6 +69,27 @@ $ qemu-img convert -c -O qcow2 source.qcow2 shrunk.qcow2
 
 > Pour éviter d'avoir à faire ça régulièrement, on peut activer *TRIM* dans la VM (selon le système d'exploitation). Il faut également que le matériel le supporte. C'est le cas des dernières versions de *Virtio*. Il faut ajouter l'option `discard=unmap` au disque dur de la VM.
 
+## Monter une image disque qcow2
+Il faut :
+1. Démarrer le module `nbd` (*network block device*)
+2. Connecter le fichier à un *network block device*
+3. Lister les partitions
+4. Monter la partition
+
+Dans l'ordre :
+```
+# modprobe nbd max_part=8
+# qemu-nbd --connect=/dev/nbd0 disk.qcow2
+# fdisk /dev/nbd0 -l
+# mount /dev/nbd0p1 /mnt/somepoint/
+```
+
+Lorsqu'on a fini :
+```
+# umount /mnt/somepoint/
+# qemu-nbd --disconnect /dev/nbd0
+# rmmod nbd
+```
 
 ## Machine virtuelle en mode texte
 
