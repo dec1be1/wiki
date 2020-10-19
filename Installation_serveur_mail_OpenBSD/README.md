@@ -110,49 +110,51 @@ On relance le service : `# rcctl restart smtpd`
 ### Dovecot
 Dovecot est le serveur IMAP. Les fichiers de configuration se trouvent dans `/etc/dovecot`. Les modifications à faire sont les suivantes :
 #### `/etc/dovecot.conf`
-* `protocols = imap lmtp`
-* `listen = *, ::`
+`protocols = imap lmtp`
+`listen = *, ::`
 
 #### `/etc/dovecot/conf.d/10-auth.conf`
-* `disable_plaintext_auth = yes`
-* `auth_username_chars = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@`
-* `!include auth-passwdfile.conf.ext`
+`disable_plaintext_auth = yes`
+`auth_username_chars = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@`
+`!include auth-passwdfile.conf.ext`
 
 #### `/etc/dovecot/conf.d/10-mail.conf`
-* ```
+```
 mail_home = /var/vmail/%d/%n
 mail_location = mbox:~/mail:LAYOUT=maildir++:INDEX=~/mail/index:CONTROL=~/mail/control
 ```
-* ```
+
+```
 namespace inbox {
     type = private
     separator = .
     [...]
 }
 ```
-* ```
+
+ ```
 mail_uid = vmail
 mail_gid = vmail
 ```
 
 #### `/etc/dovecot/conf.d/10-ssl.conf`
-* `ssl = yes`
-* ```
+`ssl = yes`
+```
 ssl_cert = </etc/ssl/domain.tld.fullchain.pem
 ssl_key = </etc/ssl/private/domain.tld.key
 ```
-* `ssl_prefer_server_ciphers = yes`
+`ssl_prefer_server_ciphers = yes`
 
 #### `/etc/dovecot/conf.d/15-lda.conf`
-* `postmaster_address = postmaster@domain.tld`
-* `hostname = mail.domain.tld`
+`postmaster_address = postmaster@domain.tld`
+`hostname = mail.domain.tld`
 
 #### `/etc/dovecot/conf.d/15-mailboxes.conf`
 * Ajouter `auto = subscribe` à toutes les sections `mailbox`
 * Commenter la mailbox `"Sent Messages"`
 
 #### `/etc/dovecot/conf.d/20-lmtp.conf`
-* `mail_plugins = $mail_plugins sieve`
+`mail_plugins = $mail_plugins sieve`
 
 #### `/etc/dovecot/conf.d/auth-passwdfile.conf.ext`
 ```
