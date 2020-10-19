@@ -111,11 +111,14 @@ On relance le service : `# rcctl restart smtpd`
 Dovecot est le serveur IMAP. Les fichiers de configuration se trouvent dans `/etc/dovecot`. Les modifications à faire sont les suivantes :
 #### `/etc/dovecot.conf`
 `protocols = imap lmtp`
+
 `listen = *, ::`
 
 #### `/etc/dovecot/conf.d/10-auth.conf`
 `disable_plaintext_auth = yes`
+
 `auth_username_chars = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@`
+
 `!include auth-passwdfile.conf.ext`
 
 #### `/etc/dovecot/conf.d/10-mail.conf`
@@ -139,14 +142,17 @@ mail_gid = vmail
 
 #### `/etc/dovecot/conf.d/10-ssl.conf`
 `ssl = yes`
+
 ```
 ssl_cert = </etc/ssl/domain.tld.fullchain.pem
 ssl_key = </etc/ssl/private/domain.tld.key
 ```
+
 `ssl_prefer_server_ciphers = yes`
 
 #### `/etc/dovecot/conf.d/15-lda.conf`
 `postmaster_address = postmaster@domain.tld`
+
 `hostname = mail.domain.tld`
 
 #### `/etc/dovecot/conf.d/15-mailboxes.conf`
