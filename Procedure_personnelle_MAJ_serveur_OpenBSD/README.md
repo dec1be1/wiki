@@ -19,9 +19,10 @@ Elle suppose de disposer de deux disques durs système strictement identiques :
 
 ## Copie bit à bit du disque dur système actuel
 * Sous GParted Live, identifier correctement les disques durs pour éviter la cata... ! les disques SATA peuvent être branchés à chaud ;)
+* Pour mettre le clavier en français : `# setxkbmap fr`
 * Lancer la copie bit à bit du disque système actuel (qui sera ensuite démonté et conservé en cas de problème) vers le disque cible (dont le système sera mis à jour puis utilisé en production) :
 ```
-$ sudo dd if=/dev/sda of=/dev/sdb conv=notrunc
+$ sudo dd if=/dev/sda of=/dev/sdb conv=notrunc status=progress
 ```
 * Attendre environ une heure pour un disque de 250 Go.
 * Eteindre le serveur.
@@ -29,7 +30,7 @@ $ sudo dd if=/dev/sda of=/dev/sdb conv=notrunc
 ## Modification matérielle
 
 * Installer le disque *cible* à la place du disque *source*.
-* Remiser le disque *source* par devers moi.
+* Remiser le disque *source* par devers moi ;D
 * Remettre en place les disques durs de données (les 3,5 pouces).
 * Démarrer le serveur.
 * Vérifier les systèmes de fichiers :
