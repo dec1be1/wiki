@@ -19,15 +19,26 @@ $ git add fichier
 $ git add --all
 ```
 
+### Supprimer un fichier du dépôt
+Il faut le dé-indexer avant de le supprimer :
+```
+$ git rm <file>
+```
+
 ### Faire un commit (stage -> repository)
 ```
 $ git commit -m "commit description"
 ```
 
+> Option `-v` pour ajouter le diff au commentaire du commit. 
+> Option `-a` pour ajouter directement les fichiers **déjà** suivis (*tracked*) à l'index.
+
 ### Afficher les commits
 ```
 $ git log
 ```
+
+> Option `--pretty=...` pour personnaliser la sortie.
 
 ### Afficher les commits et les actions réalisées
 ```
@@ -81,14 +92,40 @@ $ git checkout -b testing
 $ git checkout v4.14.23
 ```
 
-### Mettre à jour un dépôt
+### Récupérer les commits d'une branche distante vers la branche locale
 ```
 $ git fetch
+```
+
+> Cela permet de récupérer les commits d'une branche (en général *master*) dans le dépôt local pour les examiner (et éventuellement faire des modifications) avant de fusionner avec une branche de travail en cours. Utile lorsque la branche principale d'un projet évolue pendant qu'on travaille sur ses propres branches. On récupère alors les commits distants de la branche principale dans son dépôt local avant de fusionner cette branche principale avec sa propre branche (des conflits peuvent alors être à gérer manuellement).
+
+### Fusionner les commits d'une branche avec la branche en cours
+```
+$ git merge <branch>
+```
+
+> Cela crée également un nouveau commit dans la branche en cours.
+
+### Rebase
+Lorsqu'on travail en local (avant de faire des pushs "propres"), il est plus clair de faire un `git rebase` plutôt qu'un `git merge`. En effet, le `git rebase` permet de transposer les commits faits sur une branche vers une autre (*master* par exemple). On garde donc l'historique des commits mais dans la nouvelle branche. **A ne pas faire sur un dépôt public**. 
+
+L'option `-i` permet de faire un *rebase interactif*. Très utile pour nettoyer son historique avant de faire un push.
+
+Exemple pour lancer un rebase interactif sur les 3 derniers commits de la branche en cours : 
+```
+$ git rebase -i HEAD~3
 ```
 
 ### Afficher l’état du répertoire de travail par rapport au dépôt
 ```
 $ git status
+```
+
+> `-s` pour un affichage plus court.
+
+### Afficher les différences entre les fichiers indexés et non indexés
+```
+$ git diff
 ```
 
 ### Remiser les modifications faites (la branche en cours redevient "propre")
@@ -117,6 +154,8 @@ Pour récupérer dans le dépôt local les modifications du dépôt distant (rem
 ```
 $ git pull origin master
 ```
+
+> `git pull` est en fait la combinaison d'un `git fetch` (pour récupérer les commits) et d'un `git merge` (pour les fusionner dans la branche courante et créer un nouveau commit).
 
 ### Créer un tag (étiquette annotée)
 Sur le dernier commit réalisé (**attention à être dans la bonne branche**) :
@@ -149,6 +188,9 @@ Sur le dépôt distant :
 ```
 $ git push --delete origin nom-du-tag
 ```
+
+## gitignore
+Des modèles de `.gitignore` sont disponibles pour différents langages : <https://github.com/github/gitignore>
 
 ## Correction des erreurs
 ### Supprimer une branche
@@ -222,7 +264,7 @@ $ git reset --mixed HEAD^
 
 > Pour rappel, `HEAD` est un pointeur vers la position actuelle dans le répertoire de travail.
 
-Pour supprimer tous les commit faits après un commit donné (**attention : aucune possibilité de revenir en arrière** :
+Pour supprimer tous les commits faits après un commit donné (**attention : aucune possibilité de revenir en arrière** :
 ```
 $ git reset --hard <commit_hash>
 ```
