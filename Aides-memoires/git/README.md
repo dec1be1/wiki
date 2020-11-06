@@ -3,10 +3,28 @@ git
 
 **Toutes les commandes suivantes supposent qu'on se soit d'abord placé dans le répertoire local du dépôt (repository).**
 
-## Commandes
+## Dépôts
 ### Initialiser un nouveau dépôt
 ```
 $ git init
+```
+
+### Voir les dépôts distants
+```
+$ git remote -v
+```
+
+### Ajouter un dépôt distant
+```
+$ git remote add <remote_name> <repo_url>
+```
+
+> `git remote rename` pour renommer un dépôt distant
+> `git remote remove` pour supprimer un dépôt distant
+
+### Avoir des informations sur un dépôt distant
+```
+$ git remote show <remote_name>
 ```
 
 ### Ajouter un fichier à l'index du dépôt (working directory -> stage)
@@ -39,6 +57,7 @@ $ git log
 ```
 
 > Option `--pretty=...` pour personnaliser la sortie.
+> Option `--graph` pour avoir une représentation graphique.
 
 ### Afficher les commits et les actions réalisées
 ```
@@ -72,50 +91,6 @@ $ git remote rename origin old-origin
 $ git clone REPOSITORY.git
 ```
 
-### Lister les branches d'un dépôt (et afficher la branche en cours)
-```
-$ git branch
-```
-
-### Créer une nouvelle branche (en restant sur la branche en cours)
-```
-$ git branch new_branch
-```
-
-### Créer une nouvelle branche et basculer directement dessus
-```
-$ git checkout -b testing
-```
-
-### Changer de branche
-```
-$ git checkout v4.14.23
-```
-
-### Récupérer les commits d'une branche distante vers la branche locale
-```
-$ git fetch
-```
-
-> Cela permet de récupérer les commits d'une branche (en général *master*) dans le dépôt local pour les examiner (et éventuellement faire des modifications) avant de fusionner avec une branche de travail en cours. Utile lorsque la branche principale d'un projet évolue pendant qu'on travaille sur ses propres branches. On récupère alors les commits distants de la branche principale dans son dépôt local avant de fusionner cette branche principale avec sa propre branche (des conflits peuvent alors être à gérer manuellement).
-
-### Fusionner les commits d'une branche avec la branche en cours
-```
-$ git merge <branch>
-```
-
-> Cela crée également un nouveau commit dans la branche en cours.
-
-### Rebase
-Lorsqu'on travail en local (avant de faire des pushs "propres"), il est plus clair de faire un `git rebase` plutôt qu'un `git merge`. En effet, le `git rebase` permet de transposer les commits faits sur une branche vers une autre (*master* par exemple). On garde donc l'historique des commits mais dans la nouvelle branche. **A ne pas faire sur un dépôt public**. 
-
-L'option `-i` permet de faire un *rebase interactif*. Très utile pour nettoyer son historique avant de faire un push.
-
-Exemple pour lancer un rebase interactif sur les 3 derniers commits de la branche en cours : 
-```
-$ git rebase -i HEAD~3
-```
-
 ### Afficher l’état du répertoire de travail par rapport au dépôt
 ```
 $ git status
@@ -127,6 +102,20 @@ $ git status
 ```
 $ git diff
 ```
+
+### Push
+Pour *pusher* les modifications commitées vers le dépôt distant (remplacer `master` par `--all` pour pusher toutes les branches) :
+```
+$ git push origin master
+```
+
+### Pull
+Pour récupérer dans le dépôt local les modifications de la branche `master` du dépôt distant `origin` (remplacer `master` par `--all` pour puller toutes les branches) :
+```
+$ git pull origin master
+```
+
+> `git pull` est en fait la combinaison d'un `git fetch` (pour récupérer les commits) et d'un `git merge` (pour les fusionner dans la branche courante et créer un nouveau commit).
 
 ### Remiser les modifications faites (la branche en cours redevient "propre")
 ```
@@ -143,34 +132,146 @@ $ git stash list
 $ git stash apply [stash_name]
 ```
 
-### Push
-Pour *pusher* les modifications commitées vers le dépôt distant (remplacer `master` par `--all` pour pusher toutes les branches) :
+
+
+
+
+
+
+## Branches
+Une branche est une suite de commits.
+
+### Lister les branches d'un dépôt (et afficher la branche en cours)
 ```
-$ git push -u origin master
+$ git branch
 ```
 
-### Pull
-Pour récupérer dans le dépôt local les modifications du dépôt distant (remplacer `master` par `--all` pour puller toutes les branches) :
+> Option `-a` pour voir également les branches distantes présentes dans le dépôt local.
+> Option `-vv` pour voir les branches suivies. Pour changer la branche suivie : `git branch -u origin/<branch>`.
+
+### Créer une nouvelle branche (en restant sur la branche en cours)
 ```
-$ git pull origin master
+$ git branch new_branch
 ```
 
-> `git pull` est en fait la combinaison d'un `git fetch` (pour récupérer les commits) et d'un `git merge` (pour les fusionner dans la branche courante et créer un nouveau commit).
+### Créer une nouvelle branche et basculer directement dessus
+```
+$ git checkout -b testing
+```
 
-### Créer un tag (étiquette annotée)
+> Attention à créer la nouvelle branche depuis le bon endroit (changer la branche courante si nécessaire).
+
+### Créer une branche locale depuis une branche distante
+Cela revient à faire une copie locale d'une branche distante :
+```
+$ git checkout -b <branch> origin/<branch>
+```
+
+### Changer de branche
+```
+$ git checkout v4.14.23
+```
+
+> On déplace le pointeur `HEAD` et les fichiers du répertoire de travail deviennent ceux du snapshot pointé par le dernier commit de la branche.
+
+### Récupérer les commits d'une branche distante vers la branche locale
+Par exemple de `origin/master` vers `master` :
+```
+$ git fetch
+```
+
+> Cela permet de récupérer les commits d'une branche (en général *origin/master*) dans le dépôt local pour les examiner (et éventuellement faire des modifications) avant de fusionner avec une branche de travail en cours. Utile lorsque la branche principale d'un projet évolue pendant qu'on travaille sur ses propres branches. On récupère alors les commits distants de la branche principale dans son dépôt local avant de fusionner cette branche principale avec sa propre branche (des conflits peuvent alors être à gérer manuellement).
+
+> **Attention :** Lorsqu'on récupère une nouvelle branche distante avec fetch, on ne récupère pas une copie éditable de la branche mais seulement un pointeur vers la branche distante. Il faut merger avec sa branche en cours : `git merge origin/<branch>`.
+
+### Fusionner les commits d'une branche avec la branche en cours
+```
+$ git merge <branch>
+```
+
+S'il y a continuité des commits entre les deux branches fusionnées, git va simplement déplacer le pointeur de la branche en cours sur celui de la branche à fusionner. C'est une fusion *Fast-Forward*. On peut supprimer la branche mergée si on n'en a plus besoin.
+
+Dans le cas contraire, git va faire la fusion et créer un nouveau commit (*merge commit*) dans la branche en cours. En effet, on ne peut pas simplement déplacer le pointeur de la branche en cours car les modifications sont issues d'au moins deux branches divergentes. C'est une fusion de type *recursive*. Il peut y avoir des conflits à gérer dans ce cas. S'il y en a, on note que le merge est fait dans tous les cas. On résout les conflits manuellement puis on commit les modifications (pas besoin de refaire le merge).
+
+### Voir les branches fusionnées ou non
+```
+$ git branch --merged
+$ git branch --no-merged
+```
+
+### Supprimer une branche
+```
+$ git branch -d <branch_to_delete>
+```
+> Si la branche n'est pas totalement fusionnée, on aura un avertissement. On peut forcer la suppression avec `-D`. **Attention, dans ce cas, on perd toutes les modifications faites dans la branche**.
+
+Pour une branche distante :
+```
+$ git push origin --delete <branch_to_delete>
+```
+
+### Rebase
+Lorsqu'on travail en local (avant de faire des pushs "propres"), il est plus clair de faire un `git rebase` plutôt qu'un `git merge`. En effet, le `git rebase` permet de transposer les commits faits sur une branche vers une autre (*master* par exemple). On garde donc l'historique des commits mais dans la nouvelle branche. **Ne jamais rebaser des commits poussés sur un dépôt public**. 
+
+L'option `-i` permet de faire un *rebase interactif*. Très utile pour nettoyer son historique avant de faire un push.
+
+Exemple pour lancer un rebase interactif sur les 3 derniers commits de la branche en cours : 
+```
+$ git rebase -i HEAD~3
+```
+
+
+
+
+
+
+## Tags
+### Lister les tags
+```
+$ git tag
+```
+
+> Deux types de tag :
+> - léger (juste un pointeur sur un commit)
+> - annoté avec `-a` (un objet git à part entière)
+
+### Créer un tag annoté
 Sur le dernier commit réalisé (**attention à être dans la bonne branche**) :
 ```
-$ git tag -a nom-du-tag -m "Annotation du tag"
+$ git tag -a <tag_name> -m "Annotation du tag"
 ```
 
 Sur un commit particulier :
 ```
-$ git tag -a nom-du-tag -m "Annotation du tag" <hash du commit>
+$ git tag -a <tag_name> -m "Annotation du tag" <commit_hash>
 ```
+
+### Voir les informations sur un tag
+```
+$ git show <tag_name>
+```
+
+### Récupérer tous les tags depuis un dépôt distant
+```
+$ git fetch --tags --all
+```
+
+> Si on ne met pas le `--all`, on ne récupère que le dernier tag.
+
+### Se placer sur un tag particulier
+```
+$ git checkout <tag_name>
+```
+
+### Créer une nouvelle branche basée sur un tag
+```
+$ git checkout -b <new_branch_name> <tag_name>
+```
+
 ### Pousser un tag
 Pour pousser un tag sur le dépôt distant :
 ```
-$ git push origin nom-du-tag
+$ git push origin <tag_name>
 ```
 
 Pour pousser tous les nouveaux tags d'un coup :
@@ -181,12 +282,12 @@ $ git push origin --tags
 ### Effacer un tag
 En local :
 ```
-$ git tag -d nom-du-tag
+$ git tag -d <tag_name>
 ```
 
 Sur le dépôt distant :
 ```
-$ git push --delete origin nom-du-tag
+$ git push --delete origin <tag_name>
 ```
 
 ## gitignore
@@ -262,7 +363,7 @@ Pour supprimer le dernier commit mais en gardant les modifications de ce commit 
 $ git reset --mixed HEAD^
 ```
 
-> Pour rappel, `HEAD` est un pointeur vers la position actuelle dans le répertoire de travail.
+> Pour rappel, `HEAD` est un pointeur vers la position actuelle dans le répertoire de travail (branche en cours et dernier commit).
 
 Pour supprimer tous les commits faits après un commit donné (**attention : aucune possibilité de revenir en arrière** :
 ```
