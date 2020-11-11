@@ -7,7 +7,7 @@ Cette page décrit la procédure à suivre pour installer *OpenVPN* dans un chro
 ### Installation des paquets et création des répertoires
 Pour installer les paquets (on va utiliser *easy-rsa* pour faciliter la gestion des certificats) :
 ```
-# pkg_add openvpn easy-rsa
+# pkg_add openvpn easy-rsa bash
 ```
 
 Création des répertoires nécessaires et du chroot qui sera dans `/var/openvpn/chrootjail` :
