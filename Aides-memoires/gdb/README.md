@@ -161,6 +161,11 @@ Pour convertir une valeur hexadécimale en décimal :
 
 `continue` (ou `cont` en abrégé ou `c` en super abrégé) permet de reprendre l'exécution du programme après un point d'arrêt (`breakpoint`).
 
+Pour lancer le programme en envoyant des données sur *stdin* (en utilisant un programme *python* par exemple :
+```
+(gdb) run ./my_program < <(python -c 'print "A"*156')
+```
+
 ### breakpoint
 `breakpoint` (ou `break` en abrégé ou `b` en super abrégé) permet de spécifier des points d'arrêts pendant l'exécution du programme. La mémoire et les registres pourront être examinés lors de ces points d'arrêt. On peut déclarer autant de points d'arrêt que nécessaire. Le numéro de la ligne est à spécifier. Par exemple :
 ```
@@ -181,17 +186,18 @@ Pour supprimer le breakpoint 2 (ne pas pas spécifier le numéro pour supprimer 
 (gdb) del break 2
 ```
 
-
 ### backtrace
 La commande `backtrace` (`bt` en abrégé) permet d'afficher la backtrace du stack. Utile pour trouver une adresse de retour par exemple.
 ```
 (gdb) bt
 ```
 
-### stepi et nexti
-`stepi` (ou `si` en abrégé) permet de sauter à l'instruction suivante (au moment d'un *breakpoint*). Si un entier `N` est fourni en argument, on saute de N instructions.
+### stepi, nexti, fin
+`stepi` (ou `si` en abrégé) permet de sauter à l'instruction suivante en suivant un appel de fonction (au moment d'un *breakpoint*). Si un entier `N` est fourni en argument, on saute de N instructions.
 
 `nexti` (ou `ni`) fait la même chose mais en sautant les appels de fonction.
+
+`fin` pour aller jusqu'au prochain `ret`.
 
 ## Environnement
 Pour voir les variables d'environnement :
@@ -209,10 +215,9 @@ Pour supprimer toutes les variables :
 (gdb) unset env
 ```
 
-## Entrée standard
-Pour lancer un programme en envoyant des données sur l'entrée standard :
+Pour charger une bibliothèque particulière au lancement d'un programme :
 ```
-(gdb) run ./my_program < <(python -c 'print "A"*156')
+(gdb) set exec-wrapper env 'LD_PRELOAD=/path/to/lib.so'
 ```
 
 ## Modification de la mémoire
