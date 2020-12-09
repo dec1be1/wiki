@@ -15,13 +15,14 @@ Docker
 
 ### Préambule
 
-Une image est un empilement de couches en lecture seule. Par exemple, pour un serveur *nginx*, on aura une couche correspondant à l'OS (*debian* par exemple) et une couche correspondant à l'application (*nginx*). Lorsqu'un conteneur est créé à partir d'une image, on ajoute par dessus une couche en lecture-écriture qui vivra aussi longtemps que le conteneur. On a un fonctionnement de type *COW (copy-on-write)* c'est-à-dire que si le conteneur veut modifier un fichier d'une couche base, il va d'abord le copier dans la couche haute en lecture-écriture puis le modifier. 
+Une image est un empilement de couches en lecture seule. Par exemple, pour un serveur *nginx*, on aura une couche correspondant à l'OS (*debian* par exemple) et une couche correspondant à l'application (*nginx*). Lorsqu'un conteneur est créé à partir d'une image, les systèmes de fichiers de chaque couche sont réunis (*union filesystem*) et on ajoute par dessus une couche en lecture-écriture qui vivra aussi longtemps que le conteneur. On a un fonctionnement de type *COW (copy-on-write)* c'est-à-dire que si le conteneur veut modifier un fichier d'une couche base, il va d'abord le copier dans la couche haute en lecture-écriture puis le modifier. 
 
 On note que si on *pull* deux conteneurs qui utilisent une couche en commun, *Docker* ne va télécharger qu'une seule fois la couche en question.
 
 ### Création d'une image
 
 #### A partir d'un conteneur
+
 A partir d'un conteneur arrêté :
 ```
 $ docker commit <cont_name> <new_image_name>
@@ -30,6 +31,7 @@ $ docker commit <cont_name> <new_image_name>
 > Le nom de l'image créée est de la forme : `mon_organisation/mon_image:version`.
 
 #### A partir d'un *Dockerfile*
+
 Pour créer une image à partir d'un *Dockerfile* :
 ```
 $ docker build -t <new_image_name> <path_to_folder_containing_dockerfile>
@@ -43,12 +45,14 @@ Les commandes de bases d'un *Dockerfile* :
 - `RUN` : exécute une commande (ne pas utiliser ça pour l'application principale).
 - `ADD` : copier (ou extrait une archive) depuis le répertoire de travail de l'hôte vers le conteneur. On peut utiliser des URL.
 - `COPY` : copier simplement un fichier depuis le répertoire de travail de l'hôte vers le conteneur.
-- `CMD` : spécifie la commande de l'application principale du conteneur. Elle n'existe qu'une seule fois dans un *Dockerfile*.
+- `VOLUME` : spécifie un volume en dehors de l'*union filesystem* du conteneur.
+- `CMD` : spécifie la commande de l'application principale du conteneur. Elle n'existe qu'une seule fois dans un *Dockerfile*. La commande s'exécute dans un shell : `/bin/sh -c CMD`.
 - `ENTRYPOINT` : le point d'entrée du conteneur (application principale). Si `CMD` est spécifiée aussi, il sert à surcharger la commande `ENTRYPOINT`.
 
 Des bonnes pratiques : <https://docs.docker.com/develop/develop-images/dockerfile_best-practices/>
 
 #### A partir d'une archive de conteneur
+
 Pour créer une archive de conteneur (on peut ensuite compresser l'archive avec *gzip*) :
 ```
 $ docker export -o <archive_filename.tar> <cont_name>
@@ -134,7 +138,7 @@ Pour s'attacher à un conteneur (shell interactif) :
 $ docker attach <cont_name>
 ```
 
-Pour passer en mode *détaché* depuis le mode *attaché* : séquence de touches `[Ctrl]-p + q`.
+Pour passer en mode *détaché* depuis le mode *attaché* : séquence de touches `[Ctrl]+p+q`.
 
 Pour arrêter proprement un conteneur : ça envoie un signal *TERM* au processus principal du conteneur (PID 1) :
 ```
@@ -175,7 +179,7 @@ Pour obtenir des informations sur un conteneur (format json) :
 $ docker inspect <cont_name>
 ```
 
-> On peut extraire un champ particulier avec l'option `--format`. Par exemple pour l'IP du conteneur :
+> On peut extraire un champ particulier avec l'option `--format` (format *Go Template*). Par exemple pour l'IP du conteneur :
 ```
 $ docker inspect --format='{{.NetworkSettings.IPAddress}}' <cont_name>
 ```
@@ -218,7 +222,7 @@ $ docker volume rm <volume_name>
 
 > Les volumes sont regroupés dans le dossier `/var/lib/docker/volumes` de l'hôte.
 
-### Volumes d'hôtes
+### Volumes d'hôtes (*bind-mount*)
 
 Dans ce cas, on peut monter un dossier (ou simplement un fichier) de l'hôte vers un conteneur.
 
@@ -236,8 +240,14 @@ Il suffit de monter le même volume dans les conteneurs qui doivent y avoir acc�
 
 ## Réseau
 
-### Divers
-A l'installation, *Docker* crée le bridge `docker0` sur la machine hôte. Au démarrage d'un conteneur, une interface réseau virtuelle `vethX` est ajoutée à ce bridge et liée à l'interface réseau `ethX` du conteneur. Par défaut, *Docker* fait du NAT pour les conteneurs (on dispose ainsi par exemple d'Internet dans les conteneurs si l'hôte est connecté). 
+### Généralités
+
+A l'installation, *Docker* crée le bridge `docker0` sur la machine hôte. Par défaut au démarrage d'un conteneur, une interface réseau virtuelle `vethX` est ajoutée à ce bridge et liée à l'interface réseau `ethX` du conteneur. Cela permet aux conteneurs de communiquer entre eux. Par défaut, *Docker* fait du NAT pour les conteneurs (on dispose ainsi par exemple d'Internet dans les conteneurs si l'hôte est connecté). 
+
+En plus de l'interface brige `docker0`, *Docker* créé deux autres réseaux :
+
+- *Host* : Si un conteneur est connecté à ce réseau, il utilisera la pile réseau de l'hôte.
+- *None* : Si un conteneur est connecté à ce réseau, il ne disposera que de son interface *localhost* (pas de connexion avec l'extérieur).
 
 Pour lister les réseaux disponibles :
 ```
@@ -259,9 +269,10 @@ Pour faire fonctionner un conteneur sur un réseau spécifique :
 $ docker run --net <network_name> <image_name>
 ```
 
-> *Docker* gère l'attribution de l'adresse IP dans le réseau spécifié pour chaque conteneur. Par ailleurs, *Docker* fournit une résolution de noms basée sur le nom des conteneurs (et pas sur les éventuels hostnames affectés).
+> *Docker* gère l'attribution de l'adresse IP dans le réseau spécifié pour chaque conteneur. Par ailleurs, dans le cas d'un *user defined bridge* (donc pas le bridge par défaut `docker0`), *Docker* fournit une résolution de noms basée sur le nom des conteneurs (et pas sur les éventuels hostnames affectés).
 
 ### Plusieurs interfaces sur un conteneur
+
 Si on souhaite créer un conteneur avec plusieurs interfaces réseaux, il faut en déclarer une principale (avec `--net`) puis connecter le conteneur aux autres réseaux (on ne peut pas utiliser plusieurs fois `--net` au démarrage d'un conteneur) :
 ```
 $ docker run --name <cont_name> --net <network1_name> <image_name>
@@ -269,6 +280,7 @@ $ docker network connect <network2_name> <cont_name>
 ```
 
 ### Mapping de ports (PAT)
+
 Pour mapper un port de l'hôte vers un port du conteneur :
 ```
 $ docker run -p <ip_host>:<host_port>:<container_port> <image_name>
@@ -283,3 +295,109 @@ $ docker port <cont_name>
 
 On peut faire un mapping dynamique. Dans ce cas, c'est *Docker* qui choisit des ports aléatoires sur l'hôte et les mappe vers les ports exposés du conteneur. Il suffit d'utiliser l'option `-P` dans la commande `docker run`. Le mapping ne se fait que si le fichier `Dockerfile` contient au moins une directive `EXPOSE`.
 
+### Drivers
+
+Il existe nativement trois drivers pour les interfaces :
+
+- *bridge* (par défaut) : Fournit une communication entre des conteneurs situés sur le même hôte.
+- *overlay* : Permet la communication entre des conteneurs situés sur des hôtes différents (basé sur les fonctionnalités *VXLAN* du noyau Linux). Il ne peut être créé que dans le contexte d'un cluster d'hôtes *Docker* (par exemple *Swarm*).
+- *macvlan* : Mapper directement l'interface réseau d'un conteneur vers une interface réseau de l'hôte(pas de bridge entre les deux). Utilisé principalement pour les performances. 
+
+## Autres utilitaires
+
+### docker-machine
+
+Gestion du cycle de vie (création, démarrage, arrêt, ...) d'un hôte physique ou virtuel hébergeant *Docker* (démon *docker* et client). Il existe beaucoup de drivers pour des infrastructures locales (*virtualbox*, *vmware*) ou dans le cloud (*Amazon EC2*, *DigitalOcean*, ...).
+
+On peut configurer le client local pour cibler un démon distant particulier (à l'aide de variables d'environnement). Voir `docker-machine env`.
+
+### docker-compose
+
+Gestion du cycle de vie d'une application multi-conteneurs (micro-service). Il utilise un fichier *yaml* (`docker-compose.yml`) qui décrit l'application :
+
+- Les différents *services*. Chaque service permettra d'instancier un conteneur (ou plusieurs identiques en cas de réplication).
+- Les volumes de données nécessaires.
+- Les différents réseaux utilisés par les conteneurs.
+- Le déploiement dans un cluster *Swarm* (à partir de la version 3 de *docker-compose*).
+
+On peut avoir plusieurs versions de `docker-compose.yml` pour une application. Par exemple une version locale pour un environnement de développement et une version décrivant un déploiement en cluster pour l'environnement de production.
+
+### Swarm
+
+#### Généralités
+
+Voir `docker swarm --help` et `docker node --help`.
+
+*Swarm* est intégré au *Docker Engine*. Le mode *Swarm* permet l'orchestration d'applications sur un cluster. Permet le déploiement d'applications au format *Docker Compose*.
+
+Un peu de vocabulaire :
+
+- *Node* : Hôte physique ou virtuel faisant partie du cluster *Swarm* (le *Docker Engine* est par conséquent installé sur le node).
+- *Manager* : Node particulier qui orchestre les conteneurs et gère l'état du cluster. Il y en a généralement plusieurs de manière à avoir de la redondance en cas de panne du manager leader. Si le leader tombe en panne, un autre leader est élu pour prendre le relai (ce manager doit avoir été configuré auparavant comme manager *reachable* avec la commande `docker node promote <node_name>`).
+- *Worker* : Node particulier qui exécute des conteneurs. 
+
+> Par défaut, un manager est aussi un worker.
+
+Un node peut avoir plusieurs états :
+
+- *Active* : Le node peut recevoir de nouvelles tâches.
+- *Pause* : Le node ne reçoit plus de nouvelles tâches mais continue les tâches en cours.
+- *Drain* : Le node ne reçoit plus de nouvelles tâches et les tâches en cours sont schedulées sur d'autres nodes du cluster (des nodes à l'état *active*).
+
+#### Services
+
+Voir `docker service --help`
+
+Comme pour *Docker Compose*, on a la notion de *service*. Un service va permettre d'instancier un ou plusieurs conteneurs (en cas de réplicat). La commande `docker service` permet de gérer le cycle de vie des services. Une fois créé, un service pourra être déployé sur le cluster (sur différents nodes du cluster en cas de réplication). 
+
+Comme pour les conteneurs, on peut définir des volumes pour les services.
+
+#### Stack
+
+Voir `docker stack --help`.
+
+Une stack est un groupe de services déployée à partir d'un fichier au format *Docker Compose*. Une stack peut également comporter des réseaux et des volumes. 
+
+> La suppression d'une stack engendre la suppression de tous les services de la stack.
+
+#### Secrets
+
+Voir `docker secret --help`.
+
+On a la possibilité de gérer des secrets qui pourront être utilisés par les services. Après déclaration d'un secret pour un service, ce secret sera accessible en clair pour le service pendant son exécution (dans `/run/secrets/<secret_name>` qui est monté en *tmpfs*).
+
+## Sécurité
+
+### AppArmor
+
+C'est un module de sécurité de Linux (*LSM* pour *Linux Security Module*) qui implémente du MAC (*Mandatory Access Control*) en complément du DAC (*Discretionary Access Control*) habituel.
+
+Il permet d'ajouter des droits d'accès supplémentaires basés sur les chemins d'accès aux ressources selon les applications (un profil de sécurité par application). 
+
+*Docker* utilise un profil par défaut lors du lancement d'un conteneur. On peut le désactiver en passant l'option `--security-opt apparmor:unconfined` à l'exécution d'un conteneur.
+
+### SELinux
+
+C'est aussi un *LSM* implémentant du *MAC*. Il définit des sujets (utilisateur, application, processus) et des objets (répertoire, périphérique, ...) ainsi que des règles définissant les objets auquel un sujet a accès.
+
+Sur un système hôte utilisant SELinux, on peut désactiver le labeling SELinux avec l'option `--security-opt label:disable` lors de l'exécution d'un conteneur.
+
+> Pour lister les attributs SELinux : `ls -Z`.
+
+### Capabilities
+
+Les *capabilities* est une fonctionnalité du noyau Linux permettant d'accorder des permissions précises à un processus. Cela permet à un utilisateur non root d'exécuter une action particulière qui nécessite normalement les droits root.
+
+*Docker* définit des *capabilities* par défaut aux conteneurs. Elles peuvent être modifiées à l'aide des options `--cap-add` et `--cap-drop`.
+
+### Seccomp
+
+*Seccomp* permet de filtrer les appels systèmes exposés par le noyau aux processus. 
+
+*Docker* applique par défaut un profil *seccomp* lors du lancement d'un conteneur de manière à interdire certains appels système. On peut créer un profil personnalisé et le fournir à l'exécution d'un conteneur avec l'option `--security-opt seccomp:policiy.json`. 
+
+### Content Trust
+
+Il s'agit d'un mécanisme de signature d'images (ou plutôt du tag des images). Il peut être activé via une variable d'environnement : `export DOCKER_CONTENT_TRUST=1`. 
+
+Dans ce cas, la signature du tag de l'image sera créée lors d'un push sur un registry. Seules les images signées peuvent être pull lorsque *Content Trust* est activé.
