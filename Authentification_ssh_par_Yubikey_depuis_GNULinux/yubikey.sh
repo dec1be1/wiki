@@ -1,5 +1,3 @@
-#!/bin/bash
-
 pgrep -l gpg-agent &>/dev/null
 if [[ "$?" != "0" ]]; then
     gpg-agent --daemon &>/dev/null

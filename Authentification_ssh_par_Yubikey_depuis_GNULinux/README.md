@@ -8,6 +8,7 @@ La Yubikey doit être correctement configurée. Les clés gpg doivent avoir ét�
 La clé publique correspondante doit évidemment être présente dans le fichier `authorized_keys` du serveur auquel on veut se connecter.
 
 ## Installation
+
 * Installer le démon *SmartCard* (et d'autres paquets) et *GnuPG* si ça n'est pas déjà fait (le paquet `gpg-agent` doit également être installé). Pour *Debian* :
 ```
 # apt install scdaemon pcscd ykcs11 pinentry-tty gnupg2
@@ -35,9 +36,9 @@ export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
 Le principe est que l'on démarre l'agent gpg s'il n'est pas en fonctionnement puis on ré-écrit le socket d'authentification ssh pour qu'il utilise `gpg-agent`.
 
 ## Utilisation
-* Si le fichier `~/.bashrc` a été modifié comme indiqué plus haut, rien de plus à faire. On peut se connecter en ssh et entrer le code PIN quand il est demandé. Sinon, le plus simple est de créer le script suivant et de l'exécuter quand c'est nécessaire : [yubikey.sh](./yubikey.sh)
 
-* Ne pas oublier de lancer ce script avec `source` (ou `.`) pour conserver le contexte du shell initial (et que la variable d'environnement `SSH_AUTH_SOCK` ait la bonne valeur). Une fois le script *sourcé** et la *Yubikey* insérée, on peut s'authentifier en ssh avec cette identité.
+* Si le fichier `~/.bashrc` a été modifié comme indiqué plus haut, rien de plus à faire. On peut se connecter en ssh et entrer le code PIN quand il est demandé. Sinon, pour une utilisation ponctuelle, le plus simple est de créer [ce fichier](./yubikey.sh) et de le sourcer dans un shell lorsque nécessaire : `$ source ./yubikey.sh`.
+
 * On peut vérifier que l'identité est bien chargée dans l'agent ssh :
 ```
 $ ssh-add -l
@@ -48,5 +49,6 @@ $ gpg --card-status
 ```
 
 ## Sources
+
 * https://gist.github.com/ageis/14adc308087859e199912b4c79c4aaa4
 * https://www.ultrabug.fr/hardening-ssh-authentication-using-yubikey-32/
