@@ -43,6 +43,13 @@ Il faut le dé-indexer avant de le supprimer :
 $ git rm <file>
 ```
 
+### Changer les droits d'un fichier après indexation
+Si on veut changer les droits d'un fichier après l'avoir indexé (par exemple 
+ajouter les droits d'exécution pour un script), il faut :
+
+- Changer les droits de manière normale : `chmod +x file`.
+- Mettre à jour l'index : `git update-index --chmod=+x file`.
+
 ### Faire un commit (stage -> repository)
 ```
 $ git commit -m "commit description"
