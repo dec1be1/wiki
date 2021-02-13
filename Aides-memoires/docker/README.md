@@ -119,6 +119,7 @@ Quelques options pour `docker run` :
 - `--host=<host_name>` : pour spécifier le nom de l'hôte associé au conteneur.
 - `-d` : pour démarrer le conteneur en mode *détaché* (pas de connexion à un terminal)
 - `-it` : pour se connecter à un shell interactif après le démarrage du conteneur ou laisse la possibilité de le faire si on a également spécifié l'option `-d`.
+- `-u 0` : pour forcer la connexion au conteneur en utilisateur `root`.
 - `--restart=always` : relancer automatiquement le conteneur en cas de problème.
 
 Pour lister les conteneurs en cours d'exécution :
