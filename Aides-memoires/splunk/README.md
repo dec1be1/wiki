@@ -95,7 +95,20 @@ Cela crée un fichier `/opt/splunkforwarder/etc/system/local/outputs.conf`.
 
 On ajoute ensuite un *monitor*, par exemple ici pour surveiller *nginx* :
 ```
-# ./splunk add monitor /var/log/nginx/
+# ./splunk add monitor /var/log/nginx/access.log -index access_rproxy
+```
+
+> L'index doit d'abord avoir été créé dans l'interface de *Splunk* :
+  *Settings/Indexes*.
+
+Pour lister les *monitor* :
+```
+# ./splunk list monitor
+```
+
+Pour supprimer un *monitor* :
+```
+# ./splunk remove monitor /var/log/nginx/access.log
 ```
 
 
