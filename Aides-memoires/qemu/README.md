@@ -58,7 +58,7 @@ On peut aussi créer un snapshot temporaire en ajoutant le flag `-snapshot` à l
 ## Réduction image qcow2
 Il faut d'abord mettre des zéros dans les zones non utilisées de l'image. Pour une machine virtuelle Linux, depuis la VM :
 ```
-# dd if=/dev/zero of=/mytempfile
+# dd status=progress if=/dev/zero of=/mytempfile
 # rm -f /mytempfile
 ```
 
@@ -117,4 +117,3 @@ Ce [Makefile](./Makefile) permet de configurer et de lancer facilement une machi
 - <https://doc.ycharbi.fr/index.php/Qemu>
 - <https://www.spice-space.org/spice-user-manual.html>
 - <https://blog.programster.org/qemu-img-cheatsheet>
-
