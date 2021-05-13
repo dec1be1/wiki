@@ -42,3 +42,7 @@ $ optirun hashcat --session <session_name> --restore
 > Si on ne met pas `--session`, le fichier de session est enregistré
   par defaut dans le fichier `~/.hashcat/hashcat.restore`. Dans ce cas, pas
   besoin de spécifier `--session` pour restaurer la session.
+
+## Sources
+
+- <https://hashcat.net/wiki/>
