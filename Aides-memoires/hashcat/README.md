@@ -20,13 +20,18 @@ $ optirun hashcat -m 1000 \
                   --session <session_name> \
                   <hash_file_path> \
                   <wordlist_path>
+                  -r <rulesfile_path>
 ```
 
 - `-m` : le type de hash à cracker
-- `-a` : le type de crack
+- `-a` : le mode de crack
 - `-d` : les devices de calcul à utiliser (utiliser `-I` pour les lister)
+         On peut aussi utiliser `-D` pour spécifier les **types** de devices
+         à utiliser (1: CPU, 2: GPU, ...).
 - `--session` : pour nommer la session actuelle et pouvoir la restaurer
-                si elle s'arrête (création d'un fichier `.restore`).
+                si elle s'arrête (création d'un fichier `.restore` dans
+                `~/.hashcat/sessions/`).
+- `-r` : fichier de règles de dérivation des mots
 
 Pour le mettre en pause proprement, choisir *Checkpoint* en appuyant sur `c`.
 Cela arrêtera l'opération après la prochaine écriture dans le fichier
@@ -40,8 +45,8 @@ $ optirun hashcat --session <session_name> --restore
 ```
 
 > Si on ne met pas `--session`, le fichier de session est enregistré
-  par defaut dans le fichier `~/.hashcat/hashcat.restore`. Dans ce cas, pas
-  besoin de spécifier `--session` pour restaurer la session.
+  par defaut dans le fichier `~/.hashcat/sessions/hashcat.restore`.
+  Dans ce cas, pas besoin de spécifier `--session` pour restaurer la session.
 
 ## Sources
 
