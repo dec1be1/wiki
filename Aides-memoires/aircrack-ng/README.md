@@ -103,6 +103,22 @@ forcer sa ré-authentification.
 # aircrack-ng -w dict.txt -b <bssid> dump.cap
 ```
 
+On peut simplement lire le fichier de capture pour voir si des handshakes ont
+été capturés :
+```
+# aircrack-ng <capture_file>
+```
+
+On peut ajouter l'option `-j` pour créer un fichier *HCCAPX* pour *hashcat* :
+```
+# aircrack-ng <capture_file> -j <hashcat_file_to_create>
+```
+
+Si on veut voir le handshake dans *Wireshark*, on peut appliquer ce filtre :
+```
+(wlan.fc.type_subtype == 0x08 || wlan.fc.type_subtype == 0x05 || eapol) && wlan.addr==XX:XX:XX:XX:XX:XX
+```
+
 ## Sources
 * <https://linuxconfig.org/discover-hidden-wifi-ssids-with-aircrack-ng>
 * <https://www.aircrack-ng.org/doku.php?id=simple_wep_crack>
