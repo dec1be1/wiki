@@ -1,6 +1,8 @@
 hashcat
 =======
 
+## Utilisation avec un GPU
+
 On suppose ici qu'on a une installation de *hashcat* qu'on va utiliser avec
 un GPU *nvidia* (avec le framework *CUDA*).
 
@@ -11,6 +13,8 @@ Pour voir les backends de calculs disponibles :
 ```
 $ optirun hashcat -I
 ```
+
+## Généralités
 
 Pour lancer un calcul :
 ```
@@ -48,6 +52,13 @@ $ optirun hashcat --session <session_name> --restore
   par defaut dans le fichier `~/.hashcat/sessions/hashcat.restore`.
   Dans ce cas, pas besoin de spécifier `--session` pour restaurer la session.
 
+## Clé WPA/WPA2
+
+```
+$ optirun hashcat -m 2500 capture.hccapx rockyou.txt
+```
+
 ## Sources
 
 - <https://hashcat.net/wiki/>
+- <https://hashcat.net/wiki/doku.php?id=cracking_wpawpa2>
