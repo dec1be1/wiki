@@ -71,14 +71,17 @@ Les charsets prédéfinis :
 - ?b = `0x00 - 0xff`
 
 On peut définir des *sous-charsets* avec `-1`, `-2`, `-3` et `-4`.
-On doit ensuite fournir le *mask* à utiliser. Il définit la longueur et le charset (ou *sous-charset*) pour
-chaque caractère).
+On doit ensuite fournir le *mask* à utiliser. Il définit la longueur et le
+charset (ou *sous-charset*) pour chaque caractère).
 
 Exemples :
 
 - 4 caractères parmi les chiffres (pas besoin de `-1` ici) : `-a 3 ?d?d?d?d`
 - 8 caractères parmi chiffres et lettres majuscules et minuscules :
  `-a 3 -1 ?d?l?u ?1?1?1?1?1?1?1?1`
+
+> Pour tester aussi les clés plus petites que le *mask* spécifié, on peut
+  ajouter l'option `--incremental`.
 
 ## Clé WPA/WPA2
 
