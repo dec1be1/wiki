@@ -76,12 +76,13 @@ charset (ou *sous-charset*) pour chaque caractère).
 
 Exemples :
 
-- 4 caractères parmi les chiffres (pas besoin de `-1` ici) : `-a 3 ?d?d?d?d`
+- 4 caractères parmi les chiffres (pas besoin de `-1` ici) :
+  `-a 3 <hash_file> ?d?d?d?d`
 - 8 caractères parmi chiffres et lettres majuscules et minuscules :
- `-a 3 -1 ?d?l?u ?1?1?1?1?1?1?1?1`
+ `-a 3 <hash_file> -1 ?d?l?u ?1?1?1?1?1?1?1?1`
 
 > Pour tester aussi les clés plus petites que le *mask* spécifié, on peut
-  ajouter l'option `--incremental`.
+  ajouter l'option `--increment`.
 
 ## Clé WPA/WPA2
 
