@@ -28,7 +28,7 @@ $ optirun hashcat -m 1000 \
 ```
 
 - `-m` : le type de hash à cracker
-- `-a` : le mode de crack
+- `-a` : le mode d'attaque (par exemple : 0 pour Straight, 3 pour Bruteforce)
 - `-d` : les devices de calcul à utiliser (utiliser `-I` pour les lister)
          On peut aussi utiliser `-D` pour spécifier les **types** de devices
          à utiliser (1: CPU, 2: GPU, ...).
@@ -51,6 +51,34 @@ $ optirun hashcat --session <session_name> --restore
 > Si on ne met pas `--session`, le fichier de session est enregistré
   par defaut dans le fichier `~/.hashcat/sessions/hashcat.restore`.
   Dans ce cas, pas besoin de spécifier `--session` pour restaurer la session.
+
+Pour redéfinir la température d'alerte pour le GPU (ici à 97°C) :
+`--hwmon-temp-abort=97`
+
+## Bruteforce
+
+Les attaques par bruteforce se font à l'aide du mode `-a 3`.
+
+Les charsets prédéfinis :
+
+- ?l = `abcdefghijklmnopqrstuvwxyz`
+- ?u = `ABCDEFGHIJKLMNOPQRSTUVWXYZ`
+- ?d = `0123456789`
+- ?h = `0123456789abcdef`
+- ?H = `0123456789ABCDEF`
+- ?s = ``«space»!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~``
+- ?a = `?l?u?d?s`
+- ?b = `0x00 - 0xff`
+
+On peut définir des *sous-charsets* avec `-1`, `-2`, `-3` et `-4`.
+On doit ensuite fournir le *mask* à utiliser. Il définit la longueur et le charset (ou *sous-charset*) pour
+chaque caractère).
+
+Exemples :
+
+- 4 caractères parmi les chiffres (pas besoin de `-1` ici) : `-a 3 ?d?d?d?d`
+- 8 caractères parmi chiffres et lettres majuscules et minuscules :
+ `-a 3 -1 ?d?l?u ?1?1?1?1?1?1?1?1`
 
 ## Clé WPA/WPA2
 
