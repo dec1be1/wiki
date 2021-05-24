@@ -37,6 +37,18 @@ Ce mode teste toutes les combinaisons de caractères d'un jeu donné (cf. fichie
 $ john --incremental [HASH_FILE]
 ```
 
+Plusieurs modes sont déjà définis (non exhaustif) :
+
+- `ASCII`
+- `Alnum`
+- `Alpha`
+- `Digits`
+
+Pour utiliser un mode particulier :
+```
+$ john --incremental=Digits [HASH_FILE]
+```
+
 ## Mangling rules
 
 Les *mangling rules* permettent de faire des dérivations de mots selon des règles établies dans le fichier de configuration de john.
@@ -48,6 +60,8 @@ On peut également générer un dictionnaire custom utilisant des *mangling rule
 ```
 $ john --config=custom_config_file --wordlist=custom_wordlist.txt --rules=Jumbo --stdout
 ```
+
+> Pour mettre TOUTES les règles : `--rules:All`
 
 ## unshadow
 
