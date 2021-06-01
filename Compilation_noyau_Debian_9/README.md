@@ -1,7 +1,8 @@
 Compilation noyau sur Debian 9 (Stretch)
 ========================================
 
-Cette page décrit la procédure de compilation du noyau Linux sous Debian 9 (Stretch).
+Cette page décrit la procédure de compilation du noyau Linux sous Debian 9
+(Stretch).
 
 ## Installation des packages nécessaires
 ```
@@ -9,17 +10,23 @@ Cette page décrit la procédure de compilation du noyau Linux sous Debian 9 (St
 ```
 
 ## Téléchargement des sources
+
 ### Solution 1 : Téléchargement manuel
-* [Télécharger les sources et la signature](https://www.kernel.org), vérifier la signature et décompresser l'archive.
+
+[Télécharger les sources et la signature](https://www.kernel.org),
+vérifier la signature et décompresser l'archive.
 
 ### Solution 2 : Avec git
-Pour ne cloner que la branche qui nous intéresse sans tout l'historique des commit (qui prend beaucoup de place), on peut taper :
+
+Pour ne cloner que la branche qui nous intéresse sans tout l'historique des
+commit (qui prend beaucoup de place), on peut taper :
 ```
 $ cd repertoire_source_kernel
 $ git clone --depth 1 --single-branch --branch v4.14.61 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/ linux-4.14.61
 ```
 
 ## Préparation des sources
+
 * Copier le fichier `.config` dans le dossier des sources.
 * Entrer dans le dossier des sources.
 * Taper :
@@ -34,6 +41,7 @@ $ cp ./.config /home/ju/geek/systems/Debian/kernel-config/mac/config-X.X.XX
 ```
 
 ## Compilation
+
 * Taper les commandes suivantes :
 ```
 $ make deb-pkg -j$(nproc)
@@ -46,16 +54,22 @@ $ cd ..
 ```
 
 ## Post installation
-Relancer une mise à jour des paquets. Le paquet `linux-libc-dev` (qui avait été downgradé pendant l'installation du nouveau noyau) se remet à jour :
+
+Relancer une mise à jour des paquets. Le paquet `linux-libc-dev`
+(qui avait été downgradé pendant l'installation du nouveau noyau) se remet à
+jour :
 ```
 # apt update && apt dist-upgrade
 ```
 
 ## Nettoyage
-On peut supprimer les paquets des vieux noyaux (garder au moins un ancien noyau fonctionnel...) avec :
+
+On peut supprimer les paquets des vieux noyaux (garder au moins un ancien
+noyau fonctionnel...) avec :
 ```
 # apt purge ...
 ```
 
 ## Sources
-https://computerz.solutions/kernel-4-debian-8/
+
+- <https://computerz.solutions/kernel-4-debian-8/>

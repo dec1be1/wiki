@@ -1,22 +1,30 @@
 Configuration PHP et Python dans un chroot OpenBSD
 ==================================================
 
-Ce wiki explique comment faire fonctionner php et python dans un environnement chrooté sous OpenBSD.
-Le chroot concerne ici l'exécution du serveur web (nginx) et est fait dans `/var/www`.
+Ce wiki explique comment faire fonctionner php et python dans un
+environnement chrooté sous OpenBSD.
+Le chroot concerne ici l'exécution du serveur web (nginx) et est fait
+dans `/var/www`.
 
-Le shell par défaut de l'utilisateur *root* doit être `/bin/sh`. D'une manière générale, ça élimine pas mal de problèmes, notamment parce que *bash* est dans la partition `/usr/local` qui n'est pas montée en mode *single user* (avec `boot -s` au démarrage).
+Le shell par défaut de l'utilisateur *root* doit être `/bin/sh`. D'une
+manière générale, ça élimine pas mal de problèmes, notamment parce que *bash*
+est dans la partition `/usr/local` qui n'est pas montée en mode *single user*
+(avec `boot -s` au démarrage).
 
 ## Modification des propriétés de montage de la partition `/var`
 
-* Dans `/etc/fstab` : enlever les propriétés *nodev* et *nosuid* à la partition `/var`.
+* Dans `/etc/fstab` : enlever les propriétés *nodev* et *nosuid* à la
+  partition `/var`.
 * Dans `/etc/fstab` : ajouter la propriété *wxallowed* à la partition `/var`.
 * rebooter
 
 ## Copie des fichiers nécessaires dans le chroot
 
-Copier les fichiers suivants dans le chroot (en recréant la structure des dossiers).
+Copier les fichiers suivants dans le chroot (en recréant la structure des
+dossiers).
 
 Pour php :
+
 * /etc/resolv.conf
 * /etc/hosts
 * /etc/localtime
@@ -27,6 +35,7 @@ Pour php :
 
 
 Pour python :
+
 * /sbin/ldconfig
 * /usr/lib/libc.so.X.X
 * /usr/lib/libcrypto.so.X.X
@@ -57,14 +66,19 @@ Pour python :
 * /usr/local/lib/mysql/libmysqlclient_r.so.X.X
 
 
-Copier aussi le dossier `/usr/local/lib/pythonX.X` dans le chroot (uniquement les modules nécessaires).
+Copier aussi le dossier `/usr/local/lib/pythonX.X` dans le chroot (uniquement
+les modules nécessaires).
 
-Créer les liens symboliques vers la version python utilisée pour `pydoc`, `python` et `python-config` (voir dans le dossier d'origine `/usr/local/bin`).
+Créer les liens symboliques vers la version python utilisée pour `pydoc`,
+`python` et `python-config` (voir dans le dossier d'origine `/usr/local/bin`).
 
 
-Pour les *locale* (permet d'envoyer les commandes exécutées par la fonction php `exec()` en UTF-8 ; sinon la commande échoue lorsqu'elle comporte des caractères UTF-8) :
+Pour les *locale* (permet d'envoyer les commandes exécutées par la fonction
+php `exec()` en UTF-8 ; sinon la commande échoue lorsqu'elle comporte des
+caractères UTF-8) :
 
-Copier le dossier `/usr/local/share/locale` et le fichier `/usr/share/locale/UTF-8/LC_CTYPE` dans le chroot.
+Copier le dossier `/usr/local/share/locale` et le fichier
+`/usr/share/locale/UTF-8/LC_CTYPE` dans le chroot.
 
 ## Création des nodes nécessaires
 
@@ -85,7 +99,8 @@ ou, pour tout créer d'un coup, utiliser le script `MAKEDEV` d'OpenBSD :
 
 ## Finalisation
 
-Créer le dossier `/var/run` dans le chroot puis générer un fichier chrooté `ld.hints.so` :
+Créer le dossier `/var/run` dans le chroot puis générer un fichier chrooté
+`ld.hints.so` :
 ```
 # mkdir /var/www/var/run
 # chroot /var/www /sbin/ldconfig /usr/lib /usr/local/lib
@@ -97,5 +112,6 @@ Pour tester python :
 ```
 
 ## Sources
-* https://synacks.blogspot.fr/2009/01/django-on-openbsd.html
-* https://yeuxdelibad.net/ah/#toc37
+
+* <https://synacks.blogspot.fr/2009/01/django-on-openbsd.html>
+* <https://yeuxdelibad.net/ah/#toc37>

@@ -2,25 +2,34 @@ Installation d'un serveur mail sous OpenBSD
 ===========================================
 
 ## Préambule
-L'installation est réalisée sous OpenBSD 6.5. On va installer et configurer les éléments suivants :
+
+L'installation est réalisée sous OpenBSD 6.5. On va installer et configurer
+les éléments suivants :
+
 * OpenSMTPD : le serveur mail par défaut d'OpenBSD (déjà installé)
 * Dovecot : le serveur IMAP
 * ClamAV et Clamsmtp : l'antivirus
 * Spamd, Spampd et Spamassassin : gestion des spams
 * DKIM Proxy : signature des mails sortants pour authentification
 
-On note que PacketFilter (le firewall d'OpenBSD) va également jouer un grand rôle (filtrage de paquets, redirection de ports et réception des mails entrants).
+On note que PacketFilter (le firewall d'OpenBSD) va également jouer un grand
+rôle (filtrage de paquets, redirection de ports et réception des mails
+entrants).
 
-On utilisera aussi *fetchmail* qui permet de récupérer les messages venant d'autres comptes pour les centraliser dans une seule boîte de réception.
+On utilisera aussi *fetchmail* qui permet de récupérer les messages venant
+d'autres comptes pour les centraliser dans une seule boîte de réception.
 
 ## Installation des paquets
+
 On installe les paquets nécessaires :
 ```
 # pkg_add opensmtpd-extras dovecot dovecot-pigeonhole curl dkimproxy p5-Mail-SpamAssassin spampd clamav clamsmtp fetchmail
 ```
 
 ## Configuration du firewall (pf)
-On va éditer le fichier `/etc/pf.conf`. Vers le début du fichier, on ajoute les tables qui vont être utilisées ainsi que les ports :
+
+On va éditer le fichier `/etc/pf.conf`. Vers le début du fichier, on ajoute
+les tables qui vont être utilisées ainsi que les ports :
 ```
 # Mail tables
 table <mail_bruteforce> persist
@@ -32,14 +41,16 @@ table <nospamd> persist file "/etc/mail/nospamd"
 mail_ports = "{ 25 587 993 }"
 ```
 
-Un peu plus bas, dans les règles par défaut, on bloque et on loggue les paquets venant des méchants :
+Un peu plus bas, dans les règles par défaut, on bloque et on loggue les
+paquets venant des méchants :
 ```
 # Rejecting abuse and mail_bruteforce tables (and logging it)
 block log quick from <abuse>
 block log quick from <mail_bruteforce>
 ```
 
-Ensuite, encore un peu plus bas, on autorise le trafic entrant sur les ports qui vont bien :
+Ensuite, encore un peu plus bas, on autorise le trafic entrant sur les ports
+qui vont bien :
 ```
 # Pass traffic on mail ports from outside
 pass in quick on $ext_if inet proto tcp from !<abuse> to (egress) port $mail_ports
@@ -83,20 +94,32 @@ On n'oublie pas de redémarrer le firewall :
 ```
 
 ## Configuration des différentes briques
+
 ### OpenSMTPD
-On commence par créer l'utilisateur *vmail* pour séparer les droits avec les autres applications :
+
+On commence par créer l'utilisateur *vmail* pour séparer les droits avec les
+autres applications :
 ```
 # useradd -m -u 1002 -g =uid -c "Virtual Mail" -d /var/vmail -s /sbin/nologin vmail
 ```
 
-Le fichier de configuration principal est `/etc/mail/smtpd.conf`. Il est responsable de la transmission des messages entrants et sortants. Voilà un exemple : [`smtpd.conf`](./smtpd.conf).
+Le fichier de configuration principal est `/etc/mail/smtpd.conf`. Il est
+responsable de la transmission des messages entrants et sortants.
+Voilà un exemple : [`smtpd.conf`](./smtpd.conf).
 
 Ce fichier fait appel à d'autres fichiers qu'on crée :
-* [`users`](./users) : liste des adresses à prendre en compte et vers quel utilisateur les renvoyer.
-* [`passwd`](./passwd) : liste des comptes utilisateurs avec le hash du mot de passe. Pour générer un hash blowfish, on peut utiliser cette commande : `dovecot pw -s BLF-CRYPT`.
-* [`domains`](./domains) : liste de domaine à prendre en charge. On peut en mettre plusieurs si nécessaire.
 
-On ajoute les adresses mail du serveur dans le fichiers `aliases`. On note que l'utilisateur *vmail* renvoie les mails vers `/dev/null`. Exemples de lignes à ajouter :
+* [`users`](./users) : liste des adresses à prendre en compte et vers quel
+  utilisateur les renvoyer.
+* [`passwd`](./passwd) : liste des comptes utilisateurs avec le hash du mot
+  de passe. Pour générer un hash blowfish, on peut utiliser cette commande :
+  `dovecot pw -s BLF-CRYPT`.
+* [`domains`](./domains) : liste de domaine à prendre en charge. On peut en
+  mettre plusieurs si nécessaire.
+
+On ajoute les adresses mail du serveur dans le fichiers `aliases`. On note
+que l'utilisateur *vmail* renvoie les mails vers `/dev/null`. Exemples de
+lignes à ajouter :
 ```
 vmail: /dev/null
 jean-clode: jean-clode@domain.tld
@@ -111,13 +134,15 @@ On crée le fichier `/etc/mail/mailname` :
 ```
 
 Ce fichier fait en sorte que le *hostname* du serveur apparaisse bien comme
-`domain.tld` (plutôt que le *hostname* réel du serveur qui est dans 
+`domain.tld` (plutôt que le *hostname* réel du serveur qui est dans
 `/etc/myname`). Il est important que ça corresponde avec le reverse dns.
 
 On relance le service : `# rcctl restart smtpd`
 
 ### Dovecot
-Dovecot est le serveur IMAP. Les fichiers de configuration se trouvent dans `/etc/dovecot`. Les modifications à faire sont les suivantes :
+Dovecot est le serveur IMAP. Les fichiers de configuration se trouvent dans
+`/etc/dovecot`. Les modifications à faire sont les suivantes :
+
 #### `/etc/dovecot.conf`
 `protocols = imap lmtp`
 
@@ -165,6 +190,7 @@ ssl_key = </etc/ssl/private/domain.tld.key
 `hostname = mail.domain.tld`
 
 #### `/etc/dovecot/conf.d/15-mailboxes.conf`
+
 * Ajouter `auto = subscribe` à toutes les sections `mailbox`
 * Commenter la mailbox `"Sent Messages"`
 
@@ -207,7 +233,9 @@ On active et on démarre le service :
 ```
 
 ### ClamAV
-Les fichiers de configuration sont [`/etc/freshclam.conf`](./freshclam.conf) et [`/etc/clamd.conf`](./clamd.conf).
+
+Les fichiers de configuration sont [`/etc/freshclam.conf`](./freshclam.conf)
+et [`/etc/clamd.conf`](./clamd.conf).
 
 On lance la mise à jour des signatures : `/usr/local/bin/freshclam`.
 
@@ -231,7 +259,10 @@ On active le service et on le lance :
 ```
 
 ### clamsmtp
-Les fichiers de configuration sont [`/etc/clamsmtpd-in.conf`](./clamsmtpd-in.conf) et [`/etc/clamsmtpd-out.conf`](./clamsmtpd-out.conf).
+
+Les fichiers de configuration sont
+[`/etc/clamsmtpd-in.conf`](./clamsmtpd-in.conf) et
+[`/etc/clamsmtpd-out.conf`](./clamsmtpd-out.conf).
 
 On lance les services :
 ```
@@ -242,6 +273,7 @@ On lance les services :
 On ajoute ces lignes à `/etc/rc.local` pour les démarrer automatiquement au boot.
 
 ### spamd
+
 On ajoute le service et on configure :
 ```
 # rcctl enable spamd
@@ -271,9 +303,12 @@ On ajoute ce crontab :
 ```
 
 ### spamlogd
-On ajoute l'interface `pflog1` en créant le fichier [`/etc/hostname.pflog1`](./hostname.pflog1).
 
-On lance l'interface : `# ifconfig pflog1 up description "spamlogd logging interface"`
+On ajoute l'interface `pflog1` en créant le fichier
+[`/etc/hostname.pflog1`](./hostname.pflog1).
+
+On lance l'interface :
+`# ifconfig pflog1 up description "spamlogd logging interface"`
 
 On lance le service :
 ```
@@ -283,6 +318,7 @@ On lance le service :
 ```
 
 ### SpamAssassin et spampd
+
 On active et on lance les services :
 ```
 # rcctl enable spamassassin
@@ -292,12 +328,19 @@ On active et on lance les services :
 # rcctl start spampd
 ```
 
-Si on souhaite *whitelister* des adresses particulières, on peut le faire via le fichier `/etc/mail/spamassassin/local.cf`. Voir https://cwiki.apache.org/confluence/display/SPAMASSASSIN/ManualWhitelist pour plus de détails. Relancer les services après édition de ce fichier.
+Si on souhaite *whitelister* des adresses particulières, on peut le faire via
+le fichier `/etc/mail/spamassassin/local.cf`.
+Voir <https://cwiki.apache.org/confluence/display/SPAMASSASSIN/ManualWhitelist>
+pour plus de détails. Relancer les services après édition de ce fichier.
 
 ### DKIM Proxy
-Le fichier de configuration est : [`/etc/dkimproxy_out.conf`](./dkimproxy_out.conf).
 
-On crée le dossier `/etc/dkimproxy/private` et y copier les clés publique et privée (`public.key` et `private.key` qu'on peut obtenir à partir de la commande `dkim-genkey`).
+Le fichier de configuration est :
+[`/etc/dkimproxy_out.conf`](./dkimproxy_out.conf).
+
+On crée le dossier `/etc/dkimproxy/private` et y copier les clés publique et
+privée (`public.key` et `private.key` qu'on peut obtenir à partir de la
+commande `dkim-genkey`).
 
 On ajuste les droits :
 ```
@@ -314,17 +357,22 @@ On active et lance le service :
 ```
 
 ### Fetchmail
+
 On commence par créer un utilisateur :
 ```
 # useradd -m -u 3001 -g=uid -c "Fetchmail Daemon User" -d /var/fetchmail -s /sbin/nologin _fetchmail
 ```
 
-*Fetchmail* va fonctionner de manière autonome et aura donc besoin de droits particuliers. On gère ça avec *doas*. On édite le fichier `/etc/doas.conf` et on ajoute ce contenu :
+*Fetchmail* va fonctionner de manière autonome et aura donc besoin de droits
+particuliers. On gère ça avec *doas*. On édite le fichier `/etc/doas.conf` et
+on ajoute ce contenu :
 ```
 permit nopass setenv { HOME=/var/fetchmail USER=_fetchmail LOGNAME=_fetchmail } root as _fetchmail cmd /usr/local/bin/fetchmail
 ```
 
-On crée le fichier de configuration `/var/fetchmail/.fetchmailrc`. Voici un exemple de contenu (on peut mettre plusieurs sections `poll` pour plusieurs comptes) :
+On crée le fichier de configuration `/var/fetchmail/.fetchmailrc`.
+Voici un exemple de contenu (on peut mettre plusieurs sections `poll` pour
+plusieurs comptes) :
 ```
 set daemon 60
 set postmaster 'jc'
@@ -351,6 +399,7 @@ Fetchmail est lancé depuis le fichier `/etc/rc.local` :
 ```
 
 ### Divers
+
 Ajouter le contenu suivant au fichier `/etc/login.conf` :
 ```
 dovecot:\
@@ -362,7 +411,9 @@ dovecot:\
 Il faudra rebooter pour prise en compte.
 
 ## Configuration de la zone DNS
-Ajouter les champs suivants à la zone DNS. Penser également à configurer correctement le reverse DNS.
+
+Ajouter les champs suivants à la zone DNS. Penser également à configurer
+correctement le reverse DNS.
 
 ### Champ MX
 `IN MX 1 mail.domain.tld.`
@@ -380,6 +431,7 @@ Ajouter les champs suivants à la zone DNS. Penser également à configurer corr
 `pubkey._domainkey IN TXT "v=DKIM1;h=sha256;k=rsa;s=email;t=s;p=<...PUBLIC_KEY...>"`
 
 ## Sources
-* https://www.openbsd.org/opensmtpd/
-* https://frozen-geek.net/openbsd-email-server-1/
-* http://technoquarter.blogspot.fr/2015/02/openbsd-mail-server-part-3-clamav-and.html
+
+* <https://www.openbsd.org/opensmtpd/>
+* <https://frozen-geek.net/openbsd-email-server-1/>
+* <http://technoquarter.blogspot.fr/2015/02/openbsd-mail-server-part-3-clamav-and.html>

@@ -1,7 +1,8 @@
 Quelques exemples de regex
 ==========================
 
-Cette page centralise quelques exemples d'expressions régulières (regex) de type PCRE.
+Cette page centralise quelques exemples d'expressions régulières (regex)
+de type PCRE.
 
 Numéro de téléphone français : `#^0[0-9]([-. ]?[0-9]{2}){4}$#`
 
