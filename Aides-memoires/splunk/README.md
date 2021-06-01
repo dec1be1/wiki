@@ -41,7 +41,8 @@ L'instance est alors accessible à l'adresse indiquée.
 #### Configuration
 
 Pour ajouter des ports d'écoute (pour recevoir les données depuis les
-forwarders) : *Settings/Forwarding and receiving/Receive data/New receiving port*.
+forwarders) :
+*Settings/Forwarding and receiving/Receive data/New receiving port*.
 
 On ajoute le port qu'on veut puis on relance l'instance :
 *Settings/System/Server controls*.
@@ -110,7 +111,6 @@ Pour supprimer un *monitor* :
 ```
 # ./splunk remove monitor /var/log/nginx/access.log
 ```
-
 
 ## Sources
 

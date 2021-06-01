@@ -1,12 +1,15 @@
 Configuration réseau/iptables sous GNU/Linux
 ============================================
 
-Voici quelques commandes sous GNU/Linux pour configurer le réseau et le firewall. On parle des commandes `ethtool`, `ip`, `bridge` et `iptables`.
+Voici quelques commandes sous GNU/Linux pour configurer le réseau et le
+firewall. On parle des commandes `ethtool`, `ip`, `bridge` et `iptables`.
 
 Ces commandes sont à taper avec les droits d'administration.
 
 ## Ethernet
+
 ### Interfaces
+
 |Action|Commande|
 |------|--------|
 |Observation interface|`# ethtool eth0`|
@@ -26,6 +29,7 @@ Ces commandes sont à taper avec les droits d'administration.
 |Etat de la base de données|`# bridge fdb show`|
 
 ### VLAN
+
 |Action|Commande|
 |------|--------|
 |Ajouter une interface|`# ip link add link eth0 name eth0.14 type vlan id 14`|
@@ -35,8 +39,11 @@ Ces commandes sont à taper avec les droits d'administration.
 |Observation d'un VLAN|`# bridge vlan show`|
 
 ## IP
+
 ### Interfaces
-On note que des alias sont disponibles : par exemple `addr` peut s'écrire simplement `a`.
+
+On note que des alias sont disponibles : par exemple `addr` peut s'écrire
+simplement `a`.
 
 |Action|Commande|
 |------|--------|
@@ -48,6 +55,7 @@ On note que des alias sont disponibles : par exemple `addr` peut s'écrire simpl
 |Voir les interfaces actives|`# ip addr show` (alias `# ip a`)|
 
 ### Routage
+
 |Action|Commande|
 |------|--------|
 |Activer le routage|`# echo 1 > /proc/sys/net/ipv4/ip_forward`|
@@ -57,6 +65,7 @@ On note que des alias sont disponibles : par exemple `addr` peut s'écrire simpl
 |Voir les routes|`# ip route show` (alias `# ip r`)|
 
 ### iptables
+
 |Action|Commande|
 |------|--------|
 |Source NAT d'une adresse|`# iptables -t nat -a POSTROUTING -o eth0 -j SNAT 192.168.1.10`|

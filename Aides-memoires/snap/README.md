@@ -1,9 +1,14 @@
 snap
 ====
 
-Il s'agit d'un gestionnaire de paquets indépendant de la distribution GNU/Linux utilisée. Chaque paquet embarque toutes les dépendances nécessaires.
-Cela permet d'installer les dernières versions de paquets supportés. Pratique sous Debian par exemple puisque ça permet d'éviter de jongler avec les dépôts *unstable* ou *testing* pour installer une version récente d'un logiciel.
-Site officiel : https://snapcraft.io
+Il s'agit d'un gestionnaire de paquets indépendant de la distribution
+GNU/Linux utilisée. Chaque paquet embarque toutes les dépendances nécessaires.
+Cela permet d'installer les dernières versions de paquets supportés.
+Pratique sous Debian par exemple puisque ça permet d'éviter de jongler avec
+les dépôts *unstable* ou *testing* pour installer une version récente d'un
+logiciel.
+
+Site officiel : <https://snapcraft.io>
 
 Pour installer un paquet :
  ```

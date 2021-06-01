@@ -9,12 +9,15 @@ pandoc
 
 La conversion se fait ici directement en pdf.
 
-Pour faire une conversion rapide (en modifiant les énormes marges par défaut de *Latex*) :
+Pour faire une conversion rapide (en modifiant les énormes marges par défaut
+de *Latex*) :
 ```
 $ pandoc -V geometry:margin=1.2cm -f markdown -t pdf -o doc.pdf doc.md
 ```
 
-On peut aussi mettre un entête *YAML* pour spécifier plus d'options (liste non exhaustive). Dans ce cas, on aura une page de garde avec beaucoup plus d'informations ainsi qu'une table des matières :
+On peut aussi mettre un entête *YAML* pour spécifier plus d'options (liste
+non exhaustive). Dans ce cas, on aura une page de garde avec beaucoup plus
+d'informations ainsi qu'une table des matières :
 ```
 ---
 title: "Mon titre"
@@ -40,4 +43,3 @@ toc-title: "Table des matières"
 lang: fr-FR
 ...
 ```
-

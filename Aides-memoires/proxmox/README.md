@@ -18,19 +18,19 @@ Proxmox va alors créer une nouvelle image dans le dossier correspondant de la
 VM (avec un nom de fichier normalisé) puis il va copier les données du disque
 existant vers ce nouveau disque. On peut supprimer l'image original si elle
 n'est plus utile.
-Il faut aller ensuite dans l'onglet *Hardware* de la VM depuis l'interface 
+Il faut aller ensuite dans l'onglet *Hardware* de la VM depuis l'interface
 Proxmox pour ajouter le nouveau disque dur (qui apparaît comme un disque non
 utilisé).
 
 ## Création certificat Let's Encrypt pour la GUI de PVE
 
-Selon l'architecture réseau mise en place, il est assez ennuyeux d'utiliser 
-un challenge de type *http*. On va donc configurer le tout pour un challenge 
-de type *dns*. 
+Selon l'architecture réseau mise en place, il est assez ennuyeux d'utiliser
+un challenge de type *http*. On va donc configurer le tout pour un challenge
+de type *dns*.
 
-Le principe est que Proxmox va utiliser l'API du fournisseur de domaine (OVH 
-chez moi) pour créer dynamiquement un enregistrement dans la zone qui 
-permettra de prouver que ce domaine est bien sous mon contrôle. 
+Le principe est que Proxmox va utiliser l'API du fournisseur de domaine (OVH
+chez moi) pour créer dynamiquement un enregistrement dans la zone qui
+permettra de prouver que ce domaine est bien sous mon contrôle.
 
 ### Création token API OVH
 
@@ -66,7 +66,7 @@ On récupère alors :
 
 ### Création challenge plugin
 
-Dans Proxmox, *Datacenter/ACME*, *Add* et on remplit les champs en mettant 
+Dans Proxmox, *Datacenter/ACME*, *Add* et on remplit les champs en mettant
 le type d'API sur *OVH*.
 
 ### Ajout domaine ACME
@@ -75,8 +75,7 @@ Dans Proxmox, *Node/System/Certificates*, *Add* et on remplit les champs.
 
 Le plugin est celui qu'on a créé à l'étape au dessus.
 
-Le *Domain* est le nom de sous-domaine affecté à Proxmox (par exemple 
+Le *Domain* est le nom de sous-domaine affecté à Proxmox (par exemple
 `pve.domain.tld`).
 
 On peut alors demander un certificat en cliquant sur *Order Certificates Now*.
-

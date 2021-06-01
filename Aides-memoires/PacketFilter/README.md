@@ -18,4 +18,5 @@ Pour effacer une adresse ip d'une table (<abuse> ici) :
 # pfctl -t abuse -T del <adresse_ip>
 ```
 
-Pour ajouter un élément à une table, utiliser la même syntaxe en remplaçant `del` par `add`.
+Pour ajouter un élément à une table, utiliser la même syntaxe en remplaçant
+`del` par `add`.

@@ -2,6 +2,7 @@ Python
 ======
 
 ## pip / pip3
+
 Pour mettre à jour tous les modules :
 ```
 $ pip install -r <(pip freeze) --upgrade
@@ -15,7 +16,9 @@ $ pip check && pip3 check
 ```
 
 ## subprocess
-Pour lancer un processus en lisant sur *stdin* puis imprimer le résultat (même si c'est sur *stderr*) et le code de retour :
+
+Pour lancer un processus en lisant sur *stdin* puis imprimer le résultat (même
+si c'est sur *stderr*) et le code de retour :
 ```python
 import subprocess
 import shlex
@@ -26,7 +29,12 @@ print(p.returncode)
 ```
 
 ## format
-La spécification du type de données à afficher à l'aide de la fonction `format()` peut se faire avec la syntaxe suivante : `{numéro_argument:conversion}`, avec `conversion` pouvant prendre les valeurs suivantes :
+
+La spécification du type de données à afficher à l'aide de la fonction
+`format()` peut se faire avec la syntaxe suivante :
+`{numéro_argument:conversion}`, avec `conversion` pouvant prendre les valeurs
+suivantes :
+
 - `s` : strings
 - `d` : decimal integers (base-10)
 - `f` : floating point display
@@ -37,7 +45,9 @@ La spécification du type de données à afficher à l'aide de la fonction `form
 - `X` : hexadecimal with uppercase letters after 9
 - `e` : exponent notation
 
-Comme en C, on peut ajouter, avant le code précédent, le nombre de caractères à afficher (avec padding en ajoutant encore un zéro devant).
-Par exemple : `{0:08x}` sera bien adapté pour afficher une adresse mémoire sur 32 bits.
+Comme en C, on peut ajouter, avant le code précédent, le nombre de caractères
+à afficher (avec padding en ajoutant encore un zéro devant).
+Par exemple : `{0:08x}` sera bien adapté pour afficher une adresse mémoire sur
+32 bits.
 
-*Source :* <https://www.geeksforgeeks.org/python-format-function/>
+Source : <https://www.geeksforgeeks.org/python-format-function/>

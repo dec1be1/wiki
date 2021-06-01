@@ -5,8 +5,10 @@ vim
 
 En mode interactif :
 
-- pour ouvrir un nouveau fichier à la place d'un autre (le fichier ouvert doit avoir été sauvé) : `:e`
-- utiliser la commande `:r CheminFichierAInserer` pour insérer un fichier à la position du curseur.
+- pour ouvrir un nouveau fichier à la place d'un autre (le fichier ouvert
+  doit avoir été sauvé) : `:e`
+- utiliser la commande `:r CheminFichierAInserer` pour insérer un fichier à
+  la position du curseur.
 
 ## Déplacement
 
@@ -23,7 +25,8 @@ En mode interactif :
 ## Insertion
 
 - passer en mode d'insertion de texte à partir du curseur : `i`.
-- insérer une nouvelle ligne après la ligne du curseur (et passer en mode insertion) : `o`
+- insérer une nouvelle ligne après la ligne du curseur (et passer en mode
+  insertion) : `o`
 - insérer à la fin de la ligne : `A`
 
 ## Indentation
@@ -56,14 +59,17 @@ En mode interactif :
 - copier un mot en mémoire : `yw`
 - copier du curseur jusqu'à la fin de la ligne : `y$`
 - couper la ligne courante en mémoire : `dd`
-- coller la ligne située en mémoire (sur la ligne située après le curseur) : `p`
+- coller la ligne située en mémoire (sur la ligne située après le
+  curseur) : `p`
 - coller 4 fois la ligne en mémoire : `4p`
 
 ## Mode visuel
 
-Ce mode permet de sélectionner une partie du texte à l'aide des flèches. On accède à ce mode depuis le mode interactif avec `v`.
+Ce mode permet de sélectionner une partie du texte à l'aide des flèches.
+On accède à ce mode depuis le mode interactif avec `v`.
 
-On peut sélectionner une colonne particulière (sur un nombre arbitraire de lignes) avec `Ctrl+v` depuis le mode interactif.
+On peut sélectionner une colonne particulière (sur un nombre arbitraire de
+lignes) avec `Ctrl+v` depuis le mode interactif.
 
 ## Annulation
 
@@ -74,6 +80,7 @@ En mode interactif :
 - annuler l'annulation : `Ctrl+r`
 
 ## Rechercher / Remplacer
+
 ### Rechercher
 
 Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
@@ -82,14 +89,19 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 - `n` : parcourir les occurrences suivantes
 - `N` : parcourir les occurrences précédentes
 
-> Note : pour faire une recherche vers le début du fichier, taper `?` au lieu de `/`.
+> Note : pour faire une recherche vers le début du fichier, taper `?` au
+  lieu de `/`.
 
 ### Remplacer
 
-- remplacer la première occurrence de la ligne du curseur : `:s/ancien/nouveau`
-- remplacer toutes les occurrences de la ligne du curseur : `:s/ancien/nouveau/g`
-- remplacer toutes les occurrences entre les lignes 6 et 42 : `:6,42s/ancien/nouveau/g`
-- remplacer toutes les occurrences dans le fichier entier : `:%s/ancien/nouveau/g`
+- remplacer la première occurrence de la ligne du curseur :
+  `:s/ancien/nouveau`
+- remplacer toutes les occurrences de la ligne du curseur :
+  `:s/ancien/nouveau/g`
+- remplacer toutes les occurrences entre les lignes 6 et 42 :
+  `:6,42s/ancien/nouveau/g`
+- remplacer toutes les occurrences dans le fichier entier :
+  `:%s/ancien/nouveau/g`
 
 ### Commentaires
 
@@ -106,16 +118,19 @@ Depuis le mode interactif, taper `/` pour passer en *mode recherche*.
 - découper l'écran verticalement : `:vsp` ou `Ctrl+w` puis `v`
 - ouvrir une nouvelle vue (vide) : `Ctrl+w` puis `n`
 
-> Note : Par défaut, c'est le même fichier qui est ouvert. On peut spécifier le chemin du fichier à ouvrir à la suite de la commande.
+> Note : Par défaut, c'est le même fichier qui est ouvert. On peut spécifier
+  le chemin du fichier à ouvrir à la suite de la commande.
 
 ### Gestion des vues
 
 - naviguer de vue en vue : `Ctrl` + `w` plusieurs fois
-- déplacer le curseur vers la vue en dessous : `Ctrl+w` puis `j` (au dessus : `k`, à gauche : `h`, à droite : `l`)
+- déplacer le curseur vers la vue en dessous : `Ctrl+w` puis `j`
+  (au dessus : `k`, à gauche : `h`, à droite : `l`)
 - zoom sur la vue actuelle : `Ctrl+w` puis `+`
 - dé-zoom de la vue actuelle : `Ctrl+w` puis `-`
 - égalise la taille des vues : `Ctrl+w` puis `=`
-- échange la position des vues : `Ctrl+w` puis `r` (ou `R` pour le sens inverse)
+- échange la position des vues : `Ctrl+w` puis `r`
+  (ou `R` pour le sens inverse)
 - fermer la vue actuelle : `Ctrl+w` puis `q`
 - Augmenter ou diminuer :
     * la hauteur d'une vue de 10 lignes : `Ctrl+w` puis `10` puis `+` ou `-`
@@ -165,7 +180,8 @@ Installer d'abord `ctags` dans sa distribution.
 
 ### Génération des tags
 
-Pour générer un fichier de tags, se placer dans le dossier des sources puis : `$ ctags -R *`.
+Pour générer un fichier de tags, se placer dans le dossier des sources puis :
+`$ ctags -R *`.
 Un fichier `tags` est alors généré dans le dossier courant.
 
 ### Dans vim
@@ -194,7 +210,7 @@ Il existe un paquet précompilé pour Arch :
 
 ### Commentaires
 
-On peut utiliser ce plugin : <https://github.com/preservim/nerdcommenter> 
+On peut utiliser ce plugin : <https://github.com/preservim/nerdcommenter>
 
 Il y a un paquet précompilé sous Arch :
 ```
@@ -215,12 +231,15 @@ En mode interactif ou visuel :
 - Spécifier la langue : `:set spell spelllang=fr`
 - Désactiver la correction orthographique : `set nospell`
 
-> Note : Pour l'activation et désactivation du mode de correction, on peut mapper la touche `F6` en ajoutant cette ligne dans le fichier de configuration de *vim* :
+> Note : Pour l'activation et désactivation du mode de correction, on peut
+  mapper la touche `F6` en ajoutant cette ligne dans le fichier de
+  configuration de *vim* :
 ```
 map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
 ```
 
-Lors de la première utilisation, *vim* va tenter de télécharger les fichiers de langues nécessaires. S'il n'y parvient pas, on peut le faire manuellement :
+Lors de la première utilisation, *vim* va tenter de télécharger les fichiers
+de langues nécessaires. S'il n'y parvient pas, on peut le faire manuellement :
 ```
 $ cd $HOME/.vim/spell
 $ wget http://ftp.vim.org/vim/runtime/spell/fr.latin1.spl
@@ -231,28 +250,32 @@ $ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 
 ### Barre de status
 
-Pour avoir une belle barre de status  : <https://github.com/itchyny/lightline.vim>
+Pour avoir une belle barre de status  :
+<https://github.com/itchyny/lightline.vim>
 
 ### Arborescence des fichiers
 
-Pour avoir un panneau avec l'arborescence des fichiers : <https://github.com/preservim/nerdtree>
+Pour avoir un panneau avec l'arborescence des fichiers :
+<https://github.com/preservim/nerdtree>
 
 Il existe un paquet précompilé sous Arch :
 ```
 # pacman -S vim-nerdtree
 ```
 
-On peut mapper une touche pour afficher/masquer le panneau : `map <C-o> :NERDTreeToggle<CR>` (à mettre dans le `.vimrc`).
+On peut mapper une touche pour afficher/masquer le panneau :
+`map <C-o> :NERDTreeToggle<CR>` (à mettre dans le `.vimrc`).
 
 ### Autojump
 
 <https://github.com/wting/autojump>
 
-Permet de faciliter l'ouverture des fichiers. Il propose en priorité les fichiers ouverts le plus souvent.
+Permet de faciliter l'ouverture des fichiers. Il propose en priorité les
+fichiers ouverts le plus souvent.
 
 ### Thèmes
- 
-Suivre les indications. Par exemple : 
+
+Suivre les indications. Par exemple :
 
 - <https://github.com/joshdick/onedark.vim>
 - <https://github.com/altercation/vim-colors-solarized>
@@ -261,9 +284,9 @@ Suivre les indications. Par exemple :
 
 ## Sources
 
-- https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/42693-vim-lediteur-de-texte-du-programmeur
-- https://doc.ubuntu-fr.org/vim
-- https://www.saintcarre.fr/saintcarre/2018/08/correcteur-orthographe-vim.html
-- https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/
-- https://vim.fandom.com/wiki/Using_tab_pages
-- https://vimawesome.com/
+- <https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/42693-vim-lediteur-de-texte-du-programmeur>
+- <https://doc.ubuntu-fr.org/vim>
+- <https://www.saintcarre.fr/saintcarre/2018/08/correcteur-orthographe-vim.html>
+- <https://www.shortcutfoo.com/blog/top-50-vim-configuration-options/>
+- <https://vim.fandom.com/wiki/Using_tab_pages>
+- <https://vimawesome.com/>

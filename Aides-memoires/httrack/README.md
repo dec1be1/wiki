@@ -7,4 +7,5 @@ $ httrack --connection-per-second=50 --sockets=80 --keep-alive --display --verbo
 ```
 
 ## Sources
-* https://www.archiveteam.org/index.php/HTTrack_options
+
+* <https://www.archiveteam.org/index.php/HTTrack_options>

@@ -2,6 +2,7 @@ Arch Linux
 ==========
 
 ## pacman
+
 ### Commandes de base
 
 Mettre à jour le système :
@@ -26,7 +27,8 @@ Pour voir la taille occupée par les paquets en cache :
 $ du -sh /var/cache/pacman/pkg/
 ```
 
-Pour nettoyer le cache (par défaut, on garde les 3 dernières versions de chaque paquets) :
+Pour nettoyer le cache (par défaut, on garde les 3 dernières versions de
+chaque paquets) :
 ```
 # paccache -r
 ```
@@ -46,7 +48,8 @@ Pour enlever tous les paquets (installés ou pas) du cache :
 # pacman -Scc
 ```
 
-Pour automatiser le nettoyage du cache, on peut créer un *hook* en créant le fichier suivant :
+Pour automatiser le nettoyage du cache, on peut créer un *hook* en créant le
+fichier suivant :
 ```
 # cat /etc/pacman.d/hooks/clean_package_cache.hook
 [Trigger]
@@ -64,4 +67,3 @@ Exec = /usr/bin/paccache -r
 ### Sources
 - <https://wiki.archlinux.org/index.php/pacman>
 - <https://ostechnix.com/recommended-way-clean-package-cache-arch-linux/>
-
