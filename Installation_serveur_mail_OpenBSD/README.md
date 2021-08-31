@@ -128,11 +128,6 @@ mickey: mickey@domain.tld
 
 On régénère la base de données en tapant la commande : `# newaliases`.
 
-On crée le fichier `/etc/mail/mailname` :
-```
-# echo "domain.tld" > /etc/mail/mailname
-```
-
 Ce fichier fait en sorte que le *hostname* du serveur apparaisse bien comme
 `domain.tld` (plutôt que le *hostname* réel du serveur qui est dans
 `/etc/myname`). Il est important que ça corresponde avec le reverse dns.
