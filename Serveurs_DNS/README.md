@@ -1,9 +1,26 @@
 Quelques serveurs DNS
 =====================
 
+Pas tous égaux en ce qui concerne le blocage et le respect de la vie privée. 
+Se renseigner !
+
+## Quad9
+
+<https://www.quad9.net/>
+
+* 9.9.9.9
+* 149.112.112.112
+
+## Cloudflare
+
+<https://1.1.1.1/>
+
+* 1.1.1.1
+* 1.0.0.1
+
 ## FDN
 
-*French Data Network : FAI associatif* : https://www.fdn.fr/.
+*French Data Network : FAI associatif* : <https://www.fdn.fr/>
 Engagé contre la censure sur Internet.
 
 * 80.67.169.12
@@ -11,7 +28,7 @@ Engagé contre la censure sur Internet.
 
 ## OpenNic DNS
 
-A vérifier régulièrement : https://www.opennic.org/
+A vérifier régulièrement : <https://www.opennic.org/>
 
 * 195.154.226.249
 * 87.98.175.85
@@ -24,8 +41,6 @@ A vérifier régulièrement : https://www.opennic.org/
 * 212.27.40.241
 
 ## OpenDNS
-
-Méfiance...
 
 * 208.67.222.222
 * 208.67.220.220
