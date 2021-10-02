@@ -10,6 +10,15 @@ commandes rapidement (*commandes ad hoc*).
 $ ansible [pattern] -m [module] -a "[module options]"
 ```
 
+### Installer un paquet
+
+Sur toutes les machines du groupe webservers, sauf www1 et en faisant un
+*update* du cache avant :
+
+```
+ansible -K -b webservers\:\!www1 -m ansible.builtin.apt -a "name=<package_name> state=present update_cache=yes"
+```
+
 ### Supprimer un fichier
 
 ```
