@@ -2,6 +2,7 @@
 
 import ovh
 from sys import argv
+from pprint import pprint
 
 ApplicationKey='<AK>'
 ApplicationSecret='<AS>'
@@ -18,16 +19,16 @@ method = argv[1]
 payload = argv[2]
 
 # Print nice welcome message
-print("Welcome", client.get('/me')['firstname'])
+#print("Welcome", client.get('/me')['firstname'])
 
 if method == 'GET':
-    print(client.get(payload))
+    pprint(client.get(payload))
 elif method == 'POST':
-    print(client.post(payload))
+    pprint(client.post(payload))
 elif method == 'PUT':
-    print(client.put(payload))
+    pprint(client.put(payload))
 elif method == 'DELETE':
-    print(client.delete(payload))
+    pprint(client.delete(payload))
 else:
     print("Error: bad method")
 
