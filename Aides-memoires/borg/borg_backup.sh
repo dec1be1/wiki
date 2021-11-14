@@ -4,7 +4,7 @@
 PATHS_TO_BACKUP="/firstpath /secondpath"
 PATHS_TO_EXCLUDE="--exclude /firstpath/.cache --exclude /secondpath/.cache"
 BORG_REPO="ssh://username@hostname/path/to/repo/repo_name"
-BORG_ARCHIVE_PATTERN="{utcnow}_{hostname}_backup_name"
+BORG_ARCHIVE_PATTERN="{hostname}_backup_name_{utcnow}"
 
 # set local tmp folder on a large capacity partition
 #export BORG_CACHE_DIR=/mnt/SAV/borg/tmp
