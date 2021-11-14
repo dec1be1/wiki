@@ -59,7 +59,7 @@ Pour démonter :
 borg umount /local/mountpoint
 ```
 
-Pour extraire entièrement une archive :
+Pour extraire entièrement une archive **dans le répertoire courant** :
 ```
 borg extract ssh://username@hostname/path/to/repo/repo_name::archive_name
 ```
