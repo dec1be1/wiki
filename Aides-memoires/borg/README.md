@@ -4,6 +4,9 @@
 données. *borg* découpe les fichiers en *chunks*, ce qui est
 particulièrement efficace pour les gros fichiers.
 
+Le paquet à installer s'appelle `borg` ou `borgbackup` selon les
+distributions.
+
 ## Commandes utiles
 
 > Pour les sauvegardes distantes via ssh, on note qu'on peut utiliser
@@ -25,14 +28,18 @@ borg key export ssh://username@hostname/path/to/repo/repo_name /path/to/localfil
 
 ### Création d'une archive
 
-Ca se fait à l'air de la commande `borg create` mais on préfèrera
+Ca se fait à l'aide de la commande `borg create` mais on préfèrera
 l'utilisation d'un petit script *bash*. Voici un [exemple](./borg_backup.sh).
+
+Le script montre également la commande `borg prune` pour effacer les archives
+les plus anciennes d'un repo.
 
 ### Informations
 
-Obtenir des informations sur un repo :
+Obtenir des informations sur un repo (ou une archive en ajoutant son nom à la
+fin) :
 ```
-borg info ssh://username@hostname/path/to/repo/repo_name
+borg info ssh://username@hostname/path/to/repo/repo_name[::archive_name]
 ```
 
 Lister les archives disponibles sur un repo :
@@ -59,7 +66,7 @@ Pour démonter :
 borg umount /local/mountpoint
 ```
 
-Pour extraire entièrement une archive **dans le répertoire courant** :
+Pour extraire entièrement une archive **dans le répertoire local courant** :
 ```
 borg extract ssh://username@hostname/path/to/repo/repo_name::archive_name
 ```

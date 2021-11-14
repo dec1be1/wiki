@@ -27,4 +27,15 @@ ${BORG} create \
         ${BORG_REPO}::${BORG_ARCHIVE_PATTERN} \
         ${PATHS_TO_BACKUP}
 
+# pruning repo
+${ECHO} "[+] Pruning ${BORG_REPO}..."
+${BORG} prune \
+        --stats \
+        --list \
+        --keep-last=5 \
+        --keep-weekly=8 \
+        --keep-monthly=12 \
+        --keep-yearly=-1 \
+        ${BORG_REPO}
+
 exit 0
