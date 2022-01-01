@@ -1,18 +1,21 @@
 Python
 ======
 
-## pip / pip3
+## pip
+
+Pour voir les modules à mettre à jour :
+```
+pip list --outdated
+```
 
 Pour mettre à jour tous les modules :
 ```
-$ pip install -r <(pip freeze) --upgrade
+pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U --user
 ```
-
-Pour pip3, ajouter un 3.
 
 Pour vérifier ensuite :
 ```
-$ pip check && pip3 check
+pip check
 ```
 
 ## subprocess
