@@ -1,5 +1,4 @@
-Configuration réseau/iptables sous GNU/Linux
-============================================
+# Configuration réseau/iptables sous GNU/Linux
 
 Voici quelques commandes sous GNU/Linux pour configurer le réseau et le
 firewall. On parle des commandes `ethtool`, `ip`, `bridge` et `iptables`.

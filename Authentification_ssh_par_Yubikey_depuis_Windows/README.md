@@ -1,5 +1,4 @@
-Authentification ssh par Yubikey sur un poste Windows
-=====================================================
+# Authentification ssh par Yubikey sur un poste Windows
 
 Ce wiki décrit la procédure à suivre pour ouvrir une session ssh à un serveur
 distant depuis un poste Windows en utilisant une clé gpg stockée sur une

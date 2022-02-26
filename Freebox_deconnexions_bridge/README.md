@@ -1,5 +1,4 @@
-Freebox : Problème de déconnexions intempestives en mode bridge
-===============================================================
+# Freebox : Problème de déconnexions intempestives en mode bridge
 
 ## Préambule
 
@@ -26,10 +25,10 @@ On commence par autoriser notre application qui va gérer le reboot à accéder
 On clone le dépôt suivant, on charge les fonctions de l'API dans le shell et
 on demande le token :
 ```
-$ git clone https://gitlab.com/benzoga33/reboot_freebox.git
-$ cd reboot_freebox
-$ source ./freeboxos_bash_api.sh
-$ authorize_application 'rebootFbox.sh' 'script reboot freebox' '1.0.0' 'routeur'
+git clone https://gitlab.com/benzoga33/reboot_freebox.git
+cd reboot_freebox
+source ./freeboxos_bash_api.sh
+authorize_application 'rebootFbox.sh' 'script reboot freebox' '1.0.0' 'routeur'
 ```
 
 A ce moment-là, il faut physiquement autoriser l'application sur l'écran LCD

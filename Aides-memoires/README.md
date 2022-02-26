@@ -1,5 +1,4 @@
-Aides-mémoire
-=============
+# Aides-mémoires
 
 Cette page est un aide-mémoire regroupant des informations sur tout type de
 logiciel.
@@ -14,10 +13,3 @@ Pour commencer, quelques aide-mémoires externes à ce wiki :
 * [Shell Unix](http://www.linux-france.org/article/dalox/unix04.htm#tubep)
 * [Encodage x264](https://tutox264.wordpress.com/)
 * [Article Wikipedia sur l'Endianness](https://fr.wikipedia.org/wiki/Endianness)
-
-Enfin, une convention générale à tous mes articles concernant les commandes
-système :
-```
-$ : commande à taper avec les droits d'un utilisateur classique.
-# : commande à taper avec les droits de l'utilisateur root.
-```

@@ -1,5 +1,4 @@
-Authentification ssh par Yubikey depuis un poste GNU/Linux
-==========================================================
+# Authentification ssh par Yubikey depuis un poste GNU/Linux
 
 Ce wiki décrit la procédure à suivre pour ouvrir une session ssh à un serveur
 distant depuis un poste GNU/Linux en utilisant une clé gpg stockée sur une
@@ -18,11 +17,11 @@ La clé publique correspondante doit évidemment être présente dans le fichier
   pas déjà fait (le paquet `gpg-agent` doit également être installé).
   Pour *Debian* :
 ```
-# apt install scdaemon pcscd ykcs11 pinentry-tty gnupg2
+sudo apt install scdaemon pcscd ykcs11 pinentry-tty gnupg2
 ```
 * Ajouter la ligne `enable-ssh-support` au fichier `~/.gnupg/gpg-agent.conf` :
 ```
-$ echo "enable-ssh-support" >> ~/.gnupg/gpg-agent.conf
+echo "enable-ssh-support" >> ~/.gnupg/gpg-agent.conf
 ```
 * Créer le fichier `/etc/udev/rules.d/70-yubikey.rules` avec le contenu
   suivant (remplacer `amnesia` par le nom du user) :
@@ -31,7 +30,7 @@ ACTION=="add|change", SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=
 ```
 * Taper la commande suivante pour prendre en compte ce fichier :
 ```
-# udevadm control --reload-rules
+sudo udevadm control --reload-rules
 ```
 * Si on veut toujours utiliser la *Yubikey* comme moyen d'authentification, on
   peut ajouter ce qui suit à son fichier `~/.bashrc` :
@@ -56,11 +55,11 @@ puis on ré-écrit le socket d'authentification ssh pour qu'il utilise
 `$ source ./yubikey.sh`.
 * On peut vérifier que l'identité est bien chargée dans l'agent ssh :
 ```
-$ ssh-add -l
+ssh-add -l
 ```
 * On peut voir les informations de la *Yubikey* grâce à *gpg* :
 ```
-$ gpg --card-status
+gpg --card-status
 ```
 
 ## Sources

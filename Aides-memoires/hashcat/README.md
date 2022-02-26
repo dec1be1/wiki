@@ -1,5 +1,4 @@
-hashcat
-=======
+# hashcat
 
 ## Utilisation avec un GPU
 
@@ -11,20 +10,20 @@ ajouter `optirun` avant toutes commandes lorsqu'on veut utiliser le GPU.
 
 Pour voir les backends de calculs disponibles :
 ```
-$ optirun hashcat -I
+optirun hashcat -I
 ```
 
 ## Généralités
 
 Pour lancer un calcul :
 ```
-$ optirun hashcat -m 1000 \
-                  -a 0 \
-                  -d 1,2,3 \
-                  --session <session_name> \
-                  <hash_file_path> \
-                  <wordlist_path>
-                  -r <rulesfile_path>
+optirun hashcat -m 1000 \
+                -a 0 \
+                -d 1,2,3 \
+                --session <session_name> \
+                <hash_file_path> \
+                <wordlist_path>
+                -r <rulesfile_path>
 ```
 
 - `-m` : le type de hash à cracker
@@ -45,7 +44,7 @@ le dernier checkpoint devront juste être retestés).
 
 Pour relancer une session existante :
 ```
-$ optirun hashcat --session <session_name> --restore
+optirun hashcat --session <session_name> --restore
 ```
 
 > Si on ne met pas `--session`, le fichier de session est enregistré
@@ -87,7 +86,7 @@ Exemples :
 ## Clé WPA/WPA2
 
 ```
-$ optirun hashcat -m 2500 capture.hccapx rockyou.txt
+optirun hashcat -m 2500 capture.hccapx rockyou.txt
 ```
 
 ## Sources

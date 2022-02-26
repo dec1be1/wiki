@@ -1,5 +1,4 @@
-Docker
-======
+# Docker
 
 ## Architecture Docker
 
@@ -35,7 +34,7 @@ On note que si on *pull* deux conteneurs qui utilisent une couche en commun,
 
 A partir d'un conteneur arrêté :
 ```
-$ docker commit <cont_name> <new_image_name>
+docker commit <cont_name> <new_image_name>
 ```
 
 > Le nom de l'image créée est de la forme :
@@ -45,7 +44,7 @@ $ docker commit <cont_name> <new_image_name>
 
 Pour créer une image à partir d'un *Dockerfile* :
 ```
-$ docker build -t <new_image_name> <path_to_folder_containing_dockerfile>
+docker build -t <new_image_name> <path_to_folder_containing_dockerfile>
 ```
 
 Les commandes de bases d'un *Dockerfile* :
@@ -76,12 +75,12 @@ Des bonnes pratiques :
 Pour créer une archive de conteneur (on peut ensuite compresser l'archive
 avec *gzip*) :
 ```
-$ docker export -o <archive_filename.tar> <cont_name>
+docker export -o <archive_filename.tar> <cont_name>
 ```
 
 Pour générer une nouvelle image à partir de l'archive de conteneur :
 ```
-$ docker import <archive_filename.tar.gz> <new_image_name>
+docker import <archive_filename.tar.gz> <new_image_name>
 ```
 
 > Dans ce cas, l'image créée ne comporte qu'une couche de base.
@@ -90,17 +89,17 @@ $ docker import <archive_filename.tar.gz> <new_image_name>
 
 Lister les images disponibles en local :
 ```
-$ docker images
+docker images
 ```
 
 Faire une recherche par mot-clé sur le *docker registry* public :
 ```
-$ docker search <keyword>
+docker search <keyword>
 ```
 
 Pour télécharger une image depuis le *docker registry* :
 ```
-$ docker pull <image_name>
+docker pull <image_name>
 ```
 
 > Si on veut une version particulière de l'image, on peut spécifier un
@@ -108,12 +107,12 @@ $ docker pull <image_name>
 
 Pour supprimer une image :
 ```
-$ docker rmi <image_name>
+docker rmi <image_name>
 ```
 
 Pour afficher les différentes couches d'une image :
 ```
-$ docker history <image_name>
+docker history <image_name>
 ```
 
 ## Conteneurs
@@ -125,13 +124,13 @@ Un conteneur peut indifféremment être identifié par son nom ou son id.
 
 Pour lancer l'exécution d'un conteneur (à partir d'une image) :
 ```
-$ docker run <image_name>`
+docker run <image_name>`
 ```
 
 Pour lancer un conteneur en exécutant une autre commande que la commande par
 défaut du conteneur :
 ```
-$ docker run <image_name> <command>
+docker run <image_name> <command>
 ```
 
 > Ne pas oublier que l'exécution du conteneur s'arrête en même temps que la
@@ -153,19 +152,19 @@ Quelques options pour `docker run` :
 
 Pour lister les conteneurs en cours d'exécution :
 ```
-$ docker ps
+docker ps
 ```
 
 > Option `-a` : pour voir tous les conteneurs (même arrêtés).
 
 Pour afficher la sortie standard d'un conteneur :
 ```
-$ docker logs <cont_name>
+docker logs <cont_name>
 ```
 
 Pour s'attacher à un conteneur (shell interactif) :
 ```
-$ docker attach <cont_name>
+docker attach <cont_name>
 ```
 
 Pour passer en mode *détaché* depuis le mode *attaché* : séquence de
@@ -174,35 +173,35 @@ touches `[Ctrl]+p+q`.
 Pour arrêter proprement un conteneur : ça envoie un signal *TERM* au processus
 principal du conteneur (PID 1) :
 ```
-$ docker stop <cont_name>
+docker stop <cont_name>
 ```
 
 Pour tuer un conteneur (moins proprement) :
 ```
-$ docker kill <cont_name>
+docker kill <cont_name>
 ```
 
 Pour démarrer un conteneur existant (conserve les paramètres passés lors du
 `docker run`) :
 ```
-$ docker start <cont_name>
+docker start <cont_name>
 ```
 
 Pour mettre un conteneur en pause :
 ```
-$ docker pause <cont_name>
+docker pause <cont_name>
 ```
 
 > `docker unpause` pour reprendre l'exécution d'un conteneur en pause.
 
 Pour supprimer un conteneur arrêté :
 ```
-$ docker rm <cont_name>
+docker rm <cont_name>
 ```
 
 Pour exécuter un processus à l'intérieur d'un conteneur :
 ```
-$ docker exec <cont_name> <command>
+docker exec <cont_name> <command>
 ```
 
 > Les nouveaux processus sont créés à partir du PID 5 et ne seront pas tués
@@ -211,19 +210,19 @@ $ docker exec <cont_name> <command>
 
 Pour obtenir des informations sur un conteneur (format json) :
 ```
-$ docker inspect <cont_name>
+docker inspect <cont_name>
 ```
 
 > On peut extraire un champ particulier avec l'option `--format`
   (format *Go Template*). Par exemple pour l'IP du conteneur :
 ```
-$ docker inspect --format='{{.NetworkSettings.IPAddress}}' <cont_name>
+docker inspect --format='{{.NetworkSettings.IPAddress}}' <cont_name>
 ```
 
 Pour voir les différences entre une image et un conteneur créé à partir de
 cette image :
 ```
-$ docker diff <cont_name>
+docker diff <cont_name>
 ```
 
 ## Volumes
@@ -232,17 +231,17 @@ $ docker diff <cont_name>
 
 Créer un volume nommé :
 ```
-$ docker volume create --name <volume_name>
+docker volume create --name <volume_name>
 ```
 
 Lister les volumes existants :
 ```
-$ docker volume ls
+docker volume ls
 ```
 
 Monter un volume nommé au démarrage d'un conteneur :
 ```
-$ docker run -v <volume_name>:<mount_point_in_container> <image_name>
+docker run -v <volume_name>:<mount_point_in_container> <image_name>
 ```
 
 > Si on ne met pas le nom du volume, Docker va alors créer un *volume anonyme*
@@ -250,12 +249,12 @@ $ docker run -v <volume_name>:<mount_point_in_container> <image_name>
 
 Voir les informations d'un volume :
 ```
-$ docker volume inspect <volume_name>
+docker volume inspect <volume_name>
 ```
 
 Supprimer un volume (il ne doit être utilisé dans aucun conteneur) :
 ```
-$ docker volume rm <volume_name>
+docker volume rm <volume_name>
 ```
 
 > Les volumes sont regroupés dans le dossier `/var/lib/docker/volumes` de
@@ -268,7 +267,7 @@ vers un conteneur.
 
 Au démarrage d'un conteneur :
 ```
-$ docker run -v <host_path>:<container_path> <image_name>
+docker run -v <host_path>:<container_path> <image_name>
 ```
 
 ### Volumes partagés
@@ -300,22 +299,22 @@ En plus de l'interface brige `docker0`, *Docker* créé deux autres réseaux :
 
 Pour lister les réseaux disponibles :
 ```
-$ docker network ls
+docker network ls
 ```
 
 Pour avoir des informations détaillées sur un réseau :
 ```
-$ docker network inspect <network_name>
+docker network inspect <network_name>
 ```
 
 Par exemple, pour créer un réseau bridge supplémentaire :
 ```
-$ docker network create --driver bridge --subnet 10.1.0.0/16 --gateway 10.1.0.1 <bridge_name>
+docker network create --driver bridge --subnet 10.1.0.0/16 --gateway 10.1.0.1 <bridge_name>
 ```
 
 Pour faire fonctionner un conteneur sur un réseau spécifique :
 ```
-$ docker run --net <network_name> <image_name>
+docker run --net <network_name> <image_name>
 ```
 
 > *Docker* gère l'attribution de l'adresse IP dans le réseau spécifié pour
@@ -331,15 +330,15 @@ en déclarer une principale (avec `--net`) puis connecter le conteneur aux
 autres réseaux (on ne peut pas utiliser plusieurs fois `--net` au démarrage
 d'un conteneur) :
 ```
-$ docker run --name <cont_name> --net <network1_name> <image_name>
-$ docker network connect <network2_name> <cont_name>
+docker run --name <cont_name> --net <network1_name> <image_name>
+docker network connect <network2_name> <cont_name>
 ```
 
 ### Mapping de ports (PAT)
 
 Pour mapper un port de l'hôte vers un port du conteneur :
 ```
-$ docker run -p <ip_host>:<host_port>:<container_port> <image_name>
+docker run -p <ip_host>:<host_port>:<container_port> <image_name>
 ```
 
 > Si `<ip_host>` n'est pas spécifiée, le mapping se fait pour toutes les
@@ -347,7 +346,7 @@ $ docker run -p <ip_host>:<host_port>:<container_port> <image_name>
 
 Pour avoir des informations sur le mapping d'un conteneur :
 ```
-$ docker port <cont_name>
+docker port <cont_name>
 ```
 
 On peut faire un mapping dynamique. Dans ce cas, c'est *Docker* qui choisit

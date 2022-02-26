@@ -1,8 +1,9 @@
-Installation d'un serveur OpenVPN dans un chroot sous OpenBSD
-=============================================================
+# Installation d'un serveur OpenVPN dans un chroot sous OpenBSD
 
 Cette page décrit la procédure à suivre pour installer *OpenVPN* dans un
 chroot sur *OpenBSD*.
+
+**Toutes les commandes sont à exécuter avec les privilèges root.**
 
 ## Installation et configuration
 
@@ -11,21 +12,21 @@ chroot sur *OpenBSD*.
 Pour installer les paquets (on va utiliser *easy-rsa* pour faciliter la
 gestion des certificats) :
 ```
-# pkg_add openvpn easy-rsa bash
+pkg_add openvpn easy-rsa bash
 ```
 
 Création des répertoires nécessaires et du chroot qui sera dans
 `/var/openvpn/chrootjail` :
 ```
-# install -m 700 -d /etc/openvpn/private
-# install -m 700 -d /etc/openvpn/private-client-conf
-# install -m 755 -d /etc/openvpn/certs
-# install -m 755 -d /var/log/openvpn
-# install -m 755 -d /var/openvpn/chrootjail/tmp
-# install -m 755 -d /var/openvpn/chrootjail/etc/openvpn
-# install -m 755 -d /var/openvpn/chrootjail/var/openvpn
-# install -m 755 -d /var/openvpn/chrootjail/etc/openvpn/ccd  # client custom configuration dir
-# ln -s /var/openvpn/chrootjail/etc/openvpn/ccd/ /etc/openvpn/
+install -m 700 -d /etc/openvpn/private
+install -m 700 -d /etc/openvpn/private-client-conf
+install -m 755 -d /etc/openvpn/certs
+install -m 755 -d /var/log/openvpn
+install -m 755 -d /var/openvpn/chrootjail/tmp
+install -m 755 -d /var/openvpn/chrootjail/etc/openvpn
+install -m 755 -d /var/openvpn/chrootjail/var/openvpn
+install -m 755 -d /var/openvpn/chrootjail/etc/openvpn/ccd  # client custom configuration dir
+ln -s /var/openvpn/chrootjail/etc/openvpn/ccd/ /etc/openvpn/
 ```
 
 On note que, dans le cas d'une exécution dans un chroot, les deux éléments
@@ -44,7 +45,7 @@ le chroot.
 On utilise un script maison écrit selon le tuto suivi :
 [create-new-pki.sh](./create-new-pki.sh).
 ```
-# ./create-new-pki.sh
+./create-new-pki.sh
 ```
 
 ### Création d'un mot de passe pour l'interface de management
@@ -55,14 +56,14 @@ priori c'est déjà fait si le firewall est bien configuré). On peut ensuite
 accéder à l'interface de management via *telnet* sur le port 1195 depuis le
 serveur vpn lui-même (s'y connecter en ssh si nécessaire) :
 ```
-# telnet localhost 1195
+telnet localhost 1195
 ```
 
 Pour la mise en place du mot de passe :
 ```
-# test -f /etc/openvpn/private/mgmt.pwd || touch /etc/openvpn/private/mgmt.pwd
-# chown root:wheel /etc/openvpn/private/mgmt.pwd; chmod 600 /etc/openvpn/private/mgmt.pwd
-# vim /etc/openvpn/private/mgmt.pwd  # insert one line of text with clear-text password for management console
+test -f /etc/openvpn/private/mgmt.pwd || touch /etc/openvpn/private/mgmt.pwd
+chown root:wheel /etc/openvpn/private/mgmt.pwd; chmod 600 /etc/openvpn/private/mgmt.pwd
+vim /etc/openvpn/private/mgmt.pwd  # insert one line of text with clear-text password for management console
 ```
 
 ### Configuration du serveur OpenVPN
@@ -80,9 +81,9 @@ puisqu'on pousse l'adresse du serveur lui-même (`10.8.0.1`).
 
 On crée puis on édite le fichier de configuration du serveur :
 ```
-# test -f /etc/openvpn/server_tun0.conf || touch /etc/openvpn/server_tun0.conf
-# chown root:_openvpn /etc/openvpn/server_tun0.conf; chmod 640 /etc/openvpn/server_tun0.conf
-# vim /etc/openvpn/server_tun0.conf
+test -f /etc/openvpn/server_tun0.conf || touch /etc/openvpn/server_tun0.conf
+chown root:_openvpn /etc/openvpn/server_tun0.conf; chmod 640 /etc/openvpn/server_tun0.conf
+vim /etc/openvpn/server_tun0.conf
 ```
 
 Voilà un exemple de configuration :
@@ -148,7 +149,7 @@ net.inet.ip.forwarding=1
 
 On va configurer l'interface *tun0* en créant le fichier `/etc/hostname.tun0` :
 ```
-# touch /etc/hostname.tun0 && chmod 640 /etc/hostname.tun0
+touch /etc/hostname.tun0 && chmod 640 /etc/hostname.tun0
 ```
 
 On met le contenu suivant dedans :
@@ -161,7 +162,7 @@ description "OpenVPN tunnel"
 
 On peut alors activer l'interface :
 ```
-# sh /etc/netstart tun0
+sh /etc/netstart tun0
 ```
 
 Après tout ça, le serveur OpenVPN doit être opérationnel et se lancer
@@ -189,7 +190,7 @@ après les informations de connexion).
 Pour créer un utilisateur :
 
 ```
-# ./create-vpn-user.sh username
+./create-vpn-user.sh username
 ```
 
 Après exécution du script, un fichier `username.ovpn` est créé
@@ -203,7 +204,7 @@ On utilise un script fait maison : [revoke-vpn-user.sh](./revoke-vpn-user.sh)
 Il révoque le certificat de l'utilisateur qui ne pourra donc plus se
 connecter au vpn.
 ```
-# ./revoke-vpn-user.sh username
+./revoke-vpn-user.sh username
 ```
 
 ## Administration
@@ -211,38 +212,38 @@ connecter au vpn.
 Pour lancer manuellement le serveur (après un arrêt manuel par exemple), on
 relance tout simplement l'interface *tun0* :
 ```
-# sh /etc/netstart tun0
+sh /etc/netstart tun0
 ```
 
 Pour vérifier que l'interface *tun0* fonctionne :
 ```
-# ifconfig tun0
+ifconfig tun0
 ```
 
 Pour vérifier le processus :
 ```
-# pgrep -fl openvpn.*server
+pgrep -fl openvpn.*server
 ```
 
 Pour vérifier que le processus écoute sur le bon port :
 ```
-# netstat -an|grep '\.1194 '
+netstat -an|grep '\.1194 '
 ```
 
 Pour vérifier les logs :
 ```
-# tail /var/log/openvpn/*
+tail /var/log/openvpn/*
 ```
 
 Pour arrêter le processus :
 ```
-# pkill -x openvpn
+pkill -x openvpn
 ```
 
 Pour accéder à l'interface de management via *telnet* sur le port 1195 depuis
 le serveur vpn lui-même (s'y connecter en ssh si nécessaire) :
 ```
-# telnet localhost 1195
+telnet localhost 1195
 ```
 
 Pour rappel, le mot de passe est stocké en clair dans le fichier

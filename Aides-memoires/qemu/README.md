@@ -1,5 +1,4 @@
-qemu
-====
+# qemu
 
 ## Quelques combinaisons de touches
 
@@ -13,7 +12,7 @@ qemu
 
 Pour créer une image disque (taille maximale de 20 Go) :
 ```
-$ qemu-img create -f qcow2 disk.qcow2 20G
+qemu-img create -f qcow2 disk.qcow2 20G
 ```
 
 ### Conversion
@@ -33,7 +32,7 @@ Voir le *man* pour la prise en charge d'autres formats.
 
 Pour créer un snapshot :
 ```
-$ qemu-img create -f qcow2 -b base.qcow2 -F qcow2 snapshot.qcow2
+qemu-img create -f qcow2 -b base.qcow2 -F qcow2 snapshot.qcow2
 ```
 
 > A partir de ce moment-là, il ne faut plus modifier `base.qcow2`
@@ -44,19 +43,19 @@ $ qemu-img create -f qcow2 -b base.qcow2 -F qcow2 snapshot.qcow2
 
 Pour appliquer les changements d'un snapshot dans l'image de base :
 ```
-$ qemu-img commit snapshot.qcow2
+qemu-img commit snapshot.qcow2
 ```
 
 > On peut ensuite supprimer le fichier du snapshot.
 
 Pour obtenir des informations sur un snapshot :
 ```
-$ qemu-img info snapshot.qcow2
+qemu-img info snapshot.qcow2
 ```
 
 Pour avoir toute la chaîne d'images :
 ```
-$ qemu-img info --backing-chain snapshot.qcow2
+qemu-img info --backing-chain snapshot.qcow2
 ```
 
 On peut aussi créer un snapshot temporaire en ajoutant le flag `-snapshot` à
@@ -68,14 +67,14 @@ sont pas enregistrées et seront perdues à l'arrêt de la machine virtuelle.
 Il faut d'abord mettre des zéros dans les zones non utilisées de l'image.
 Pour une machine virtuelle Linux, depuis la VM :
 ```
-# dd status=progress if=/dev/zero of=/mytempfile
-# rm -f /mytempfile
+sudo dd status=progress if=/dev/zero of=/mytempfile
+sudo rm -f /mytempfile
 ```
 
 On éteint ensuite la VM et on peut réduire l'image en faisant une conversion
 de qcow2 vers qcow2 :
 ```
-$ qemu-img convert -c -O qcow2 source.qcow2 shrunk.qcow2
+qemu-img convert -c -O qcow2 source.qcow2 shrunk.qcow2
 ```
 
 > Pour éviter d'avoir à faire ça régulièrement, on peut activer *TRIM* dans
@@ -94,17 +93,17 @@ Il faut :
 
 Dans l'ordre :
 ```
-# modprobe nbd max_part=8
-# qemu-nbd --connect=/dev/nbd0 disk.qcow2
-# fdisk /dev/nbd0 -l
-# mount /dev/nbd0p1 /mnt/somepoint/
+sudo modprobe nbd max_part=8
+sudo qemu-nbd --connect=/dev/nbd0 disk.qcow2
+sudo fdisk /dev/nbd0 -l
+sudo mount /dev/nbd0p1 /mnt/somepoint/
 ```
 
 Lorsqu'on a fini :
 ```
-# umount /mnt/somepoint/
-# qemu-nbd --disconnect /dev/nbd0
-# rmmod nbd
+sudo umount /mnt/somepoint/
+sudo qemu-nbd --disconnect /dev/nbd0
+sudo rmmod nbd
 ```
 
 ## Machine virtuelle en mode texte

@@ -1,5 +1,4 @@
-snap
-====
+# snap
 
 Il s'agit d'un gestionnaire de paquets indépendant de la distribution
 GNU/Linux utilisée. Chaque paquet embarque toutes les dépendances nécessaires.
@@ -12,25 +11,25 @@ Site officiel : <https://snapcraft.io>
 
 Pour installer un paquet :
  ```
-# snap install PAQUET
+sudo snap install PAQUET
 ```
 
 Pour mettre à jour tous les paquets installés :
  ```
-# snap refresh
+sudo snap refresh
 ```
 
 Pour supprimer un paquet :
  ```
-# snap remove PAQUET
+sudo snap remove PAQUET
 ```
 
 Pour afficher les paquets installés :
  ```
-$ snap list
+sudo snap list
 ```
 
 Pour chercher un paquet contenant PATTERN :
  ```
-$ snap find PATTERN
+sudo snap find PATTERN
 ```

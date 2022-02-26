@@ -1,5 +1,4 @@
-dd
-==
+# dd
 
 **Attention avec ''dd'' !!! Toujours vérifier (deux ou trois fois...) la commande avant de valider.**
 

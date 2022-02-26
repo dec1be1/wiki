@@ -1,10 +1,11 @@
-Sauvegarde de la partition racine sous OpenBSD (`/altroot`)
-===========================================================
+# Sauvegarde de la partition racine sous OpenBSD (`/altroot`)
 
 Le but est de sauvegarder régulièrement (quotidiennement ici), la partition
 racine `/` du système dans une partition créée pour l'occasion (`/altroot`).
 La sauvegarde se fait avec `dd`. Il faut donc que la partition `/altroot` soit
 au moins aussi grande que la partition `/`.
+
+**Toutes les commandes sont à exécuter avec les privilèges root.**
 
 ## Configuration de la sauvegarde
 
@@ -15,12 +16,12 @@ Le mieux est de dédier un disque dur (qui pourra booter) pour cette tâche.
 On repère le nom du device. On choisira ici `sd1`. On initialise le disque
 avec `fdisk` :
 ```
-# fdisk -i sd1
+fdisk -i sd1
 ```
 
 On crée le `disklabel` :
 ```
-# disklabel -E sd1
+disklabel -E sd1
 ```
 
 Puis, dans `disklabel` :
@@ -32,12 +33,12 @@ Puis, dans `disklabel` :
 
 On crée le système de fichier sur la partition :
 ```
-# newfs sd1a
+newfs sd1a
 ```
 
 On repère le `duid` de la partition :
 ```
-# sysctl hw.disknames
+sysctl hw.disknames
 sd1:5dc1e396ebe437a3
 ```
 
@@ -50,7 +51,7 @@ On ajoute cette ligne dans le fichier `/etc/fstab` :
 
 On crée le crontab quotidienne :
 ```
-# echo ROOTBACKUP=1 >> /etc/daily.local
+echo ROOTBACKUP=1 >> /etc/daily.local
 ```
 
 ## En cas de problème

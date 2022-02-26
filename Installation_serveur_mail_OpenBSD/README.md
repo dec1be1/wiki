@@ -1,5 +1,4 @@
-Installation d'un serveur mail sous OpenBSD
-===========================================
+# Installation d'un serveur mail sous OpenBSD
 
 ## Préambule
 
@@ -19,11 +18,13 @@ entrants).
 On utilisera aussi *fetchmail* qui permet de récupérer les messages venant
 d'autres comptes pour les centraliser dans une seule boîte de réception.
 
+**Toutes les commandes sont à exécuter avec les privilèges root.**
+
 ## Installation des paquets
 
 On installe les paquets nécessaires :
 ```
-# pkg_add opensmtpd-extras dovecot dovecot-pigeonhole curl dkimproxy p5-Mail-SpamAssassin spampd clamav clamsmtp fetchmail
+pkg_add opensmtpd-extras dovecot dovecot-pigeonhole curl dkimproxy p5-Mail-SpamAssassin spampd clamav clamsmtp fetchmail
 ```
 
 ## Configuration du firewall (pf)
@@ -90,7 +91,7 @@ pass out quick log (to pflog1) on egress proto tcp to any port smtp
 
 On n'oublie pas de redémarrer le firewall :
 ```
-# pfctl -d && pfctl -ef /etc/pf.conf
+pfctl -d && pfctl -ef /etc/pf.conf
 ```
 
 ## Configuration des différentes briques
@@ -100,7 +101,7 @@ On n'oublie pas de redémarrer le firewall :
 On commence par créer l'utilisateur *vmail* pour séparer les droits avec les
 autres applications :
 ```
-# useradd -m -u 1002 -g =uid -c "Virtual Mail" -d /var/vmail -s /sbin/nologin vmail
+useradd -m -u 1002 -g =uid -c "Virtual Mail" -d /var/vmail -s /sbin/nologin vmail
 ```
 
 Le fichier de configuration principal est `/etc/mail/smtpd.conf`. Il est
@@ -218,13 +219,13 @@ userdb {
 
 On finit en générant les paramètres DH (c'est un peu long) :
 ```
-# openssl dhparam -out /etc/dovecot/dh.pem 4096
+openssl dhparam -out /etc/dovecot/dh.pem 4096
 ```
 
 On active et on démarre le service :
 ```
-# rcctl enable dovecot
-# rcctl start dovecot
+rcctl enable dovecot
+rcctl start dovecot
 ```
 
 ### ClamAV
@@ -241,16 +242,16 @@ On ajoute un crontab pour le faire régulièrement :
 
 On crée les fichiers de logs et on ajuste les droits :
 ```
-# touch /var/log/clamd.log /var/log/freshclam.log
-# chown _clamav:_clamav /var/log/clamd.log /var/log/freshclam.log
-# chmod 640 /var/log/clamd.log /var/log/freshclam.log
+touch /var/log/clamd.log /var/log/freshclam.log
+chown _clamav:_clamav /var/log/clamd.log /var/log/freshclam.log
+chmod 640 /var/log/clamd.log /var/log/freshclam.log
 ```
 
 On active le service et on le lance :
 ```
-# rcctl enable clamd
-# rcctl set clamd flags "-c /etc/clamd.conf"
-# rcctl start clamd
+rcctl enable clamd
+rcctl set clamd flags "-c /etc/clamd.conf"
+rcctl start clamd
 ```
 
 ### clamsmtp
@@ -261,8 +262,8 @@ Les fichiers de configuration sont
 
 On lance les services :
 ```
-# /usr/local/sbin/clamsmtpd -f /etc/clamsmtpd-in.conf
-# /usr/local/sbin/clamsmtpd -f /etc/clamsmtpd-out.conf
+/usr/local/sbin/clamsmtpd -f /etc/clamsmtpd-in.conf
+/usr/local/sbin/clamsmtpd -f /etc/clamsmtpd-out.conf
 ```
 
 On ajoute ces lignes à `/etc/rc.local` pour les démarrer automatiquement au boot.
@@ -271,14 +272,14 @@ On ajoute ces lignes à `/etc/rc.local` pour les démarrer automatiquement au bo
 
 On ajoute le service et on configure :
 ```
-# rcctl enable spamd
-# rcctl set spamd flags -v -G 2:4:864 -y 127.0.0.1 -K /etc/ssl/private/domain.tld.key -C /etc/ssl/domain.tld.fullchain.pem
-# rcctl start spamd
+rcctl enable spamd
+rcctl set spamd flags -v -G 2:4:864 -y 127.0.0.1 -K /etc/ssl/private/domain.tld.key -C /etc/ssl/domain.tld.fullchain.pem
+rcctl start spamd
 ```
 
 On télécharge le fichier `nospamd` :
 ```
-# ftp -o /etc/mail/nospamd http://www.bsdly.net/~peter/nospamd
+ftp -o /etc/mail/nospamd http://www.bsdly.net/~peter/nospamd
 ```
 
 On ajoute le contenu suivant au fichier `/etc/mail/spamd.conf` :
@@ -307,20 +308,20 @@ On lance l'interface :
 
 On lance le service :
 ```
-# rcctl enable spamlogd
-# rcctl set spamlogd flags "-l pflog1"
-# rcctl start spamlogd
+rcctl enable spamlogd
+rcctl set spamlogd flags "-l pflog1"
+rcctl start spamlogd
 ```
 
 ### SpamAssassin et spampd
 
 On active et on lance les services :
 ```
-# rcctl enable spamassassin
-# rcctl start spamassassin
-# rcctl enable spampd
-# rcctl set spampd flags "--port=10035 --relayhost=127.0.0.1:10036 --tagall"
-# rcctl start spampd
+rcctl enable spamassassin
+rcctl start spamassassin
+rcctl enable spampd
+rcctl set spampd flags "--port=10035 --relayhost=127.0.0.1:10036 --tagall"
+rcctl start spampd
 ```
 
 Si on souhaite *whitelister* des adresses particulières, on peut le faire via
@@ -339,23 +340,23 @@ commande `dkim-genkey`).
 
 On ajuste les droits :
 ```
-# chown -R _dkimproxy:_dkimproxy /etc/dkimproxy
-# chmod 700 /etc/dkimproxy/private
-# chmod 444 /etc/dkimproxy/private/public.key
-# chmod 400 /etc/dkimproxy/private/private.key
+chown -R _dkimproxy:_dkimproxy /etc/dkimproxy
+chmod 700 /etc/dkimproxy/private
+chmod 444 /etc/dkimproxy/private/public.key
+chmod 400 /etc/dkimproxy/private/private.key
 ```
 
 On active et lance le service :
 ```
-# rcctl enable dkimproxy_out
-# rcctl start dkimproxy_out
+rcctl enable dkimproxy_out
+rcctl start dkimproxy_out
 ```
 
 ### Fetchmail
 
 On commence par créer un utilisateur :
 ```
-# useradd -m -u 3001 -g=uid -c "Fetchmail Daemon User" -d /var/fetchmail -s /sbin/nologin _fetchmail
+useradd -m -u 3001 -g=uid -c "Fetchmail Daemon User" -d /var/fetchmail -s /sbin/nologin _fetchmail
 ```
 
 *Fetchmail* va fonctionner de manière autonome et aura donc besoin de droits
@@ -385,12 +386,12 @@ poll <imap_server> port 993 proto imap:
 
 On ajuste les droits de ce fichier car il contient des credentials.
 ```
-# chmod 600 /var/fetchmail/.fetchmailrc
+chmod 600 /var/fetchmail/.fetchmailrc
 ```
 
 Fetchmail est lancé depuis le fichier `/etc/rc.local` :
 ```
-# echo "/usr/bin/doas -u _fetchmail /usr/local/bin/fetchmail" >> /etc/rc.local
+echo "/usr/bin/doas -u _fetchmail /usr/local/bin/fetchmail" >> /etc/rc.local
 ```
 
 ### Divers

@@ -1,5 +1,4 @@
-Installation serveur Synapse (Matrix) sous Debian
-=================================================
+# Installation serveur Synapse (Matrix) sous Debian
 
 Le principe est d'installer un reverse proxy TLS (*nginx* ici) qui va
 transférer les requêtes venant :
@@ -24,7 +23,7 @@ On doit donc ouvrir les ports 443 et 8448 (en TCP) sur le firewall du serveur.
 ### Paquets
 
 ```
-# apt install build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-virtualenv libjpeg-dev libxslt1-dev virtualenv
+sudo apt install build-essential python3-dev libffi-dev python3-pip python3-setuptools sqlite3 libssl-dev python3-virtualenv libjpeg-dev libxslt1-dev virtualenv
 ```
 
 ### certbot
@@ -61,7 +60,7 @@ On peut en complément installer *PostgreSQL* pour de meilleures performances :
 
 Sur Debian 10, on peut installer par les paquets disponibles dans les dépôts :
 ```
-# apt install matrix-synapse
+sudo apt install matrix-synapse
 ```
 
 Alternativement, on peut installer via les sources en suivant les indications
@@ -81,7 +80,7 @@ Editer le fichier `config.yaml` :
 
 Commande pour créer un fichier de *registration* :
 ```
-$ node app.js -r -f my_registration_file_freenode.yaml -u "http://localhost:9998" -c config.freenode.yaml -l my_bot
+node app.js -r -f my_registration_file_freenode.yaml -u "http://localhost:9998" -c config.freenode.yaml -l my_bot
 ```
 
 Enregistrer le service dans le fichier de configuration de synapse
@@ -91,7 +90,7 @@ Python).
 
 Commande pour lancer un *appservice* :
 ```
-$ node app.js -c config.freenode.yaml -f my_registration_file_freenode.yaml -p 9998
+node app.js -c config.freenode.yaml -f my_registration_file_freenode.yaml -p 9998
 ```
 
 Sources :

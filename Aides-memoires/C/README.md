@@ -1,5 +1,4 @@
-Langage C
-=========
+# Langage C
 
 ## Les segments mémoire
 
@@ -24,7 +23,7 @@ Langage C
 
 Pour compiler le programme `code.c`. Le résultat est le fichier `executable` :
 ```
-$ gcc -o executable code.c
+gcc -o executable code.c
 ```
 
 Quelques options utiles :
@@ -49,17 +48,17 @@ l'exploitation de failles de type *buffer overflow*.
 
 Pour voir si l'ASLR est activé ou pas sous GNU/Linux :
 ```
-$ cat /proc/sys/kernel/randomize_va_space
+cat /proc/sys/kernel/randomize_va_space
 ```
 
 On peut l'activer :
 ```
-# echo "2" | dd of=/proc/sys/kernel/randomize_va_space
+echo "2" | sudo dd of=/proc/sys/kernel/randomize_va_space
 ```
 
 Ou le désactiver :
 ```
-# echo "0" | dd of=/proc/sys/kernel/randomize_va_space
+echo "0" | sudo dd of=/proc/sys/kernel/randomize_va_space
 ```
 
 ## Fonction `printf()`

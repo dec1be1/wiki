@@ -1,5 +1,4 @@
-Configuration PHP et Python dans un chroot OpenBSD
-==================================================
+# Configuration PHP et Python dans un chroot OpenBSD
 
 Ce wiki explique comment faire fonctionner php et python dans un
 environnement chrooté sous OpenBSD.
@@ -84,17 +83,17 @@ Copier le dossier `/usr/local/share/locale` et le fichier
 
 Taper les commandes suivantes :
 ```
-# mknod -m 666 /var/www/dev/tty c 5 0
-# mknod -m 666 /var/www/dev/null c 2 2
-# mknod -m 644 /var/www/dev/random c 45 0
-# mknod -m 644 /var/www/dev/urandom c 45 2
+sudo mknod -m 666 /var/www/dev/tty c 5 0
+sudo mknod -m 666 /var/www/dev/null c 2 2
+sudo mknod -m 644 /var/www/dev/random c 45 0
+sudo mknod -m 644 /var/www/dev/urandom c 45 2
 ```
 
 ou, pour tout créer d'un coup, utiliser le script `MAKEDEV` d'OpenBSD :
 ```
-# cp /dev/MAKEDEV /var/www/dev/MAKEDEV
-# cd /var/www/dev/
-# ./MAKEDEV all
+sudo cp /dev/MAKEDEV /var/www/dev/MAKEDEV
+sudo cd /var/www/dev/
+sudo ./MAKEDEV all
 ```
 
 ## Finalisation
@@ -102,13 +101,13 @@ ou, pour tout créer d'un coup, utiliser le script `MAKEDEV` d'OpenBSD :
 Créer le dossier `/var/run` dans le chroot puis générer un fichier chrooté
 `ld.hints.so` :
 ```
-# mkdir /var/www/var/run
-# chroot /var/www /sbin/ldconfig /usr/lib /usr/local/lib
+sudo mkdir /var/www/var/run
+sudo chroot /var/www /sbin/ldconfig /usr/lib /usr/local/lib
 ```
 
 Pour tester python :
 ```
-# chroot -u www /var/www /usr/local/bin/python
+sudo chroot -u www /var/www /usr/local/bin/python
 ```
 
 ## Sources

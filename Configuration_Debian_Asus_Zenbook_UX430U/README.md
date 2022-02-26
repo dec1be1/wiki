@@ -1,5 +1,4 @@
-Configuration Debian sur laptop Asus Zenbook UX430U
-===================================================
+# Configuration Debian sur laptop Asus Zenbook UX430U
 
 Cette page décrit diverses tâches de configuration et d'optimisation de
 Debian 10 (*Buster* branche *unstable* ou *sid*) sur un Asus Zenbook UX430UNR.
@@ -8,7 +7,7 @@ avec *LUKS*.
 
 Voici les sorties des commandes `lspci` et `lsusb` :
 ```
-$ lspci
+lspci
 00:00.0 Host bridge: Intel Corporation Device 5914 (rev 08)
 00:02.0 VGA compatible controller: Intel Corporation Device 5917 (rev 07)
 00:04.0 Signal processing controller: Intel Corporation Skylake Processor Thermal Subsystem (rev 08)
@@ -28,7 +27,7 @@ $ lspci
 01:00.0 3D controller: NVIDIA Corporation Device 1d10 (rev a1)
 02:00.0 Network controller: Intel Corporation Device 24fd (rev 78)
 
-$ lsusb
+lsusb
 Bus 002 Device 002: ID 0bda:8153 Realtek Semiconductor Corp.
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 004: ID 04f3:0903 Elan Microelectronics Corp.
@@ -45,7 +44,7 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Vérifier que le kernel intègre bien les éléments pour la configuration du
 microcode :
 ```
-# grep -i 'microcode' /boot/config-X.XX.XX
+sudo grep -i 'microcode' /boot/config-X.XX.XX
 ```
 
 Si la sortie ressemble à ça :
@@ -59,7 +58,7 @@ CONFIG_MICROCODE_OLD_INTERFACE=y
 on peut installer le paquet `intel-microcode` et `iucode-tool` (qui est un
 outil de gestion du microcode) :
 ```
-# apt install iucode-tool intel-microcode
+sudo apt install iucode-tool intel-microcode
 ```
 
 ## Les dépôts
@@ -84,7 +83,7 @@ deb http://deb.debian.org/debian/ sid main non-free contrib
 
 Installer le paquet firmware-iwlwifi (non libre) :
 ```
-# apt install firmware-iwlwifi
+sudo apt install firmware-iwlwifi
 ```
 
 Ajouter le contenu suivant au fichier
@@ -119,8 +118,8 @@ au démarrage par le script `/etc/rc.local`. Pour faire ça :
 * Créer les fichiers `/etc/rc.local` et `/etc/firewall.sh` et les rendre
   exécutable :
 ```
-# touch /etc/rc.local && chmod 700 /etc/rc.local
-# touch /etc/firewall.sh && chmod 700 /etc/firewall.sh
+sudo touch /etc/rc.local && chmod 700 /etc/rc.local
+sudo touch /etc/firewall.sh && chmod 700 /etc/firewall.sh
 ```
 * Pour lancer le script du firewall au démarrage, ajouter ça à
   [`/etc/rc.local`](./rc.local) :
@@ -180,7 +179,7 @@ done
 Après avoir modifier les options de *dm-crypt* et *LVM*, il est nécessaire de
 régénérer les *initramfs* :
 ```
-# update-initramfs -u -k all
+sudo update-initramfs -u -k all
 ```
 
 Sources :
@@ -195,17 +194,17 @@ fait un peu de configuration :
 
 * Installer le paquet :
 ```
-# apt install rng-tools
+sudo apt install rng-tools
 ```
 * On vérifie que le noyau intègre tpm :
 ```
-# cat /boot/config-X.XX.XX | grep CONFIG_HW_RANDOM_TPM
+sudo cat /boot/config-X.XX.XX | grep CONFIG_HW_RANDOM_TPM
 ```
 Si on obtient `y`, c'est bon. Si on a `m`, il faut activer le module
 `tpm-rng` au boot :
 ```
-# echo tpm-rng >> /etc/modules
-# modprobe tpm-rng
+sudo echo tpm-rng >> /etc/modules
+sudo modprobe tpm-rng
 ```
 Si on a ni `y` ni `m`, il faut recompiler le noyau.
 
@@ -217,7 +216,7 @@ RNGDOPTIONS="--hrng=intelfwh --fill-watermark=90% --feed-interval=1"
 ```
 * On relance `rng-tools` :
 ```
-# systemctl restart rng-tools
+sudo systemctl restart rng-tools
 ```
 
 Source : <https://cryptotronix.com/2014/08/28/tpm-rng/>
@@ -239,12 +238,12 @@ un GPU NVidia GeForce MX150.
 Pour lancer une application sur le GPU NVidia, il faut ajouter `optirun` dans
 la ligne de commande :
 ```
-$ optirun glxgears
+optirun glxgears
 ```
 
 Pour ouvrir le panneau NVidia :
 ```
-$ optirun nvidia-settings -c :8
+optirun nvidia-settings -c :8
 ```
 
 Sources :
@@ -272,7 +271,7 @@ Sous Debian 10, le mode *suspend* passe par défaut l'ordinateur en mode
 S2 (`s2idle`) au lieu de S3 (`deep`). On peut le vérifier, après avoir fermé
 puis ré-ouvert le laptop :
 ```
-# journalctl | grep "PM: suspend" | tail
+sudo journalctl | grep "PM: suspend" | tail
 févr. 16 11:50:38 zen kernel: PM: suspend entry (s2idle)
 févr. 16 11:50:47 zen kernel: PM: suspend exit
 ```
@@ -288,7 +287,7 @@ On met à jour la configuration de grub qvec `# update-grub` puis on reboote.
 On peut alors vérifier que ça fonctionne bien (après avoir fermé puis
 ré-ouvert le laptop) :
 ```
-# journalctl | grep "PM: suspend" | tail
+sudo journalctl | grep "PM: suspend" | tail
 févr. 16 13:19:27 zen kernel: PM: suspend entry (deep)
 févr. 16 13:19:38 zen kernel: PM: suspend exit
 ```
@@ -302,9 +301,9 @@ Sources :
 
 On peut installer puis démarrer *tlp* pour améliorer la gestion de l'énergie (présent dans les dépôts officiels) :
 ```
-# apt install tlp
+sudo apt install tlp
 [...]
-# tlp start
+sudo tlp start
 ```
 
 La configuration par défaut est satisfaisante.
@@ -326,7 +325,7 @@ On peut lancer le mode automatique : `powertop --auto-tune`.
 
 Pour une installation sous *KDE Plasma*, on installe les paquets suivants :
 ```
-# apt install bluetooth bluedevil pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
+sudo apt install bluetooth bluedevil pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
 ```
 
 On relance le service `bluetooth`.
@@ -336,7 +335,7 @@ qu'il faille exécuter la commande suivante (si on a une erreur
 `a2dp-sink profile connect failed for ...` au niveau du service
 `bluetooth` pendant l’appairage) :
 ```
-# killall pulseaudio
+sudo killall pulseaudio
 ```
 
 Sources :

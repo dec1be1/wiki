@@ -1,5 +1,4 @@
-Procédure personnelle de mise à jour de mon serveur OpenBSD
-===========================================================
+# Procédure personnelle de mise à jour de mon serveur OpenBSD
 
 Cette page décrit **ma** procédure de mise à jour d'un serveur sous OpenBSD.
 
@@ -41,7 +40,7 @@ Elle suppose de disposer de deux disques durs système strictement identiques :
   démonté et conservé en cas de problème) vers le disque cible (dont le
   système sera mis à jour puis utilisé en production) :
 ```
-$ sudo dd if=/dev/sda of=/dev/sdb conv=notrunc status=progress
+sudo dd if=/dev/sda of=/dev/sdb conv=notrunc status=progress
 ```
 * Attendre environ une heure pour un disque de 250 Go.
 * Eteindre le serveur.
@@ -52,9 +51,9 @@ $ sudo dd if=/dev/sda of=/dev/sdb conv=notrunc status=progress
 * Remiser le disque *source* par devers moi ;D
 * Remettre en place les disques durs de données (les 3,5 pouces).
 * Démarrer le serveur.
-* Vérifier les systèmes de fichiers :
+* Vérifier les systèmes de fichiers, **en root** :
 ```
-# fsck
+fsck
 ```
 
 ## Mise à jour d'OpenBSD

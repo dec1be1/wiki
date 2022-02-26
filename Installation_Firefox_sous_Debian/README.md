@@ -1,5 +1,4 @@
-Installation de Firefox sous Debian (paquet précompilé)
-=======================================================
+# Installation de Firefox sous Debian (paquet précompilé)
 
 Ce wiki rappelle les étapes à suivre pour installer Firefox sur GNU/Linux
 (testé sur Debian Stretch) à partir du paquet précompilé. Cela permet d'avoir
@@ -20,11 +19,11 @@ répertoire personnel.
 * Décompresseur le paquet précompilé dans `/opt/firefox` (se placer avant
   dans le répertoire contenant le paquet) :
 ```
-# tar xjf Firefox.tar.bz2 -C /opt/
+sudo tar xjf Firefox.tar.bz2 -C /opt/
 ```
 * Ajuster les droits si nécessaire :
 ```
-# chmod -R 755 /opt/firefox
+sudo chmod -R 755 /opt/firefox
 ```
 * Pour que l'application apparaisse dans le menu d'applications, créer un
   fichier
@@ -36,17 +35,17 @@ La session graphique devra être relancée pour prise en compte.
 
 Entrer les commandes suivantes :
 ```
-# update-alternatives --install /usr/bin/x-www-browser x-www-browser /opt/firefox/firefox 200
-# update-alternatives --set x-www-browser /opt/firefox/firefox
-# update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser /opt/firefox/firefox 200
-# update-alternatives --set gnome-www-browser /opt/firefox/firefox
+sudo update-alternatives --install /usr/bin/x-www-browser x-www-browser /opt/firefox/firefox 200
+sudo update-alternatives --set x-www-browser /opt/firefox/firefox
+sudo update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser /opt/firefox/firefox 200
+sudo update-alternatives --set gnome-www-browser /opt/firefox/firefox
 ```
 
 ## Utilisation en ligne de commande
 
 Pour pouvoir lancer Firefox en ligne de commande :
 ```
-# ln -s /opt/firefox/firefox /usr/local/bin/
+sudo ln -s /opt/firefox/firefox /usr/local/bin/
 ```
 
 ## Procédure de mise à jour

@@ -1,5 +1,4 @@
-Configuration multiboot dans container LVM chiffré (LUKS)
-=========================================================
+# Configuration multiboot dans container LVM chiffré (LUKS)
 
 Ce wiki décrit ma procédure d'installation d'un système multiboot (Debian /
 Arch Linux / ... dans mon cas) sur un disque dur dont un volume LVM est
@@ -63,12 +62,12 @@ GRUB_DISABLE_OS_PROBER=true
 On régénère les images du noyau (le fait d'avoir fait des partitions boot
 séparées permet de n'affecter que les images de la partition boot montée) :
 ```
-# update-initramfs -u -k all
+sudo update-initramfs -u -k all
 ```
 
 On met à jour *GRUB* sur la bonne partition de boot :
 ```
-# update-grub /dev/sda2
+sudo update-grub /dev/sda2
 ```
 
 On peut maintenant installer le boot manager !
@@ -99,17 +98,17 @@ On lance la procédure d'installation normalement.
 **Avant de faire le partitionnement du disque, il faut exécuter un shell et monter les volumes chiffrés**
 pour pouvoir utiliser ceux dont on aura besoin :
 ```
-# cryptsetup luksOpen /dev/sda5 sda5_crypt
+sudo cryptsetup luksOpen /dev/sda5 sda5_crypt
 ```
 
 On active les volumes LVM pour le groupe entier :
 ```
-# lvchange -ay nomDuGroupeDeVolumes
+sudo lvchange -ay nomDuGroupeDeVolumes
 ```
 
 On vérifie qu'ils ont bien été trouvés :
 ```
-# lvscan
+sudo lvscan
 ```
 
 On peut sortir du shell et poursuivre l'installation classique de l'OS avec
@@ -128,18 +127,18 @@ On doit se chrooter dans le système qui vient d'être installé pour permettre
 de booter sur la nouvelle partition root chiffrée. On suppose ici qu'on monte
 le nouveau système dans `/mnt` :
 ```
-# mount /dev/mapper/[vg-name]-[root2ou3-lv-name] /mnt
-# mount -o bind /proc /mnt/proc
-# mount -o bind /dev /mnt/dev
-# mount -o bind /dev/pts /mnt/dev/pts
-# mount -o bind /sys /mnt/sys
-# cd /mnt
-# chroot /mnt
+sudo mount /dev/mapper/[vg-name]-[root2ou3-lv-name] /mnt
+sudo mount -o bind /proc /mnt/proc
+sudo mount -o bind /dev /mnt/dev
+sudo mount -o bind /dev/pts /mnt/dev/pts
+sudo mount -o bind /sys /mnt/sys
+sudo cd /mnt
+sudo chroot /mnt
 ```
 
 On monte la bonne partition de boot :
 ```
-# mount /dev/sda3ou4 /boot
+sudo mount /dev/sda3ou4 /boot
 ```
 
 On créé un fichier `/boot/refind_linux.conf` (sur le modèle de celui du
@@ -163,14 +162,14 @@ GRUB_DISABLE_OS_PROBER=true
 
 On régénère les images du noyau :
 ```
-# update-initramfs -u -k all
+sudo update-initramfs -u -k all
 ```
 
 **Note : Si on a une erreur à ce moment-là, il est plus simple de redémarrer sur la procédure d'installation en mode rescue. Dans ce cas, l'installateur propose de monter les partitions chiffrées automatiquement et de faire le chroot. On peut alors tout vérifier et régénérer les images du noyau et de faire un update-grub sans problèmes cette fois.**
 
 On met à jour *GRUB* sur la bonne partition de boot :
 ```
-# update-grub /dev/sda3ou4
+sudo update-grub /dev/sda3ou4
 ```
 
 On note que *cryptsetup* doit être installé sur le nouveau système.

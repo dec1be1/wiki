@@ -1,5 +1,4 @@
-Ghidra
-======
+# Ghidra
 
 ## FunctionID
 

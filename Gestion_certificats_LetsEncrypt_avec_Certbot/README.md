@@ -1,5 +1,4 @@
-Gestion des certificats Let's Encrypt avec Certbot sous GNU/Linux
-=================================================================
+# Gestion des certificats Let's Encrypt avec Certbot sous GNU/Linux
 
 Cette page décrit la procédure de création et de mise à jour des certificats
 *Let's Encrypt* avec le client [Certbot](https://certbot.eff.org/) sous
@@ -18,7 +17,7 @@ Si le serveur web gère plusieurs domaines, il faudra un certificat par domaine.
 ## Installation des packages nécessaires
 
 ```
-# apt-get install certbot python-certbot-nginx
+sudo apt-get install certbot python-certbot-nginx
 ```
 ## Création du certificat (la première fois uniquement)
 
@@ -35,7 +34,7 @@ Si le serveur web gère plusieurs domaines, il faudra un certificat par domaine.
   `/etc/nginx/sites-enabled`.
 * Relancer le serveur web :
 ```
-# systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 ### Modification temporaire du firewall (iptables)
@@ -44,7 +43,7 @@ On ouvre temporairement le port 443 qui est nécessaire pour le challenge
 *Let's Encrypt* (vérification que le serveur web est sous le contrôle de la
 bonne personne) :
 ```
-# iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 ```
 
 ### Création du certificats
@@ -53,7 +52,7 @@ Si le serveur web a bien redémarré, on peut passer à la création du
 certificat. On utilise l'argument *certonly* de manière à éviter que
 *Certbot* ne modifie les fichiers de configuration de *nginx* :
 ```
-# certbot --nginx certonly
+sudo certbot --nginx certonly
 ```
 
 S'il n'y a pas d'erreur, le certificat est créé (valable pour tous les
@@ -72,14 +71,14 @@ renseigné (directives *ssl_certificate* et *ssl_certificate_key*).
 
 On relance le serveur web :
 ```
-# systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 ### Remise en place de la configuration du firewall
 
 Le port 443 n'a plus besoin d'être ouvert :
 ```
-# iptables -D INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+sudo iptables -D INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 ```
 
 ### Post installation

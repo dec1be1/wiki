@@ -1,5 +1,4 @@
-gdb
-===
+# gdb
 
 ## Configuration
 
@@ -12,7 +11,7 @@ Pour utiliser la syntaxe *Intel*, taper dans `gdb` :
 Pour éviter d'avoir à le retaper à chaque démarrage de `gdb`, éditer le
 ficher `~/.gdbinit` :
 ```
-$ echo "set disassembly-flavor intel" > ~/.gdbinit
+echo "set disassembly-flavor intel" > ~/.gdbinit
 ```
 
 Pour AT&T : idem mais avec `att`.
@@ -71,7 +70,7 @@ Pour les processeurs 64 bits, on remplace le *e* (extended) par un *r*
 
 Pour lancer `gdb` sans la bannière de démarrage :
 ```
-$ gdb -q [executable_file]
+gdb -q [executable_file]
 ```
 
 ## Commandes

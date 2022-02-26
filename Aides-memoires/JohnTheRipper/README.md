@@ -1,5 +1,4 @@
-John The Ripper
-===============
+# John The Ripper
 
 ## Modes
 
@@ -8,7 +7,7 @@ Trois modes sont possibles.
 ### Single
 
 ```
-$ john --single [HASH_FILE]
+john --single [HASH_FILE]
 ```
 
 John va tester des combinaisons de caractères basées sur les logins identifiés
@@ -23,7 +22,7 @@ Ce mode est généralement rapide.
 
 Le principe est ici de tester tous les mots d'une liste.
 ```
-$ john --wordlist=/root/wordlists/rockyou.txt [HASH_FILE]
+john --wordlist=/root/wordlists/rockyou.txt [HASH_FILE]
 ```
 
 Si aucune liste n'est spécifiée, john utilise par défaut sa propre liste.
@@ -54,7 +53,7 @@ Plusieurs modes sont déjà définis (non exhaustif) :
 
 Pour utiliser un mode particulier :
 ```
-$ john --incremental=Digits [HASH_FILE]
+john --incremental=Digits [HASH_FILE]
 ```
 
 ## Mangling rules
@@ -72,7 +71,7 @@ On peut également générer un dictionnaire custom utilisant des
 *mangling rules* avec l'option `--stdout`. Cela permet d'utiliser ce
 dictionnaire avec un autre logiciel. Par exemple :
 ```
-$ john --config=custom_config_file --wordlist=custom_wordlist.txt --rules=Jumbo --stdout
+john --config=custom_config_file --wordlist=custom_wordlist.txt --rules=Jumbo --stdout
 ```
 
 > Pour mettre TOUTES les règles : `--rules:All`
@@ -83,19 +82,19 @@ Lorsqu'on dispose, sous GNU/Linux, des fichiers `/etc/passwd` et `/etc/shadow`,
 il faut d'abord les combiner pour pouvoir les utiliser avec john. On utilise
 l'utilitaire `unshadow` :
 ```
-$ unshadow /etc/passwd /etc/shadow > ./unshadow
+unshadow /etc/passwd /etc/shadow > ./unshadow
 ```
 
 On peut alors lancer john sur ce fichier :
 ```
-$ john ./unshadow
+john ./unshadow
 ```
 
 ## Formats de hash
 
 On peut spécifier le type de hash pour aider john. Par exemple :
 ```
-$ john --format=sha512crypt [HASH_FILE]
+john --format=sha512crypt [HASH_FILE]
 ```
 
 ## Mots de passe déjà crackés
@@ -103,7 +102,7 @@ $ john --format=sha512crypt [HASH_FILE]
 Pour visualiser les mots de passe que john a réussi à cracker sur un fichier
 particulier :
 ```
-$ john --show [HASH_FILE]
+john --show [HASH_FILE]
 ```
 
 ## Sessions
@@ -111,12 +110,12 @@ $ john --show [HASH_FILE]
 Pour créer une session qu'on pourra reprendre en cas d'arrêt (cela crée un
 fichier `.rec` dans le dossier courant) :
 ```
-$ john [...] --session=<session_name>
+john [...] --session=<session_name>
 ```
 
 Pour reprendre la session plus tard (sans aucun autre argument) :
 ```
-$ john --restore=<session_name>
+john --restore=<session_name>
 ```
 
 ## Fichiers zip ou rar
@@ -124,7 +123,7 @@ $ john --restore=<session_name>
 Pour cracker un fichier zip ou rar protégé, il faut d'abord créer le fichier
 de hash en utilisant l'utilitaire `zip2john` :
 ```
-$ zip2john fichier.zip > fichier.hash
+zip2john fichier.zip > fichier.hash
 ```
 Pour les fichiers rar, utiliser `rar2john`.
 
@@ -148,12 +147,12 @@ On utilise ensuite john normalement avec le fichier de hash créé. On peut
 
 On commence par créer le fichier de hash selon ce format :
 ```
-$ echo "username:hash$salt" > hash.txt
+echo "username:hash$salt" > hash.txt
 ```
 
 Pour lister les sous-formats disponibles :
 ```
-$ john --list=subformats
+john --list=subformats
 ```
 
 ### Exemple pour md5(salt+password)
@@ -163,7 +162,7 @@ On dispose du salt et du hash md5(salt+password). On veut trouver le password.
 On voit en listant les sous-formats qu'il s'agit du format `dynamic_4`.
 On lance john après avoir préparé le fichier de hash (cf. un peu plus haut) :
 ```
-$ john --format=dynamic_4 ./hash.txt
+john --format=dynamic_4 ./hash.txt
 ```
 
 On peut utiliser toutes les options habituelles.

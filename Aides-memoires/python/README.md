@@ -1,5 +1,4 @@
-Python
-======
+# Python
 
 ## pip
 
@@ -53,4 +52,6 @@ Comme en C, on peut ajouter, avant le code précédent, le nombre de caractères
 Par exemple : `{0:08x}` sera bien adapté pour afficher une adresse mémoire sur
 32 bits.
 
-Source : <https://www.geeksforgeeks.org/python-format-function/>
+## Sources
+
+- <https://www.geeksforgeeks.org/python-format-function/>

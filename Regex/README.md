@@ -1,5 +1,4 @@
-Quelques exemples de regex
-==========================
+# Quelques exemples de regex
 
 Cette page centralise quelques exemples d'expressions régulières (regex)
 de type PCRE.

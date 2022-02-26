@@ -1,5 +1,4 @@
-Exposition d'une VM directement sur Internet
-============================================
+# Exposition d'une VM directement sur Internet
 
 Cet article explique comment exposer une VM hébergée sur un serveur dédié
 directement sur Internet.

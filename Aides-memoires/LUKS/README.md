@@ -1,12 +1,11 @@
-LUKS (cryptsetup)
-=================
+# LUKS (cryptsetup)
 
 Ce wiki constitue mon aide-mémoire pour l'utilisation de LUKS avec cryptsetup
 sous Linux.
 
 Pour afficher la liste des volumes sous GNU/Linux :
 ```
-# blkid
+sudo blkid
 ```
 
 ## Création de volumes chiffrés
@@ -15,14 +14,14 @@ Pour afficher la liste des volumes sous GNU/Linux :
 
 Exemple pour un container de 1 Go (rempli avec des données aléatoires) :
 ```
-$ dd if=/dev/urandom of=/home/ju/container bs=1M count=1000
+dd if=/dev/urandom of=/home/ju/container bs=1M count=1000
 ```
 
 ### Chiffrer un volume (container ou partition)
 
 Exemple pour le container créé précédemment (avec un chiffrement fort) :
 ```
-# cryptsetup luksFormat -c aes-xts-plain64 -s 512 -h sha512 /home/ju/container
+sudo cryptsetup luksFormat -c aes-xts-plain64 -s 512 -h sha512 /home/ju/container
 ```
 Pour chiffrer une partition, remplacer `/home/ju/container` par le nom de la
 partition (ex : `/dev/sdc1`).
@@ -33,40 +32,40 @@ partition (ex : `/dev/sdc1`).
 
 On mappe le disque chiffré sur `/dev/mapper/chif` :
 ```
-# cryptsetup luksOpen /dev/sdc1 chif
+sudo cryptsetup luksOpen /dev/sdc1 chif
 ```
 
 On monte le volume :
 ```
-# mount /dev/mapper/chif /mnt/VolumeChiffre
+sudo mount /dev/mapper/chif /mnt/VolumeChiffre
 ```
 
 ### Démonter le volume
 
 Pour démonter le volume :
 ```
-# umount /mnt/VolumeChiffre
-# cryptsetup luksClose chif
+sudo umount /mnt/VolumeChiffre
+sudo cryptsetup luksClose chif
 ```
 
 ### Afficher les informations
 
 Pour afficher les informations sur une partition chiffrée :
 ```
-# cryptsetup luksDump /dev/sdc1
+sudo cryptsetup luksDump /dev/sdc1
 ```
 
 ### Ajouter une clé d'accès
 
 Pour ajouter une clé d'accès (s'il reste au moins un slot disponible) :
 ```
-# cryptsetup luksAddKey /dev/sdc1
+sudo cryptsetup luksAddKey /dev/sdc1
 ```
 
 ### Supprimer une clé d'accès
 
 ```
-# cryptsetup luksKillSlot /dev/sdc1 <num_slot>
+sudo cryptsetup luksKillSlot /dev/sdc1 <num_slot>
 ```
 
 ## Gestion des headers
@@ -85,7 +84,7 @@ lieu sûr (en le chiffrant au passage). Cela est utile notamment lorsqu'un
 partition *LUKS* dans un fichier
 (**attention, le fichier généré n'est pas chiffré**) :
 ```
-# cryptsetup luksHeaderBackup --header-backup-file luksheader.back /dev/sdc1
+sudo cryptsetup luksHeaderBackup --header-backup-file luksheader.back /dev/sdc1
 ```
 
 ### Restauration du header
@@ -93,7 +92,7 @@ partition *LUKS* dans un fichier
 Pour restaurer le *header* d'une partition à partir d'un fichier (ne pas
 oublier de déchiffrer le fichier avant...) :
 ```
-# cryptsetup luksHeaderRestore --header-backup-file luksheader.back /dev/sdc1
+sudo cryptsetup luksHeaderRestore --header-backup-file luksheader.back /dev/sdc1
 ```
 
 ## LUKS Nuke
@@ -106,7 +105,7 @@ sauvegardé ailleurs puis restauré).
 
 Pour ajouter une *nuke key* :
 ```
-# cryptsetup luksAddNuke /dev/sdc1
+sudo cryptsetup luksAddNuke /dev/sdc1
 ```
 
 ## Ne pas oublier !
@@ -114,10 +113,10 @@ Pour ajouter une *nuke key* :
 Après la création d'un volume chiffré, ne pas oublier de créer le dossier pour
 monter le volume :
 ```
-# mkdir /mnt/VolumeChiffre
+sudo mkdir /mnt/VolumeChiffre
 ```
 
 Et de créer le système de fichiers (exemple pour ext4) :
 ```
-# mkfs.ext4 /dev/mapper/chif
+sudo mkfs.ext4 /dev/mapper/chif
 ```

@@ -1,5 +1,4 @@
-Flash du firmware usine sur un routeur TP-Link WR1043ND v2.1
-============================================================
+# Flash du firmware usine sur un routeur TP-Link WR1043ND v2.1
 
 Ce wiki décrit la méthode utilisée pour flasher le firmware usine grâce à
 la connexion série du routeur en utilisant un serveur *tftp* pour uploader le
@@ -41,7 +40,7 @@ pour avoir le point de montage du périphérique. Chez moi c'était
 
 On démarre minicom :
 ```
-# minicom -D /dev/ttyUSB0
+sudo minicom -D /dev/ttyUSB0
 ```
 
 La configuration est la suivante :
@@ -72,8 +71,8 @@ désactive le wifi.
 
 On configure l'interface avec les paramètres suivants :
 ```
-# ip a add 192.168.1.100/24 dev eth0
-# ip route add default via 192.168.1.1 dev eth0
+sudo ip a add 192.168.1.100/24 dev eth0
+sudo ip route add default via 192.168.1.1 dev eth0
 ```
 
 ### Le firmware
@@ -87,13 +86,13 @@ On télécharge la dernière version sur le
 Si le nom du firmware contient le mot *boot*, il va falloir le "stripper"
 (enlever le début qui correspond au boot). Pour faire ça :
 ```
-# dd if=download_firmware(with_boot).bin of=6F01A8C0.img skip=257 bs=512
+sudo dd if=download_firmware(with_boot).bin of=6F01A8C0.img skip=257 bs=512
 ```
 On note que le firmware est à renommer `6F01A8C0.img`.
 
 On copie ensuite ce fichier dans le dossier du *tftp* :
 ```
-# cp 6F01A8C0.img /srv/tftp/
+sudo cp 6F01A8C0.img /srv/tftp/
 ```
 
 Normalement, la taille de ce fichier est de 0x7c0000.

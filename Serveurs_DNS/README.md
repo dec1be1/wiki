@@ -1,7 +1,6 @@
-Quelques serveurs DNS
-=====================
+# Quelques serveurs DNS
 
-Pas tous égaux en ce qui concerne le blocage et le respect de la vie privée. 
+Pas tous égaux en ce qui concerne le blocage et le respect de la vie privée.
 Se renseigner !
 
 ## Quad9

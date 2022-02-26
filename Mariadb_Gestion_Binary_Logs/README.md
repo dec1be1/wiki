@@ -1,5 +1,4 @@
-Mariadb : Gestion des binary logs
-=================================
+# Mariadb : Gestion des binary logs
 
 Le dossier `/var/mysql/mysql` contient les logs binaires (fichiers de la
 forme `mysql-bin.00000*`) qui peuvent prendre beaucoup de place au bout d'un

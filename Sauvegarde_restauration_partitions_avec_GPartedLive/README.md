@@ -1,5 +1,4 @@
-Sauvegarde et restauration de partitions avec GParted Live
-==========================================================
+# Sauvegarde et restauration de partitions avec GParted Live
 
 Cet article décrit la procédure à suivre pour sauvegarder et restaurer des
 partitions entières en utilisant la distribution GNU/Linux
@@ -27,20 +26,20 @@ de *macbook* :
 
 * Ouvrir une console et se logger en *root* :
 ```
-$ sudo su
+sudo su
 ```
 * Passer le clavier en français :
 ```
-# setxkbmap fr
+sudo setxkbmap fr
 ```
 * Créer un répertoire pour le stockage externe :
 ```
-# mkdir /media/EXTERNE
+sudo mkdir /media/EXTERNE
 ```
 * Monter le stockage externe (en supposant que le périphérique est
 `/dev/sdc`) :
 ```
-# mount /dev/sdc1 /media/EXTERNE
+sudo mount /dev/sdc1 /media/EXTERNE
 ```
 
 > Note : Si on veut sauvegarder une partition chiffrée, on peut y accéder en
@@ -49,11 +48,11 @@ $ sudo su
 
 * Lancer la sauvegarde (`dd` est ton ami ;)) :
 ```
-# dd if=/dev/sda8 | gzip -v6 | dd of=/media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz
+sudo dd if=/dev/sda8 | gzip -v6 | dd of=/media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz
 ```
 * Créer une somme de contrôle :
 ```
-# sha256sum /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz > /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz.sha256
+sudo sha256sum /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz > /media/EXTERNE/$(date +%Y%m%d)_mac_root_sda8.gz.sha256
 ```
 
 ## Restauration de partitions
@@ -63,9 +62,9 @@ $ sudo su
   et monter le stockage externe.
 * Vérifier la somme de contrôle :
 ```
-# sha256sum /media/EXTERNE/20180729_mac_root_sda8.gz && cat /media/EXTERNE/20180729_mac_root_sda8.gz.sha256
+sudo sha256sum /media/EXTERNE/20180729_mac_root_sda8.gz && cat /media/EXTERNE/20180729_mac_root_sda8.gz.sha256
 ```
 * Lancer la restauration :
 ```
-# zcat /media/EXTERNE/20180729_mac_root_sda8.gz | dd of=/dev/sda8
+sudo zcat /media/EXTERNE/20180729_mac_root_sda8.gz | dd of=/dev/sda8
 ```

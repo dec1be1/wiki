@@ -1,5 +1,4 @@
-Splunk
-======
+# Splunk
 
 On parle ici de la version gratuite : *Splunk Free*. Elle permet d'indexer
 au maximum 500Mo/jour.
@@ -19,8 +18,8 @@ le logiciel.
 Sur la machine qui servira de serveur *Splunk*, on télécharge le ficher *deb*
 depuis le lien fourni puis on l'installe :
 ```
-# wget -O splunk-8.1.3-63079c59e632-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.1.3&product=splunk&filename=splunk-8.1.3-63079c59e632-linux-2.6-amd64.deb&wget=true'
-# dpkg -i dpkg -i splunk-8.1.3-63079c59e632-linux-2.6-amd64.deb
+sudo wget -O splunk-8.1.3-63079c59e632-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.1.3&product=splunk&filename=splunk-8.1.3-63079c59e632-linux-2.6-amd64.deb&wget=true'
+sudo dpkg -i splunk-8.1.3-63079c59e632-linux-2.6-amd64.deb
 ```
 
 > Note : On peut vérifier la somme de contrôle md5. C'est vivement conseillé
@@ -30,8 +29,8 @@ depuis le lien fourni puis on l'installe :
 On active Splunk au démarrage du serveur (il faudra accepter la license et
 créer un compte administrateur à ce moment-là) puis on le lance :
 ```
-# /opt/splunk/bin/splunk enable boot-start
-# /opt/splunk/bin/splunk start
+sudo /opt/splunk/bin/splunk enable boot-start
+sudo /opt/splunk/bin/splunk start
 ```
 
 L'installation se fait par défaut dans `/opt/splunk`.
@@ -60,8 +59,8 @@ dont on veut centraliser les logs.
 Sur la machine qu'on veut monitorer, on télécharge le ficher *deb* depuis le
 lien fourni puis on l'installe :
 ```
-# wget -O splunkforwarder-8.1.3-63079c59e632-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.1.3&product=universalforwarder&filename=splunkforwarder-8.1.3-63079c59e632-linux-2.6-amd64.deb&wget=true'
-# dpkg -i splunkforwarder-8.1.3-63079c59e632-linux-2.6-amd64.deb
+sudo wget -O splunkforwarder-8.1.3-63079c59e632-linux-2.6-amd64.deb 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.1.3&product=universalforwarder&filename=splunkforwarder-8.1.3-63079c59e632-linux-2.6-amd64.deb&wget=true'
+sudo dpkg -i splunkforwarder-8.1.3-63079c59e632-linux-2.6-amd64.deb
 ```
 
 L'installation se fait par défaut dans `/opt/splunkforwarder`.
@@ -69,16 +68,16 @@ L'installation se fait par défaut dans `/opt/splunkforwarder`.
 On peut ensuite lancer le forwarder (il faut accepter la license et créer un
 utilisateur administrateur à ce moment-là) :
 ```
-# cd /opt/splunkforwarder/bin
-# ./splunk start
+cd /opt/splunkforwarder/bin
+sudo ./splunk start
 ```
 
 > Note : Pour redémarrer le forwarder : `# ./splunk restart`.
 
 On active le forwarder au démarrage du serveur :
 ```
-# cd /opt/splunkforwarder/bin
-# ./splunk enable boot-start
+cd /opt/splunkforwarder/bin
+sudo ./splunk enable boot-start
 ```
 
 #### Configuration
@@ -88,15 +87,15 @@ Les fichiers de configuration du forwarder sont dans
 
 Depuis le forwarder, on ajoute le serveur de réception :
 ```
-# cd /opt/splunkforwarder/bin
-# ./splunk add forward-server <IP_serveur_splunk>:<port_ecoute>
+cd /opt/splunkforwarder/bin
+sudo ./splunk add forward-server <IP_serveur_splunk>:<port_ecoute>
 ```
 
 Cela crée un fichier `/opt/splunkforwarder/etc/system/local/outputs.conf`.
 
 On ajoute ensuite un *monitor*, par exemple ici pour surveiller *nginx* :
 ```
-# ./splunk add monitor /var/log/nginx/access.log -index access_rproxy
+sudo ./splunk add monitor /var/log/nginx/access.log -index access_rproxy
 ```
 
 > L'index doit d'abord avoir été créé dans l'interface de *Splunk* :
@@ -104,12 +103,12 @@ On ajoute ensuite un *monitor*, par exemple ici pour surveiller *nginx* :
 
 Pour lister les *monitor* :
 ```
-# ./splunk list monitor
+sudo ./splunk list monitor
 ```
 
 Pour supprimer un *monitor* :
 ```
-# ./splunk remove monitor /var/log/nginx/access.log
+sudo ./splunk remove monitor /var/log/nginx/access.log
 ```
 
 ## Sources

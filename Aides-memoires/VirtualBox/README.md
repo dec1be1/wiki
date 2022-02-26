@@ -1,5 +1,4 @@
-VirtualBox
-==========
+# VirtualBox
 
 ## Compactage image disque VDI
 
@@ -36,7 +35,7 @@ Exemple pour `C:\` :
 
 Ca se passe maintenant sur l'*host*. On éteint la VM concernée puis :
 ```
-$ VBoxManage modifyhd disk.vdi --compact
+VBoxManage modifyhd disk.vdi --compact
 ```
 
 Source : <https://gist.github.com/kuznero/576e848c39080745ac1915c6b3e4820b>

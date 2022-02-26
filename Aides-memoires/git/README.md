@@ -1,5 +1,4 @@
-git
-===
+# git
 
 **Toutes les commandes suivantes supposent qu'on se soit d'abord placé dans le répertoire local du dépôt (repository).**
 
@@ -8,19 +7,19 @@ git
 ### Initialiser un nouveau dépôt
 
 ```
-$ git init
+git init
 ```
 
 ### Voir les dépôts distants
 
 ```
-$ git remote -v
+git remote -v
 ```
 
 ### Ajouter un dépôt distant
 
 ```
-$ git remote add <remote_name> <repo_url>
+git remote add <remote_name> <repo_url>
 ```
 
 > `git remote rename` pour renommer un dépôt distant
@@ -29,26 +28,32 @@ $ git remote add <remote_name> <repo_url>
 ### Avoir des informations sur un dépôt distant
 
 ```
-$ git remote show <remote_name>
+git remote show <remote_name>
+```
+
+### Modifier l'URL du remote origin
+
+```
+git remote set-url origin <repo_url>
 ```
 
 ### Ajouter un fichier à l'index du dépôt (working directory -> stage)
 
 ```
-$ git add fichier
+git add fichier
 ```
 
 ### Ajouter tous les fichiers créés ou modifiés à l'index du dépôt
 
 ```
-$ git add --all
+git add --all
 ```
 
 ### Supprimer un fichier du dépôt
 
 Il faut le dé-indexer avant de le supprimer :
 ```
-$ git rm <file>
+git rm <file>
 ```
 
 ### Changer les droits d'un fichier après indexation
@@ -62,7 +67,7 @@ ajouter les droits d'exécution pour un script), il faut :
 ### Faire un commit (stage -> repository)
 
 ```
-$ git commit -m "commit description"
+git commit -m "commit description"
 ```
 
 > Option `-v` pour ajouter le diff au commentaire du commit.
@@ -72,7 +77,7 @@ $ git commit -m "commit description"
 ### Afficher les commits
 
 ```
-$ git log
+git log
 ```
 
 > Option `--pretty=...` pour personnaliser la sortie.
@@ -81,25 +86,25 @@ $ git log
 ### Afficher les commits et les actions réalisées
 
 ```
-$ git reflog
+git reflog
 ```
 
 ### Pour revenir à un commit ou une action donnée
 
 ```
-$ git checkout <hash>
+git checkout <hash>
 ```
 
 ### Pour voir les modifications faites sur un fichier
 
 ```
-$ git blame file.txt
+git blame file.txt
 ```
 
 ### Ajouter un remote (ici *origin*) au dépôt en ssh
 
 ```
-$ git remote add origin git@gitlab.com:ju6a75/hello-world.git
+git remote add origin git@gitlab.com:ju6a75/hello-world.git
 ```
 
 Il faut ici un accès *ssh* au dépôt (sur [FramaGit](https://framagit.org),
@@ -108,19 +113,19 @@ avoir ajouté un clé publique *ssh* dans les paramètres du compte).
 ### Renommer un remote
 
 ```
-$ git remote rename origin old-origin
+git remote rename origin old-origin
 ```
 
 ### Cloner un dépôt
 
 ```
-$ git clone REPOSITORY.git
+git clone REPOSITORY.git
 ```
 
 ### Afficher l’état du répertoire de travail par rapport au dépôt
 
 ```
-$ git status
+git status
 ```
 
 > `-s` pour un affichage plus court.
@@ -128,7 +133,7 @@ $ git status
 ### Afficher les différences entre les fichiers indexés et non indexés
 
 ```
-$ git diff
+git diff
 ```
 
 ### Push
@@ -136,7 +141,7 @@ $ git diff
 Pour *pusher* les modifications commitées vers le dépôt distant
 (remplacer `master` par `--all` pour pusher toutes les branches) :
 ```
-$ git push origin master
+git push origin master
 ```
 
 ### Pull
@@ -145,7 +150,7 @@ Pour récupérer dans le dépôt local les modifications de la branche `master`
 du dépôt distant `origin` (remplacer `master` par `--all` pour puller toutes
 les branches) :
 ```
-$ git pull origin master
+git pull origin master
 ```
 
 > `git pull` est en fait la combinaison d'un `git fetch` (pour récupérer
@@ -155,19 +160,19 @@ $ git pull origin master
 ### Remiser les modifications faites (la branche en cours redevient "propre")
 
 ```
-$ git stash
+git stash
 ```
 
 ### Lister les remises en cours
 
 ```
-$ git stash list
+git stash list
 ```
 
 ### Appliquer une remise à la branche en cours
 
 ```
-$ git stash apply [stash_name]
+git stash apply [stash_name]
 ```
 
 ## Branches
@@ -177,7 +182,7 @@ Une branche est une suite de commits.
 ### Lister les branches d'un dépôt (et afficher la branche en cours)
 
 ```
-$ git branch
+git branch
 ```
 
 > Option `-a` pour voir également les branches distantes présentes dans
@@ -188,13 +193,13 @@ $ git branch
 ### Créer une nouvelle branche (en restant sur la branche en cours)
 
 ```
-$ git branch new_branch
+git branch new_branch
 ```
 
 ### Créer une nouvelle branche et basculer directement dessus
 
 ```
-$ git checkout -b testing
+git checkout -b testing
 ```
 
 > Attention à créer la nouvelle branche depuis le bon endroit (changer
@@ -204,13 +209,13 @@ $ git checkout -b testing
 
 Cela revient à faire une copie locale d'une branche distante :
 ```
-$ git checkout -b <branch> origin/<branch>
+git checkout -b <branch> origin/<branch>
 ```
 
 ### Changer de branche
 
 ```
-$ git checkout v4.14.23
+git checkout v4.14.23
 ```
 
 > On déplace le pointeur `HEAD` et les fichiers du répertoire de travail
@@ -220,7 +225,7 @@ $ git checkout v4.14.23
 
 Par exemple de `origin/master` vers `master` :
 ```
-$ git fetch
+git fetch
 ```
 
 > Cela permet de récupérer les commits d'une branche (en général
@@ -240,7 +245,7 @@ $ git fetch
 ### Fusionner les commits d'une branche avec la branche en cours
 
 ```
-$ git merge <branch>
+git merge <branch>
 ```
 
 S'il y a continuité des commits entre les deux branches fusionnées, git va
@@ -259,14 +264,14 @@ commit les modifications (pas besoin de refaire le merge).
 ### Voir les branches fusionnées ou non
 
 ```
-$ git branch --merged
-$ git branch --no-merged
+git branch --merged
+git branch --no-merged
 ```
 
 ### Supprimer une branche
 
 ```
-$ git branch -d <branch_to_delete>
+git branch -d <branch_to_delete>
 ```
 > Si la branche n'est pas totalement fusionnée, on aura un avertissement.
   On peut forcer la suppression avec `-D`. **Attention, dans ce cas, on perd
@@ -274,7 +279,7 @@ $ git branch -d <branch_to_delete>
 
 Pour une branche distante :
 ```
-$ git push origin --delete <branch_to_delete>
+git push origin --delete <branch_to_delete>
 ```
 
 ### Rebase
@@ -292,7 +297,7 @@ son historique avant de faire un push.
 Exemple pour lancer un rebase interactif sur les 3 derniers commits de la
 branche en cours :
 ```
-$ git rebase -i HEAD~3
+git rebase -i HEAD~3
 ```
 
 ## Tags
@@ -300,7 +305,7 @@ $ git rebase -i HEAD~3
 ### Lister les tags
 
 ```
-$ git tag
+git tag
 ```
 
 > Deux types de tag :
@@ -311,24 +316,24 @@ $ git tag
 
 Sur le dernier commit réalisé (**attention à être dans la bonne branche**) :
 ```
-$ git tag -a <tag_name> -m "Annotation du tag"
+git tag -a <tag_name> -m "Annotation du tag"
 ```
 
 Sur un commit particulier :
 ```
-$ git tag -a <tag_name> -m "Annotation du tag" <commit_hash>
+git tag -a <tag_name> -m "Annotation du tag" <commit_hash>
 ```
 
 ### Voir les informations sur un tag
 
 ```
-$ git show <tag_name>
+git show <tag_name>
 ```
 
 ### Récupérer tous les tags depuis un dépôt distant
 
 ```
-$ git fetch --tags --all
+git fetch --tags --all
 ```
 
 > Si on ne met pas le `--all`, on ne récupère que le dernier tag.
@@ -336,37 +341,37 @@ $ git fetch --tags --all
 ### Se placer sur un tag particulier
 
 ```
-$ git checkout <tag_name>
+git checkout <tag_name>
 ```
 
 ### Créer une nouvelle branche basée sur un tag
 
 ```
-$ git checkout -b <new_branch_name> <tag_name>
+git checkout -b <new_branch_name> <tag_name>
 ```
 
 ### Pousser un tag
 
 Pour pousser un tag sur le dépôt distant :
 ```
-$ git push origin <tag_name>
+git push origin <tag_name>
 ```
 
 Pour pousser tous les nouveaux tags d'un coup :
 ```
-$ git push origin --tags
+git push origin --tags
 ```
 
 ### Effacer un tag
 
 En local :
 ```
-$ git tag -d <tag_name>
+git tag -d <tag_name>
 ```
 
 Sur le dépôt distant :
 ```
-$ git push --delete origin <tag_name>
+git push --delete origin <tag_name>
 ```
 
 ## gitignore
@@ -380,7 +385,7 @@ Des modèles de `.gitignore` sont disponibles pour différents langages :
 
 Si la branche vient d'être créée (pas de modifications faites) :
 ```
-$ git branch -d new_branch
+git branch -d new_branch
 ```
 
 Si des modifications ont été faites, on peut, avant de supprimer la branche :
@@ -416,7 +421,7 @@ On va pouvoir annuler le dernier commit de la manière suivante :
 ### Modifier le message du dernier commit réalisé
 
 ```
-$ git commit --amend -m "nouveau message"
+git commit --amend -m "nouveau message"
 ```
 
 ### Ajouter un fichier au dernier commit réalisé
@@ -434,7 +439,7 @@ $ git commit --amend -m "nouveau message"
 **Prévenir ses copains !!!**
 
 ```
-$ git revert HEAD
+git revert HEAD
 ```
 
 Cela va créer un nouveau commit qui annule les modifications du commit fautif.
@@ -452,13 +457,13 @@ précédente du projet. Elle compte trois niveaux : `--soft`, `--mixed` et
 Pour revenir à un commit donné sans rien effacer (on peut par exemple créer
 une nouvelle branche depuis ce commit ou juste voir le code) :
 ```
-$ git reset --soft <commit_hash>
+git reset --soft <commit_hash>
 ```
 
 Pour supprimer le dernier commit mais en gardant les modifications de ce
 commit dans le répertoire de travail :
 ```
-$ git reset --mixed HEAD^
+git reset --mixed HEAD^
 ```
 
 > Pour rappel, `HEAD` est un pointeur vers la position actuelle dans le
@@ -467,12 +472,12 @@ $ git reset --mixed HEAD^
 Pour supprimer tous les commits faits après un commit donné
 (**attention : aucune possibilité de revenir en arrière** :
 ```
-$ git reset --hard <commit_hash>
+git reset --hard <commit_hash>
 ```
 
 Ou juste pour le dernier commit :
 ```
-$ git reset --hard HEAD^
+git reset --hard HEAD^
 ```
 
 ### Résolution des conflits

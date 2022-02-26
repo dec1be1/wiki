@@ -1,5 +1,4 @@
-American Fuzzy Lop (AFL)
-========================
+# American Fuzzy Lop (AFL)
 
 Cet article constitue mon aide-mémoire pour *AFL* (fuzzer d'applications
 userland).
@@ -9,10 +8,10 @@ userland).
 L'installation d'AFL est très simple. On suit les indications de la
 documentation officielle :
 ```
-$ git clone https://github.com/google/AFL.git
-$ cd AFL
-$ make
-# make install
+git clone https://github.com/google/AFL.git
+cd AFL
+make
+sudo make install
 ```
 
 ## Fuzzing par instrumentation du binaire
@@ -47,14 +46,14 @@ De plus, les options de compilation suivantes peuvent être utiles :
 
 Un exemple typique :
 ```
-$ export CC="afl-gcc -ggdb"
-$ export CXX="afl-g++ -ggdb"
-$ export CFLAGS="-ggdb -fsanitize=address"
-$ export CXXFLAGS="-ggdb -fsanitize=address"
-$ export AFL_INST_RATIO=100
-$ export AFL_HARDEN=1
-$ ./configure
-$ make
+export CC="afl-gcc -ggdb"
+export CXX="afl-g++ -ggdb"
+export CFLAGS="-ggdb -fsanitize=address"
+export CXXFLAGS="-ggdb -fsanitize=address"
+export AFL_INST_RATIO=100
+export AFL_HARDEN=1
+./configure
+make
 ```
 
 ### Préparation des dossiers et testcases
@@ -84,8 +83,8 @@ On peut ensuite lancer `afl-fuzz`. La variable d'envrionnement
 fréquence du CPU (qui, sous GNU/Linux, ne fait pas bon ménage avec AFL).
 Par exemple :
 ```
-$ export AFL_SKIP_CPUFREQ=1
-$ afl-fuzz -i afl_in -o afl_out <afl-fuzz_options> -- <targeted_binary> <options_for_targeted_binary> @@
+export AFL_SKIP_CPUFREQ=1
+afl-fuzz -i afl_in -o afl_out <afl-fuzz_options> -- <targeted_binary> <options_for_targeted_binary> @@
 ```
 
 Le `@@` indique, dans le cas où le binaire prend des fichiers en entrée,
@@ -107,10 +106,10 @@ Pour arrêter une session : `CTRL+C`.
 Pour lancer plusieurs opération de fuzzing en parallèle (chacune va occuper
 un coeur du CPU) :
 ```
-$ afl-fuzz -i afl_in -o afl_out -M fuzzer01 -- <targeted_binary> <options_for_targeted_binary> @@
-$ afl-fuzz -i afl_in -o afl_out -S fuzzer02 -- <targeted_binary> <options_for_targeted_binary> @@
+afl-fuzz -i afl_in -o afl_out -M fuzzer01 -- <targeted_binary> <options_for_targeted_binary> @@
+afl-fuzz -i afl_in -o afl_out -S fuzzer02 -- <targeted_binary> <options_for_targeted_binary> @@
 [...]
-$ afl-fuzz -i afl_in -o afl_out -S fuzzer0n -- <targeted_binary> <options_for_targeted_binary> @@
+afl-fuzz -i afl_in -o afl_out -S fuzzer0n -- <targeted_binary> <options_for_targeted_binary> @@
 ```
 
 On a un processus maître (`-M`) et des processus esclaves (`-S`).
@@ -135,7 +134,7 @@ screen -dmS fuzzer4 /usr/bin/bash -c "afl-fuzz -i afl_in -o afl_out -S fuzzer3 -
 Après avoir lancer ce script, on accède alors aux différents processus
 (ici `fuzzer1`) :
 ```
-$ screen -rd fuzzer1
+screen -rd fuzzer1
 ```
 
 #### Reprise d'une session existante
@@ -180,10 +179,10 @@ L'activation de ces fonctionnalités améliore généralement l'efficacité d'AF
 Sinon, une solution alternative est d'ajouter la variable d'environnement
 `AFL_USE_ASAN=1` à la compilation :
 ```
-$ export AFL_USE_ASAN=1
+export AFL_USE_ASAN=1
 [...]
-$ ./configure
-$ make
+./configure
+make
 ```
 
 Enfin, *ASAN* est gourmand en mémoire. Il peut être avantage (mais dangereux
@@ -197,9 +196,9 @@ Plus d'informations ici : <https://fuzzing-project.org/tutorial2.html>
 On va créer un ramdisk pour éviter de solliciter le SSD car AFL fait beaucoup
 de lecture/écriture qui pourrait l'user prématurément.
 ```
-# mkdir /media/ramdisk
-# chmod user:user /media/ramdisk
-# mount -t tmpfs -o size=4096M tmpfs /media/ramdisk
+sudo mkdir /media/ramdisk
+sudo chmod user:user /media/ramdisk
+sudo mount -t tmpfs -o size=4096M tmpfs /media/ramdisk
 ```
 
 On peut maintenant travailler dans le ramdisk.
@@ -214,7 +213,7 @@ Avant de commencer, on peut demander au système de sauvegarder les coredumps
 dans un fichier plutôt que de les passer à un handler spécifique (sur ma
 Debian Buster de test, c'était déjà comme ça par défaut) :
 ```
-# echo core > /proc/sys/kernel/core_pattern
+echo core | sudo tee /proc/sys/kernel/core_pattern
 ```
 
 ### Fréquence du CPU
@@ -225,7 +224,7 @@ d'environnement `AFL_SKIP_CPUFREQ`.
 
 Une solution alternative est de forcer tous les coeurs en mode *performance* :
 ```
- # echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 ```
 
 ## Ressources

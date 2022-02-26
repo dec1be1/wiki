@@ -1,5 +1,4 @@
-pdf
-=====
+# pdf
 
 ## Extraction de pages d'un fichier pdf
 ```
@@ -15,4 +14,3 @@ pdftk source1.pdf source2.pdf source3.pdf cat output destination.pdf
 ```
 qpdf --password=<password> --decrypt input.pdf output.pdf
 ```
-

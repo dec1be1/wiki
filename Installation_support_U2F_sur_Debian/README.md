@@ -1,5 +1,4 @@
-Installation support U2F (Yubikey) sur Debian
-=============================================
+# Installation support U2F (Yubikey) sur Debian
 
 Cet article décrit la procédure pour installer le support *U2F*
 (Yubikey par exemple) sur un système Debian. Cela doit fonctionner sur la
@@ -12,11 +11,11 @@ plupart des distributions GNU/Linux.
   dans le dossier `/etc/udev/rules.d/``
 * Ajuster les droits si nécessaire :
 ```
-# chown root:root /etc/udev/rules.d/70-u2f.rules && chmod 644 /etc/udev/rules.d/70-u2f.rules
+sudo chown root:root /etc/udev/rules.d/70-u2f.rules && chmod 644 /etc/udev/rules.d/70-u2f.rules
 ```
 * Taper la commande suivante pour prendre en compte ce fichier :
 ```
-# udevadm control --reload-rules
+sudo udevadm control --reload-rules
 ```
 
 ## Activation du support dans Firefox

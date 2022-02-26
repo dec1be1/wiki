@@ -1,5 +1,4 @@
-vim
-===
+# vim
 
 ## Fichiers
 
@@ -142,7 +141,7 @@ Vim permet de gérer plusieurs tabs.
 
 Pour ouvrir des fichiers dans plusieurs tabs :
 ```
-$ vim -p file1 file2 file3
+vim -p file1 file2 file3
 ```
 
 Dans vim :
@@ -181,7 +180,7 @@ Installer d'abord `ctags` dans sa distribution.
 ### Génération des tags
 
 Pour générer un fichier de tags, se placer dans le dossier des sources puis :
-`$ ctags -R *`.
+`ctags -R *`.
 Un fichier `tags` est alors généré dans le dossier courant.
 
 ### Dans vim
@@ -200,7 +199,7 @@ Assistance à la saisie des paires de caractères (ou des balises).
 
 Il existe un paquet précompilé pour Arch :
 ```
-# pacman -S vim-surround
+sudo pacman -S vim-surround
 ```
 
 ### fzf
@@ -214,7 +213,7 @@ On peut utiliser ce plugin : <https://github.com/preservim/nerdcommenter>
 
 Il y a un paquet précompilé sous Arch :
 ```
-# pacman -S vim-nerdcommenter
+sudo pacman -S vim-nerdcommenter
 ```
 
 > Par défaut, la *leader key* est `\`.
@@ -241,11 +240,11 @@ map <silent> <F6> "<Esc>:silent setlocal spell! spelllang=fr<CR>"
 Lors de la première utilisation, *vim* va tenter de télécharger les fichiers
 de langues nécessaires. S'il n'y parvient pas, on peut le faire manuellement :
 ```
-$ cd $HOME/.vim/spell
-$ wget http://ftp.vim.org/vim/runtime/spell/fr.latin1.spl
-$ wget http://ftp.vim.org/vim/runtime/spell/fr.latin1.sug
-$ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.spl
-$ wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
+cd $HOME/.vim/spell
+wget http://ftp.vim.org/vim/runtime/spell/fr.latin1.spl
+wget http://ftp.vim.org/vim/runtime/spell/fr.latin1.sug
+wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.spl
+wget http://ftp.vim.org/vim/runtime/spell/fr.utf-8.sug
 ```
 
 ### Barre de status
@@ -260,7 +259,7 @@ Pour avoir un panneau avec l'arborescence des fichiers :
 
 Il existe un paquet précompilé sous Arch :
 ```
-# pacman -S vim-nerdtree
+sudo pacman -S vim-nerdtree
 ```
 
 On peut mapper une touche pour afficher/masquer le panneau :

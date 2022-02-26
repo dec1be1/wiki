@@ -1,5 +1,4 @@
-GPG
-===
+# GPG
 
 Quelques commandes utiles pour *GPG*.
 
@@ -9,99 +8,99 @@ Quelques commandes utiles pour *GPG*.
 
 Taper la commande suivante et se laisser guider :
 ```
-$ gpg --full-gen-key
+gpg --full-gen-key
 ```
 
 Pour créer un certificat de révocation :
 ```
-$ gpg --output revoke.asc --gen-revoke <id_clé>
+gpg --output revoke.asc --gen-revoke <id_clé>
 ```
 
 Pour révoquer la clé :
 ```
-$ gpg --import revoke.asc
+gpg --import revoke.asc
 ```
 
 ### Gestion du trousseau de clés
 
 Pour exporter une clé publique :
 ```
-$ gpg --output pk.asc --armor --export <id_clé>
+gpg --output pk.asc --armor --export <id_clé>
 ```
 
 Pour exporter une clé privée (**attention... elle doit rester secrète !**) :
 ```
-$ gpg --output sk.asc --armor --export-secret-key <id_clé>
+gpg --output sk.asc --armor --export-secret-key <id_clé>
 ```
 
 Pour exporter les sous-clés privées
 (**attention... elles doivent rester secrètes !**) :
 ```
-$ gpg --output subsk.asc --armor --export-secret-subkeys <id_clé>
+gpg --output subsk.asc --armor --export-secret-subkeys <id_clé>
 ```
 
 Pour importer une clé publique dans le trousseau (si le nom du fichier n'est
 pas spécifié, l'import se fait depuis le presse-papier) :
 ```
-$ gpg --import pk.asc
+gpg --import pk.asc
 ```
 
 Pour lister toutes les clés publiques du trousseau :
 ```
-$ gpg --list-keys
+gpg --list-keys
 ```
 
 Pour lister toutes les signatures des clés publiques du trousseau :
 ```
-$ gpg --list-sigs
+gpg --list-sigs
 ```
 
 Pour lister toutes les clés privées du trousseau :
 ```
-$ gpg --list-secret-keys
+gpg --list-secret-keys
 ```
 
 Pour pousser une clé publique sur un serveur de clés :
 ```
-$ gpg --keyserver hkp://pgp.mit.edu --send-key <id_clé>
+gpg --keyserver hkp://pgp.mit.edu --send-key <id_clé>
 ```
 
 Pour chercher une clé publique sur un serveur (si le serveur n'est pas
 indiqué, celui par défaut est pris en compte : `hkp://keys.gnupg.net`) :
 ```
-$ gpg --search-keys <id_clé>
+gpg --search-keys <id_clé>
 ```
 
 Importer une clé publique depuis un serveur de clés :
 ```
-$ gpg --recv-keys <id_clé>
+gpg --recv-keys <id_clé>
 ```
 
 Pour supprimer une clé publique de son trousseau :
 ```
-$ gpg --delete-keys <id_clé>
+gpg --delete-keys <id_clé>
 ```
 
 Pour supprimer une clé privée de son trousseau :
 ```
-$ gpg --delete-secret-key <id_clé>
+gpg --delete-secret-key <id_clé>
 ```
 
 Pour éditer une clé (on se retrouver avec un prompt `gpg`) :
 ```
-$ gpg --edit-key <id_clé>
+gpg --edit-key <id_clé>
 ```
 
 Pour voir l'empreinte une clé (mettre `--fingerprint` deux fois pour avoir
 plus d'informations) :
 ```
-$ gpg --fingerprint <id_clé>
+gpg --fingerprint <id_clé>
 ```
 
 Pour signer une clé publique (également possible depuis le prompt obtenu
 avec `--edit-key` :
 ```
-$ gpg --sign-key <id_clé>
+gpg --sign-key <id_clé>
 ```
 
 ## Opérations sur les fichiers
@@ -110,12 +109,12 @@ $ gpg --sign-key <id_clé>
 
 Pour chiffrer un fichier avec l'identité donnée (génère un fichier `.gpg`) :
 ```
-$ gpg --recipient <id_clé_destinataire> --encrypt <file>
+gpg --recipient <id_clé_destinataire> --encrypt <file>
 ```
 
 Pour générer une signature dans un fichier séparé (dans un fichier `.sig`) :
 ```
-$ gpg -sb <file>
+gpg -sb <file>
 ```
 
 ### Déchiffrement et vérification
@@ -123,24 +122,24 @@ $ gpg -sb <file>
 Pour vérifier la signature (le fichier de données doit être dans le même
 dossier) :
 ```
-$ gpg --verifiy <file.sig>
+gpg --verifiy <file.sig>
 ```
 
 Pour déchiffrer le fichier :
 ```
-$ gpg --output <file> --decrypt <file.gpg>
+gpg --output <file> --decrypt <file.gpg>
 ```
 
 ## Smartcards
 
 Pour éditer les informations de la carte à puce :
 ```
-$ gpg --card-edit
+gpg --card-edit
 ```
 
 Pour voir les informations de la carte à puce :
 ```
-$ gpg --card-status
+gpg --card-status
 ```
 
 ## Bonnes pratiques

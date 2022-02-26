@@ -1,16 +1,15 @@
-Network Manager
-===============
+# Network Manager
 
 ## Connexions
 
 Pour lister les connexions disponibles :
 ```
-$ nmcli connection show
+nmcli connection show
 ```
 
 Pour se connecter :
 ```
-$ nmcli connection up <connection_name_or_uuid>
+nmcli connection up <connection_name_or_uuid>
 ```
 
 Ajouter `--ask` si un mot de passe est requis.
@@ -19,30 +18,25 @@ Ajouter `--ask` si un mot de passe est requis.
 
 Pour lister les réseaux wifi :
 ```
-$ nmcli device wifi list
+nmcli device wifi list
 ```
 
 Pour se connecter à un réseau wifi :
 ```
-$ nmcli device wifi connect <SSID> password <password>
+nmcli device wifi connect <SSID> password <password>
 ```
 
 Pour se connecter à un réseau caché :
 ```
-$ nmcli device wifi connect <SSID> password <password> hidden yes
+nmcli device wifi connect <SSID> password <password> hidden yes
 ```
 
 ## VPN
 
 Pour installer une configuration depuis un fichier *ovpn* :
 ```
-$ nmcli connection import type openvpn file <file.ovpn>
+nmcli connection import type openvpn file <file.ovpn>
 ```
-
-
-
-
-
 
 ## Sources
 

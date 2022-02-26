@@ -1,5 +1,4 @@
-Installation OpenBSD sur un serveur distant Kimsufi
-===================================================
+# Installation OpenBSD sur un serveur distant Kimsufi
 
 Testé avec OpenBSD 6.5 sur serveur Kimsufi KS-6 (Intel i5-750 -
 16GB DDR3 1333 MHz - 2To SATA).
@@ -24,7 +23,7 @@ connexion à utiliser.
 
 On se connecte en ssh :
 ```
-# ssh root@176.31.100.127
+ssh root@176.31.100.127
 [...]
 root@ns389060:~# export TERM=xterm-color
 ```
@@ -55,8 +54,8 @@ chiffrées). Pour chiffrer les partitions importantes (on ne peut pas tout
 chiffrer car on veut éviter d'avoir à taper une passphrase au boot) :
 
 * on ouvre un shell lors de l'install **avant** de partitionner le disque.
-* on crée une table des partitions : `# fdisk -iy sd0`
-* on crée le disklabel et on partitionne : `# disklabel -E sd0`
+* on crée une table des partitions : `fdisk -iy sd0`
+* on crée le disklabel et on partitionne : `disklabel -E sd0`
 
 Pour mémoire, le layout utilisé (on ajoute les tailles de chaque partition
 sur la dernière colonne ; la dernière est celle qui va accueillir les
@@ -83,18 +82,18 @@ On note que les points de montage ne sont pas encore affectés.
 On sauve on quitte disklabel.
 
 On crée maintenant le volume chiffré sur la partition `sd0l` :
-`# bioctl -c C -l sd0l softraid0`
+`bioctl -c C -l sd0l softraid0`
 
 On suit le tuto sur le site d'OpenBSD :
 ```
-# cd /dev && sh MAKEDEV sd1
-# dd if=/dev/zero of=/dev/rsd1c bs=1m count=1
+cd /dev && sh MAKEDEV sd1
+dd if=/dev/zero of=/dev/rsd1c bs=1m count=1
 ```
 
 On partition le disque chiffré (`sd1`) :
 ```
-# fdisk -iy sd1
-# disklabel -E sd1
+fdisk -iy sd1
+disklabel -E sd1
 ```
 
 Le layout des partitions chiffrées :
@@ -151,7 +150,7 @@ root@ns389060:~# qemu-system-x86_64 -drive format=raw,file=/dev/sda,cache=none,i
 ```
 
 Pour remapper correctement le clavier en français :
-`# wsconsctl keyboard.encoding=fr`.
+`wsconsctl keyboard.encoding=fr`.
 
 ### Rebooter sur le nouveau système
 
@@ -191,7 +190,7 @@ connexion à utiliser (on peut consulter les mails envoyés par Kimsufi depuis
 l'interface web).
 On se connecte en ssh :
 ```
-# ssh root@176.31.100.127
+ssh root@176.31.100.127
 [...]
 root@ns389060:~# export TERM=xterm-color
 ```

@@ -7,7 +7,7 @@ on n'a pas besoin de faire un playbook complet. On peut lancer des
 commandes rapidement (*commandes ad hoc*).
 
 ```
-$ ansible [pattern] -m [module] -a "[module options]"
+ansible [pattern] -m [module] -a "[module options]"
 ```
 
 ### Installer un paquet
@@ -22,19 +22,19 @@ ansible -K -b webservers\:\!www1 -m ansible.builtin.apt -a "name=<package_name> 
 ### Supprimer un fichier
 
 ```
-$ ansible debian -m file -a "path=/path/to/file state=absent"
+ansible debian -m file -a "path=/path/to/file state=absent"
 ```
 
 ### Exécuter une commande shell
 
 ```
-$ ansible debian -m shell -a "whoami"
+ansible debian -m shell -a "whoami"
 ```
 
 ### Rebooter
 
 ```
-$ ansible debian -a "/sbin/reboot"
+ansible debian -a "/sbin/reboot"
 ```
 
 ### Sources

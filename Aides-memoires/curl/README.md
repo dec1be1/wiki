@@ -1,38 +1,37 @@
-curl
-====
+# curl
 
 ## POST
 
 Pour poster des données dans un formulaire :
 ```
-$ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "param1=value1&param2=value2" <url>
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "param1=value1&param2=value2" <url>
 ```
 
 Pour poster des données au format *json* :
 ```
-$ curl -X POST -H "Content-Type: application/json" -d '{"key1":"value1", "key2":"value2"}' <url>
+curl -X POST -H "Content-Type: application/json" -d '{"key1":"value1", "key2":"value2"}' <url>
 ```
 
 On peut aussi mettre les données dans un fichier `data.txt` pour les
 formulaires ou `data.json` pour le json. Dans ce cas, les commandes
 deviennent :
 ```
-$ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d @data.txt <url>
-$ curl -X POST -H "Content-Type: application/json" -d @data.json <url>
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d @data.txt <url>
+curl -X POST -H "Content-Type: application/json" -d @data.json <url>
 ```
 
 ## Basic auth
 
 On peut s'authentifier avec l'option `-u` :
 ```
-$ curl -u login:password <url>
+curl -u login:password <url>
 ```
 
 ## Cookie
 
 On peut ajouter un cookie avec l'option `-b` ou `--cookie` :
 ```
-$ curl --cookie "session=eyJaZz...09In19" <url>
+curl --cookie "session=eyJaZz...09In19" <url>
 ```
 
 ## Sources

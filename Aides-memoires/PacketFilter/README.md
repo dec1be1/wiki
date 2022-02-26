@@ -1,21 +1,22 @@
-Packet Filter (pf)
-==================
+# Packet Filter (pf)
 
 *Packet Filter* est le firewall du sysème *OpenBSD*.
 
+**Commandes à exécuter en root.**
+
 Pour redémarrer pf avec la configuration de /etc/pf.conf :
 ```
-# pfctl -d && pfctl -ef /etc/pf.conf
+pfctl -d && pfctl -ef /etc/pf.conf
 ```
 
 Pour voir le contenu d'une table (<abuse> par exemple) :
 ```
-# pfctl -t abuse -T show
+pfctl -t abuse -T show
 ```
 
 Pour effacer une adresse ip d'une table (<abuse> ici) :
 ```
-# pfctl -t abuse -T del <adresse_ip>
+pfctl -t abuse -T del <adresse_ip>
 ```
 
 Pour ajouter un élément à une table, utiliser la même syntaxe en remplaçant

@@ -1,5 +1,4 @@
-Installation GitLab sur serveur Debian
-======================================
+# Installation GitLab sur serveur Debian
 
 On propose ici d'installer une instance de *Gitlab CE* sur un système
 Debian 10 (Buster). Le serveur se trouve derrière un reverse proxy qui
@@ -18,7 +17,7 @@ Le serveur (ou la VM) doit avoir au minimum :
 
 On installe les pré-requis :
 ```
-# apt install curl vim openssh-server ca-certificates
+sudo apt install curl vim openssh-server ca-certificates
 ```
 
 ### Serveur mail
@@ -34,16 +33,16 @@ sur le serveur. On suit le tutoriel suivant :
 
 On peut utiliser le script suivant :
 ```
-# curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
 ```
 
 ### Installation du paquet
 
 On précise l'adresse externe du serveur web (ici https://git.example.com) et
-on installe le paquet :
+on installe le paquet, **dans un shell root** :
 ```
-# export GITLAB_URL="https://git.example.com"
-# EXTERNAL_URL="${GITLAB_URL}" apt install gitlab-ce
+export GITLAB_URL="https://git.example.com"
+EXTERNAL_URL="${GITLAB_URL}" apt install gitlab-ce
 ```
 
 ## Configuration
@@ -59,7 +58,7 @@ nginx['listen_https'] = false
 
 On relance la configuration :
 ```
-# gitlab-ctl reconfigure
+sudo gitlab-ctl reconfigure
 ```
 
 On peut alors accéder à l'interface web : <https://git.example.com>

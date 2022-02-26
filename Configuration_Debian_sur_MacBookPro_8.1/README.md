@@ -1,5 +1,4 @@
-Configuration Debian sur MacBookPro 8.1 (Early 2011)
-====================================================
+# Configuration Debian sur MacBookPro 8.1 (Early 2011)
 
 Cette page décrit diverses tâches de configuration et d'optimisation de
 Debian 9 (Stretch) sur un MacBookPro 8.1 (Early 2011).
@@ -9,7 +8,7 @@ Le processeur est un Intel(R) Core(TM) i5-2415M CPU @ 2.30GHz
 
 Pour le reste du matériel, voici les sorties des commandes `lspci` et `lsusb` :
 ```
-$ lspci
+lspci
 00:00.0 Host bridge: Intel Corporation 2nd Generation Core Processor Family DRAM Controller (rev 09)
 00:01.0 PCI bridge: Intel Corporation Xeon E3-1200/2nd Generation Core Processor Family PCI Express Root Port (rev 09)
 00:01.1 PCI bridge: Intel Corporation Xeon E3-1200/2nd Generation Core Processor Family PCI Express Root Port (rev 09)
@@ -38,7 +37,7 @@ $ lspci
 06:06.0 PCI bridge: Intel Corporation CV82524 Thunderbolt Controller [Light Ridge 4C 2010]
 07:00.0 System peripheral: Intel Corporation CV82524 Thunderbolt Controller [Light Ridge 4C 2010]
 
-$ lsusb
+lsusb
 Bus 002 Device 003: ID 05ac:8242 Apple, Inc. Built-in IR Receiver
 Bus 002 Device 002: ID 0424:2513 Standard Microsystems Corp. 2.0 Hub
 Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
@@ -57,7 +56,7 @@ Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
 Vérifier que le kernel intègre bien les éléments pour la configuration du
 microcode :
 ```
-# grep -i 'microcode' /boot/config-X.XX.XX
+sudo grep -i 'microcode' /boot/config-X.XX.XX
 ```
 
 Si la sortie ressemble à ça :
@@ -71,7 +70,7 @@ CONFIG_MICROCODE_OLD_INTERFACE=y
 On peut installer le paquet *intel-microcode* et *iucode-tool* (qui est un
 outil de gestion du microcode) :
 ```
-# apt install iucode-tool intel-microcode
+sudo apt install iucode-tool intel-microcode
 ```
 
 ## Le clavier
@@ -80,7 +79,7 @@ outil de gestion du microcode) :
 
 Installer les paquets suivants :
 ```
-# apt install keyboard-configuration console-setup
+sudo apt install keyboard-configuration console-setup
 ```
 
 Pour que le clavier soit correctement mappé, mettre le contenu suivant dans
@@ -121,7 +120,7 @@ nécessaire pour l'installation du module wifi.
 
 Installer le paquet *firmware-b43-installer* (non libre) :
 ```
-# apt install firmware-b43-installer
+sudo apt install firmware-b43-installer
 ```
 
 ## La carte graphique Intel
@@ -131,7 +130,7 @@ il faut l'ajouter au noyau et le recompiler (dans le noyau ou en module).
 Le noyau doit être au moins en version 4.8. Ensuite, on peut supprimer
 certains paquets inutiles :
 ```
-# apt purge xserver-xorg-video-intel xserver-xorg-video-all xserver-xorg-video-amdgpu xserver-xorg-video-ati xserver-xorg-video-radeon
+sudo apt purge xserver-xorg-video-intel xserver-xorg-video-all xserver-xorg-video-amdgpu xserver-xorg-video-ati xserver-xorg-video-radeon
 ```
 On peut rebooter.
 
@@ -154,7 +153,7 @@ suivant [dofstrim.sh](./dofstrim.sh).
 * Pour désactiver le bluetooth au démarrage : ajouter la ligne suivante au
   fichier `/etc/rc.local` :
 ```
-# echo "rfkill block bluetooth" >> /etc/rc.local
+sudo echo "rfkill block bluetooth" >> /etc/rc.local
 ```
 * On édite le fichier
   `/etc/systemd/system/bluetooth.target.wants/bluetooth.service` et on
@@ -162,11 +161,11 @@ suivant [dofstrim.sh](./dofstrim.sh).
   `ExecStart=/usr/lib/bluetooth/bluetoothd`.
 * On lance le module *btusb* au démarrage :
 ```
-# echo btusb >> /etc/modules
+sudo echo btusb >> /etc/modules
 ```
 * On installe les paquets suivants :
 ```
-# apt install pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
+sudo apt install pulseaudio pulseaudio-module-bluetooth pavucontrol bluez-firmware
 ```
 * On crée le fichier `/etc/modprobe.d/b43.conf` et on le complète :
 ```
@@ -194,7 +193,7 @@ Pour l'éteindre :
 * Lancer `alsamixer` dans une console puis muter le SPDIF.
 * Sauver la configuration en tapant :
 ```
-# alsactl store
+sudo alsactl store
 ```
 
 ## Le générateur d'entropie
@@ -204,18 +203,18 @@ fait un peu de configuration :
 
 * Installer le paquet :
 ```
-# apt install rng-tools
+sudo apt install rng-tools
 ```
 * On vérifie que le noyau intègre tpm :
 ```
-# cat /boot/config-X.XX.XX | grep CONFIG_HW_RANDOM_TPM
+sudo cat /boot/config-X.XX.XX | grep CONFIG_HW_RANDOM_TPM
 ```
 
 Si on obtient `y`, c'est bon. Si on a `m`, il faut activer le module
 *tpm-rng* au boot :
 ```
-# echo tpm-rng >> /etc/modules
-# modprobe tpm-rng
+sudo echo tpm-rng >> /etc/modules
+sudo modprobe tpm-rng
 ```
 
 Si on a ni `y` ni `m`, il faut recompiler le noyau.
@@ -231,7 +230,7 @@ RNGDOPTIONS="--hrng=intelfwh --fill-watermark=90% --feed-interval=1"
 ```
 * On relance rng-tools :
 ```
-# systemctl restart rng-tools
+sudo systemctl restart rng-tools
 ```
 
 Source : <https://cryptotronix.com/2014/08/28/tpm-rng/>
@@ -240,7 +239,7 @@ Source : <https://cryptotronix.com/2014/08/28/tpm-rng/>
 
 Le lecteur de carte SD est de marque Broadcom type BCM57765/57785 :
 ```
-$ lspci | grep SD
+lspci | grep SD
 02:00.1 SD Host controller: Broadcom Limited BCM57765/57785 SDXC/MMC Card Reader (rev 10)
 ```
 
@@ -262,7 +261,7 @@ options sdhci debug_quirks2=4
 ```
 * Régénérer l'initrd :
 ```
-# update-initramfs -u -k all
+sudo update-initramfs -u -k all
 ```
 * Rebooter pour tester que tout fonctionne.
 
@@ -274,7 +273,7 @@ Pour la gestion de la vitesse de rotation du ventilateur :
 
 * Installer le paquet *macfanctld* :
 ```
-# apt install macfanctld
+sudo apt install macfanctld
 ```
 * On éditer le fichier de configuration
   [`/etc/macfanctl.conf`](./macfanctl.conf).
@@ -283,10 +282,10 @@ Pour la gestion de la vitesse de rotation du ventilateur :
 
 On peut installer et activer *tlp* pour une meilleure gestion de l'énergie :
 ```
-# apt install tlp
-# systemctl enable tlp.service
-# systemctl enable tlp-sleep.service
-# systemctl disable systemd-rfkill.service
+sudo apt install tlp
+sudo systemctl enable tlp.service
+sudo systemctl enable tlp-sleep.service
+sudo systemctl disable systemd-rfkill.service
 ```
 
 Source : <http://linrunner.de/en/tlp/tlp.html>
@@ -295,7 +294,7 @@ Source : <http://linrunner.de/en/tlp/tlp.html>
 
 * Installer le paquet :
 ```
-# apt install ntpdate
+sudo apt install ntpdate
 ```
 * Modifier le fichier de configuration (`/etc/default/ntpdate`) pour y
   ajouter les serveurs qu'on veut. Typiquement :
@@ -305,5 +304,5 @@ NTPSERVERS="0.fr.pool.ntp.org 1.fr.pool.ntp.org 2.fr.pool.ntp.org 3.fr.pool.ntp.
 * Lancer ntpdate-debian (ntpdate sera ensuite lancé au démarrage d'une
   interface réseau) :
 ```
-# ntpdate-debian
+sudo ntpdate-debian
 ```

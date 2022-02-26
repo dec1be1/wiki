@@ -38,8 +38,8 @@ Remarques :
 * L'option `-CAcreateserial` n'est nécessaire que la première fois.
 * Il faudra peut-être créer les fichiers suivants :
 ```
-echo 1000 > /etc/ssl/serial
-touch /etc/ssl/index.txt
+echo 1000 | sudo tee /etc/ssl/serial
+sudo touch /etc/ssl/index.txt
 ```
 
 ### Conversion

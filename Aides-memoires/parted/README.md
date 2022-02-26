@@ -1,5 +1,4 @@
-parted
-======
+# parted
 
 Commandes à taper dans le shell de `parted`.
 

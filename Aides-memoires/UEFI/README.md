@@ -1,5 +1,4 @@
-UEFI
-====
+# UEFI
 
 Pour créer une clé USB bootable en *UEFI* :
 
