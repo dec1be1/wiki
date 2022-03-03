@@ -14,3 +14,13 @@ pdftk source1.pdf source2.pdf source3.pdf cat output destination.pdf
 ```
 qpdf --password=<password> --decrypt input.pdf output.pdf
 ```
+
+## Fichier texte vers pdf
+
+```
+enscript --header='$n||Page $% of $=' -p file.ps file.txt
+ps2pdf file.ps file.pdf
+```
+
+> On peut personnaliser l'entête du fichier avec `enscript`. Voir le man.
+> 
