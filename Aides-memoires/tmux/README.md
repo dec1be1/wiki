@@ -6,4 +6,5 @@
 
 ## Sources
 
+- <https://tmuxcheatsheet.com/>
 - <https://doc.ubuntu-fr.org/tmux>
