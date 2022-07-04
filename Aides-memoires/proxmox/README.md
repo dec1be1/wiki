@@ -21,6 +21,19 @@ Il faut aller ensuite dans l'onglet *Hardware* de la VM depuis l'interface
 Proxmox pour ajouter le nouveau disque dur (qui apparaît comme un disque non
 utilisé).
 
+## Nettoyage vieux noyaux
+
+Par défaut, PVE laisse en place tous les noyaux. On peut faire un peu de ménage
+de temps en temps.
+
+Pour lister les noyaux installés :
+```
+dpkg --list |grep pve-kernel
+```
+
+On peut alors supprimer ce qu'on veut avec `apt purge` (on peut utiliser un
+wildcard `*`). 
+
 ## Création certificat Let's Encrypt pour la GUI de PVE
 
 Selon l'architecture réseau mise en place, il est assez ennuyeux d'utiliser
