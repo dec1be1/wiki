@@ -47,4 +47,5 @@ cd ..
 reboot
 ```
 
-[Un petit script qui fait ça](./install_patched_module.sh).
+[Un petit script qui fait ça](./install_patched_module.sh). Il faut fournir le
+chemin du fichier de patch en argument.

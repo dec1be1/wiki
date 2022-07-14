@@ -10,10 +10,12 @@ fi
 
 CWD="$(pwd)"
 
-mount -o exec /dev/sr0 /media/cdrom0
-cp -r /media/cdrom0 /tmp/
-umount /media/cdrom0
-cd /tmp/cdrom0/kmods
+mkdir -p /media/prl_tools
+mount -o exec /dev/sr0 /media/prl_tools
+cp -r /media/prl_tools /tmp/
+umount /media/prl_tools
+rmdir /media/prl_tools
+cd /tmp/prl_tools/kmods
 tar zxvf prl_mod.tar.gz
 rm prl_mod.tar.gz
 patch --verbose -p1 -i "${PATCH_FILE}"
