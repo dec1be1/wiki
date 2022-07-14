@@ -46,3 +46,5 @@ cd ..
 ./install -i --verbose
 reboot
 ```
+
+[Un petit script qui fait ça](./install_patched_module.sh).
