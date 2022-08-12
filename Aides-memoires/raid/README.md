@@ -25,6 +25,18 @@ Pour créer un cluster avec les partitions `/dev/sdb1` et `/dev/sdc1`:
 sudo mdadm --create /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb1 /dev/sdc1
 ```
 
+On se retrouve avec un périphérique bloc classique sur `/dev/md0`. Il faut le
+formatter puis ajouter l'entrée dans `/etc/fstab`.
+
+Enfin, il faut sauvegarder la configuration puis recréer le initramfs :
+```
+sudo mdadm --detail --scan > /etc/mdadm/mdadm.conf
+sudo update-initramfs -u
+```
+
+> Cette commande est à taper à chaque modification du cluster
+> (ajout/suppression/remplacement disque, ...).
+
 ### Informations
 
 Pour voir l'état du raid :
@@ -42,3 +54,4 @@ sudo watch -n 1 cat /proc/mdstat
 
 - <https://wiki.debian-fr.xyz/Raid_logiciel_(mdadm)>
 - <https://www.server-world.info/en/note?os=Debian_11&p=raid1>
+- <https://www.linuxtricks.fr/wiki/print.php?id=446>
