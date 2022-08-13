@@ -25,6 +25,8 @@ Pour créer un cluster avec les partitions `/dev/sdb1` et `/dev/sdc1`:
 sudo mdadm --create /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb1 /dev/sdc1
 ```
 
+> Ca peut être long ! Environ une heure ou deux par TB.
+
 On se retrouve avec un périphérique bloc classique sur `/dev/md0`. Il faut le
 formatter puis ajouter l'entrée dans `/etc/fstab`.
 
