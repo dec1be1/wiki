@@ -2,6 +2,10 @@
 
 **Attention avec ''dd'' !!! Toujours vérifier (deux ou trois fois...) la commande avant de valider.**
 
+Pour récupérer des données sur un support endommagé, utiliser plutôt 
+[dd_rescue](https://man.archlinux.org/man/dd_rescue.1.en) ou 
+[ddrescue](https://en.wikipedia.org/wiki/Ddrescue).
+
 ## Création d'une clé usb bootable
 
 Pour créer une clé usb bootable (par exemple sur `/dev/sdb`) :
