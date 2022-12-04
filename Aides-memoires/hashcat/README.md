@@ -22,8 +22,9 @@ optirun hashcat -m 1000 \
                 -d 1,2,3 \
                 --session <session_name> \
                 <hash_file_path> \
-                <wordlist_path>
-                -r <rulesfile_path>
+                <wordlist_path> \
+                -r <rulesfile_path> \
+                -O
 ```
 
 - `-m` : le type de hash à cracker
@@ -35,6 +36,8 @@ optirun hashcat -m 1000 \
                 si elle s'arrête (création d'un fichier `.restore` dans
                 `~/.hashcat/sessions/`).
 - `-r` : fichier de règles de dérivation des mots
+- `-O`: active les *optimisations du kernel*... ça va plus vite mais ça limite 
+  la taille des mots de passe en entrée
 
 Pour le mettre en pause proprement, choisir *Checkpoint* en appuyant sur `c`.
 Cela arrêtera l'opération après la prochaine écriture dans le fichier
