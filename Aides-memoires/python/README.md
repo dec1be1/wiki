@@ -9,7 +9,7 @@ pip list --outdated
 
 Pour mettre à jour tous les modules :
 ```
-pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U --user
+pip list --outdated --format=json | jq -r '.[] | \"\(.name)==\(.latest_version)\"' | xargs -n1 pip install -U --user
 ```
 
 Pour vérifier ensuite :
