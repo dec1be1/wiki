@@ -208,6 +208,11 @@ docker exec <cont_name> <command>
   en cas de `docker stop`. Il ne faut donc pas utiliser `docker exec` pour
   lancer l'application principale mais uniquement pour des processus annexes.
 
+Typiquement, pour avoir un shell interactif sur un conteneur :
+```
+docker exec -it <cont_name> /bin/bash
+```
+
 Pour obtenir des informations sur un conteneur (format json) :
 ```
 docker inspect <cont_name>
