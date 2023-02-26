@@ -46,3 +46,20 @@ Pour afficher la table de routage :
 ```
 netstat -nr
 ```
+
+## UART
+
+Pour repérer le bon périphérique :
+```
+ls -l /dev/cu.*
+```
+
+> Note : Attention aux droits de lecture/écriture sur le périphérique.
+
+Connxion au port UART d'un périphérique à l'aide d'un FTDI (avec minicom) :
+```
+minicom -s /dev/cu.usbserial-0001
+```
+
+Il faudra peut-être régler le périphérique à nouveau dans minicom. Régler les 
+paramètres série également si nécessaire.
