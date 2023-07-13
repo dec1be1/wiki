@@ -31,6 +31,11 @@ Obtenir la route par défaut :
 route get default
 ```
 
+Pour changer la route par défaut :
+```
+sudo route change default 192.168.0.254
+```
+
 Pour ajouter une route statique, par exemple vers le sous-réseau 
 192.168.100.0/24 via la gateway 192.168.0.99 :
 ```
