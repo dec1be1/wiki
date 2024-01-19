@@ -68,3 +68,25 @@ minicom -s /dev/cu.usbserial-0001
 
 Il faudra peut-être régler le périphérique à nouveau dans minicom. Régler les 
 paramètres série également si nécessaire.
+
+## Désinstallation programme
+
+Mettre l'application dans la corbeille puis supprimer les fichiers relatifs à 
+l'application dans les dossiers suivants :
+
+- `~/Library/`
+- `~/Library/Preferences/`
+- `~/Library/Application Support/`
+- `~/Library/Application Scripts/`
+- `~/Library/Logs/`
+- `~/Library/Caches/`
+- `~/Library/Cookies/`
+- `~/Library/Containers/`
+- `~/Library/Group Containers/`
+- `~/Library/Saved Application State/`
+- `~/Library/WebKit/`
+- `/Users/Shared/`
+- `/Library/`
+- `/Library/Application Support/`
+- `/Library/Caches/`
+- `/Library/Logs/`
