@@ -10,6 +10,14 @@ commandes rapidement (*commandes ad hoc*).
 ansible [pattern] -m [module] -a "[module options]"
 ```
 
+Si jamais on a besoin d'inclure les variables contenues dans un fichier 
+(par exemple si on référence des variables dans le fichier d'inventaire), on 
+peut les inclure avec `--extra-vars "@/path/to/vars_file.yml"`. Et on ajoute 
+le *vault-id* si nécessaire (ici *core*) :
+```
+ansible [pattern] -m [module] -a "[module options]" --extra-vars "@/path/to/vars_file.yml" --vault-id=core@prompt
+```
+
 ### Installer un paquet
 
 Sur toutes les machines du groupe webservers, sauf www1 et en faisant un
