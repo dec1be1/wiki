@@ -90,3 +90,38 @@ l'application dans les dossiers suivants :
 - `/Library/Application Support/`
 - `/Library/Caches/`
 - `/Library/Logs/`
+
+## Configuration clavier dans VM Kali sur VMWare Fusion 13
+
+### Configuration VM dans VMWare Fusion
+
+Dans la section *Keyboard and mouse*, dans *Key Mappings* :
+
+- choisir le profil *Mac Profile* (le créer s'il n'existe pas)
+- cocher *Enable Key Mappings*
+- décocher *Enable Language Specific Key Mappings*
+- Créer 2 mappings :
+  + `@` -> `<`
+  + `<` -> `@`
+
+### Dans la VM
+
+Paramètres *Keyboard* dans Gnome :
+
+- Keyboard Model : Generic 105-key PC
+- Keyboard Layout : French
+- Keyboard Variant : French (Macintosh)
+
+Fichier `/etc/default/keyboard` :
+```
+# KEYBOARD CONFIGURATION FILE
+
+# Consult the keyboard(5) manual page.
+
+XKBMODEL="pc105"
+XKBLAYOUT="fr"
+XKBVARIANT="mac"
+XKBOPTIONS="lv3:lalt_switch,compose:lwin"
+
+BACKSPACE="guess"
+```
