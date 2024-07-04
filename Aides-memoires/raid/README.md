@@ -138,6 +138,12 @@ sudo mdadm /dev/md0 --add /dev/sdd1
 
 La synchronisation commence. On peut la suivre avec `sudo watch -n 1 cat /proc/mdstat`.
 
+On ajoute l'adresse email de contact pour les notifications dans 
+`/etc/mdadm/mdadm.conf` (dernière ligne) :
+```
+MAILADDR <email address>
+```
+
 Enfin, comme à l'installation, il faut sauvegarder la configuration puis 
 recréer le initramfs :
 ```
