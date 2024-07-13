@@ -78,16 +78,22 @@ On peut cependant tenter de ré-ajouter le disque au cluster RAID :
 sudo mdadm --re-add /dev/md0 /dev/sdd1
 ```
 
-Si ça ne marche pas on peut le tenter en 2 fois :
+Ou le faire en deux fois :
 ```
 sudo mdadm --remove /dev/md0 /dev/sdd1
 sudo mdadm --add /dev/md0 /dev/sdd1
 ```
 
-Si ça ne marche troujours pas, il faut probablement changer le disque.
+Si ça ne marche pas, il faut probablement changer le disque (ou le câble).
 
 On peut également faire des tests avec smartmontools :
 <https://medium.com/@sandrodz/a-degradedarray-event-had-been-detected-3d19c5257fa6>
+
+Ou encore rechercher les secteurs défectueux sur la partition :
+```
+sudo mdadm --remove /dev/md0 /dev/sdd1
+sudo badblocks -sv -o sdd1_badblocks.lst /dev/sdd1
+```
 
 #### Remplacement disque
 
