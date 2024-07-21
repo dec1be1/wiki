@@ -91,6 +91,14 @@ Exemples :
 ```
 optirun hashcat -m 2500 capture.hccapx rockyou.txt
 ```
+## Création d'un dictionnaire à partir de rules
+
+Ca peut aller plus vite de ne pas utiliser les rules (`-r`) pendant les calculs et de lancer les calculs 
+seulement avec le dictionnaire. Dans ce cas, il faut faire le dictionnaire dérivé en amont 
+en utilisant les rules :
+```
+hashcat --force <wordlist.lst> -r <rule_file> --stdout > wordlist_derivated.lst
+```
 
 ## Sources
 
