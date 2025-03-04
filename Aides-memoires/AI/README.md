@@ -36,6 +36,8 @@ On peut tester avec :
 python -m mlx_lm.generate --model mistralai/Mistral-7B-Instruct-v0.3 --prompt "hello"
 ```
 
+> Les modèles sont stockés dans `~/.cache/huggingface`.
+
 ### Inférence
 
 Il faut lancer le serveur (joignable sur localhost sur le port 8080) : 
