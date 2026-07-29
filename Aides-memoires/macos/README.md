@@ -125,3 +125,11 @@ XKBOPTIONS="lv3:lalt_switch,compose:lwin"
 
 BACKSPACE="guess"
 ```
+
+## Performances
+
+Pour afficher les performances du GPU :
+```
+sudo powermetrics --samplers gpu_power -i 1000
+```
+
