@@ -8,7 +8,8 @@ totale disponible par le nombre de membres dans le cluster.
 
 ### Configuration
 
-**/!\\ Les données des disques à mettre dans le cluster seront perdues.**
+> [!CAUTION]
+> Les données des disques à mettre dans le cluster seront définitivement perdues.
 
 On va faire ici du RAID *software* sous Linux avec *mdadm*.
 
