@@ -51,6 +51,27 @@ Pour suivre en direct :
 sudo watch -n 1 cat /proc/mdstat
 ```
 
+### Vérification
+
+Sur du RAID1, on peut vérifier que les deux disques sont bien identiques après une synchronisation. 
+
+Lorsque l'activité est calme, lancer la vérification, ici sur `md0` : 
+```
+sudo echo check > /sys/block/md0/md/sync_action
+```
+
+On peut vérifier l'avancement dans `/proc/mdstat`.
+
+> [!IMPORTANT]  
+> Le processus est long : environ 6 heures pour 4 TB.
+
+Lorsque c'est terminé, on peut vérifier qu'il n'y a pas d'erreurs : 
+```
+cat /sys/block/md0/md/mismatch_cnt
+```
+
+doit renvoyer `0`.
+
 ### Dépannage
 
 #### Tentatives
